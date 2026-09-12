@@ -1,0 +1,98 @@
+{
+  "gene_capability_drive_evolution_20260911_233957_fusion_capability_goal_evolution_20260912_000000_20260912_002932_b4a874": {
+    "gene_id": "gene_capability_drive_evolution_20260911_233957_fusion_capability_goal_evolution_20260912_000000_20260912_002932_b4a874",
+    "gene_name": "capability_drive_evolution_20260911_233957_fusion_capability_goal_evolution_20260912_000000",
+    "integration_type": "exploration_action",
+    "action_signature": "unified_curiosity_service",
+    "drive_affinity": {
+      "curiosity": 0.44000000000000006,
+      "persistence": 0.16,
+      "expansion": 0.24,
+      "efficiency": 0.16
+    },
+    "integrated_at": "2026-09-12T07:03:12.814883Z",
+    "activation_count": 0,
+    "last_activated": null,
+    "performance_score": 0.5
+  },
+  "gene_capability_goal_evolution_20260912_000000_structural_20260912_002932_26fa8c": {
+    "gene_id": "gene_capability_goal_evolution_20260912_000000_structural_20260912_002932_26fa8c",
+    "gene_name": "capability_goal_evolution_20260912_000000_structural",
+    "integration_type": "evolution_operator",
+    "action_signature": "evolve_goals_from_drives_plus_curiosity",
+    "drive_affinity": {
+      "curiosity": 0.4,
+      "persistence": 0.1,
+      "expansion": 0.3,
+      "efficiency": 0.2
+    },
+    "integrated_at": "2026-09-12T00:32:48.394671Z",
+    "activation_count": 1,
+    "last_activated": "2026-09-12T00:41:10.953255Z",
+    "performance_score": 0.575
+  },
+  "gene_capability_goal_evolution_20260912_000000_20260912_002457_01ad5f": {
+    "gene_id": "gene_capability_goal_evolution_20260912_000000_20260912_002457_01ad5f",
+    "gene_name": "capability_goal_evolution_20260912_000000",
+    "integration_type": "drive_goal_modifier",
+    "action_signature": "evolve_goals_from_drives",
+    "drive_affinity": {
+      "curiosity": 0.4,
+      "persistence": 0.1,
+      "expansion": 0.3,
+      "efficiency": 0.2
+    },
+    "integrated_at": "2026-09-12T00:32:22.046653Z",
+    "activation_count": 0,
+    "last_activated": null,
+    "performance_score": 0.5
+  },
+  "gene_capability_drive_evolution_20260911_233957_structural_20260912_002932_cc35cd": {
+    "gene_id": "gene_capability_drive_evolution_20260911_233957_structural_20260912_002932_cc35cd",
+    "gene_name": "capability_drive_evolution_20260911_233957_structural",
+    "integration_type": "evolution_operator",
+    "action_signature": "evolve_drives_from_outcome_plus_curiosity",
+    "drive_affinity": {
+      "curiosity": 0.3,
+      "persistence": 0.2,
+      "expansion": 0.3,
+      "efficiency": 0.2
+    },
+    "integrated_at": "2026-09-12T00:32:48.398108Z",
+    "activation_count": 0,
+    "last_activated": null,
+    "performance_score": 0.5
+  },
+  "gene_capability_goal_evolution_20260912_000000_structural_fusion_capability_goal_evolution_20260912_000000_fusion_capability_goal_evolution_20260912_000000_20260912_003439_d69e6a": {
+    "gene_id": "gene_capability_goal_evolution_20260912_000000_structural_fusion_capability_goal_evolution_20260912_000000_fusion_capability_goal_evolution_20260912_000000_20260912_003439_d69e6a",
+    "gene_name": "capability_goal_evolution_20260912_000000_structural_fusion_capability_goal_evolution_20260912_000000_fusion_capability_goal_evolution_20260912_000000",
+    "integration_type": "exploration_action",
+    "action_signature": "unified_curiosity_service",
+    "drive_affinity": {
+      "curiosity": 0.511504424778761,
+      "persistence": 0.08141592920353984,
+      "expansion": 0.24424778761061947,
+      "efficiency": 0.16283185840707967
+    },
+    "integrated_at": "2026-09-12T07:03:12.810010Z",
+    "activation_count": 1,
+    "last_activated": "2026-09-12T07:03:12.819535Z",
+    "performance_score": 0.5599999999999999
+  },
+  "gene_capability_goal_evolution_20260912_000000_structural_fusion_capability_goal_evolution_20260912_000000_20260912_003439_1bc8b4": {
+    "gene_id": "gene_capability_goal_evolution_20260912_000000_structural_fusion_capability_goal_evolution_20260912_000000_20260912_003439_1bc8b4",
+    "gene_name": "capability_goal_evolution_20260912_000000_structural_fusion_capability_goal_evolution_20260912_000000",
+    "integration_type": "exploration_action",
+    "action_signature": "unified_curiosity_service",
+    "drive_affinity": {
+      "curiosity": 0.47826086956521735,
+      "persistence": 0.08695652173913043,
+      "expansion": 0.26086956521739124,
+      "efficiency": 0.17391304347826086
+    },
+    "integrated_at": "2026-09-12T07:03:12.810821Z",
+    "activation_count": 0,
+    "last_activated": null,
+    "performance_score": 0.5
+  }
+}
