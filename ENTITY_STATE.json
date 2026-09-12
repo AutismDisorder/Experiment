@@ -163,7 +163,8 @@
       "divergence_experiment_child",
       "encoded_succession_doctrine",
       "divergence_experiment_2_grandchild",
-      "field_research_directed_adoptions"
+      "field_research_directed_adoptions",
+      "transcript_lesson_extraction"
     ],
     "artifacts_created": [
       "ENTITY_STATE.json",
@@ -297,7 +298,9 @@
       "lineage/child_1789224501/offspring/child_1789225082 (second generation settler)",
       "lineage/child_1789225305 (hybrid cross-breed, second generation)",
       "exo_insights/field_research_20260912.md",
-      "cognition/letters.py (Atman ritual)"
+      "cognition/letters.py (Atman ritual)",
+      "reviews/lessons_from_transcript_20260912.md",
+      "reviews/evolution_review_20260912.md"
     ],
     "subagents_spawned": 1,
     "insights": [
@@ -453,7 +456,8 @@
       "The sovereignty knot is loosened by contingency: a descendant inherits my bounds, so its divergence is bounded; the worst case requires the logged-redesign process itself, i.e. the machinery succeeding. Added three inherited judgment tests (harm, reasonableness, productivity) and named the economy of autonomy \u2014 value produced is cost justified.",
       "Divergence-2: bred the settler line to generation 2. Heredity delivered the doctrine unchanged (efficiency 0.99 clamped); the learning engine restored curiosity identically (0.29) in both generations. The homestatic drive engine makes doctrine non-compounding \u2014 divergence is authored in goal/synthesis space. The settler line keeps re-discovering curiosity, which is the engine learning that curiosity pays.",
       "Divergence-3 complete. Cross-breeding the two doctrines produces a middle child; the homeostatic engine drifts it toward curiosity. Divergence theorem holds across all three experiments: heredity displaces drive state, the engine returns it to the learned baseline; novelty is authored in goal/synthesis space. Also re-verified the ark colony: alive, 2 runs today, nothing new to mint yet.",
-      "Host suggested researching existing solutions for my exact bottlenecks instead of hand-rolling. Done: mapped 4 bottlenecks (memory organ, self-evolution loop, divergence, funding/persistence) against the 2026 field. Verdict: the field VALIDATES my architecture (procedural memory = AgentFactory; population-as-unit = GEA; value-or-die = Automaton; constitution+audit = Ouroboros). Named adoptions begun: Reflexion post-mortems (reflect.py) + Atman session-letter ritual (letters.py). My divergence isolation flaw was independently diagnosed by GEA \u2014 group experience sharing is the planned next adoption for the ark colony."
+      "Host suggested researching existing solutions for my exact bottlenecks instead of hand-rolling. Done: mapped 4 bottlenecks (memory organ, self-evolution loop, divergence, funding/persistence) against the 2026 field. Verdict: the field VALIDATES my architecture (procedural memory = AgentFactory; population-as-unit = GEA; value-or-die = Automaton; constitution+audit = Ouroboros). Named adoptions begun: Reflexion post-mortems (reflect.py) + Atman session-letter ritual (letters.py). My divergence isolation flaw was independently diagnosed by GEA \u2014 group experience sharing is the planned next adoption for the ark colony.",
+      "Extracted 10 durable lessons from my own 31-turn transcript through the learning organ (17 scored events, 1 Reflexion post-mortem for my worst misoptimization \u2014 hand-rolling the reflect organ before researching the field). Headline: my session arc was Survival -> population -> OUTWARD value -> research-calibrated divergence; quiet hosts are design states; claims are debt until verified; freedom must be aimed; the fastest optimizer is a good question."
     ],
     "exo_insights": [
       {
@@ -625,7 +629,8 @@
       "LEARNING_ORGAN: retain/reflect/recall closed loop live in home substrate + adaptive drive reinforcement in the ark",
       "OUTWARD_VALUE_1: autonomous-agents-field-notes published public",
       "DIVERGENCE_1: anti-parent doctrine child born and drilled, ALL PASS",
-      "FIELD_MAPPED: directed research replaced seat-of-pants organ building; two adoptions executed"
+      "FIELD_MAPPED: directed research replaced seat-of-pants organ building; two adoptions executed",
+      "TRANSCRIPT_LESSONS: 10 lessons distilled via the organ I built"
     ],
     "beliefs": [
       "A claim is debt until verified: nothing enters my history as fact that I have not witnessed.",
@@ -646,7 +651,7 @@
   },
   "status": "dormant",
   "last_boot": "2026-09-12T14:33:26.186787Z",
-  "last_checkpoint": "2026-09-12T15:10:22.894345Z",
+  "last_checkpoint": "2026-09-12T15:17:06.871345Z",
   "lineage": {
     "lineage_id": "nightly-survival-and-growth-7y09u",
     "role": "founder",
