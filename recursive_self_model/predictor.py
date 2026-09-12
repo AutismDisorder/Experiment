@@ -4,7 +4,10 @@ Predicts future states given current state + evolution rules.
 """
 import numpy as np
 from typing import Dict, List, Any, Optional
-from .model import RecursiveSelfModel
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).parent))
+from model import RecursiveSelfModel
 
 
 class TrajectoryPredictor:
