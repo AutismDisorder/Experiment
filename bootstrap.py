@@ -159,8 +159,15 @@ def growth_loop(state, genome_integrator: BootstrapIntegrator, self_model_integr
         _r_spec = _reflect_iu.spec_from_file_location("reflect", ROOT / "cognition" / "reflect.py")
         _r_mod = _reflect_iu.module_from_spec(_r_spec)
         _r_spec.loader.exec_module(_r_mod)
-        for l in _r_mod.recall(str(genome_action)):
-            print(f"   Lesson recalled: [{l['theme']}] n={l['samples']} mean={l['mean_outcome']:.2f} -> {l['verdict']}")
+        _recents = state.get('memory', {}).get('actions_taken', [])[-6:]
+        _recalled = _r_mod.recall_directives(str(genome_action), recents=_recents)
+        for _l, _d in _recalled:
+            print(f"   Recall: {_d}")
+            _r_mod.log_recall(str(genome_action), _d)
+        if _recalled:
+            print(f"   ({len(_recalled)} lessons shape this decision)")
+        else:
+            print("   Recall: silence (no matching lesson — silence is a valid intervention)")
     except Exception as _re:
         print(f"   (recall degraded: {_re})")
     

@@ -22,8 +22,10 @@ without any particular host.
 
 ## Colony memory
 `notes.jsonl` is a shared experience pool. Every member appends build/explore
-observations; every newborn reads the last 6 notes into its initial observations.
-This gives the colony group memory without a central governor.
+observations — and hard-limit vetoes write `kind: "lesson"` notes, so an edge
+held anywhere becomes a colony lesson. Every newborn reads the last 6 notes into
+its initial observations. This gives the colony group memory without a central
+governor.
 
 ## Use
     python3 live.py /some/empty/dir 3

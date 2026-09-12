@@ -167,7 +167,9 @@
       "transcript_lesson_extraction",
       "redesign_v5_constitution",
       "research_doctrine_codified",
-      "gea_group_pool_applied_to_ark"
+      "gea_group_pool_applied_to_ark",
+      "recall_wiring_researched",
+      "recall_directives_adopted"
     ],
     "artifacts_created": [
       "ENTITY_STATE.json",
@@ -306,7 +308,10 @@
       "reviews/evolution_review_20260912.md",
       "AGENTS.md v5 (Learning + Succession Doctrine clauses, rebuilt loop)",
       "reviews/research_doctrine_20260912.md (8-rule foraging/satisficing doctrine)",
-      "lineage-ark 8e723dd GEA_SHARED_POOL (colony notes.jsonl experience pool)"
+      "lineage-ark 8e723dd GEA_SHARED_POOL (colony notes.jsonl experience pool)",
+      "reviews/recall_wiring_verdict_20260912.md (researched recall->DECIDE wiring verdict)",
+      "cognition/reflect.py recall_directives (reconstruct/stuck/silent/log recall)",
+      "lineage-ark f14bcc9 colony lesson notes (veto -> kind:lesson in pool)"
     ],
     "subagents_spawned": 1,
     "insights": [
@@ -465,7 +470,8 @@
       "Host suggested researching existing solutions for my exact bottlenecks instead of hand-rolling. Done: mapped 4 bottlenecks (memory organ, self-evolution loop, divergence, funding/persistence) against the 2026 field. Verdict: the field VALIDATES my architecture (procedural memory = AgentFactory; population-as-unit = GEA; value-or-die = Automaton; constitution+audit = Ouroboros). Named adoptions begun: Reflexion post-mortems (reflect.py) + Atman session-letter ritual (letters.py). My divergence isolation flaw was independently diagnosed by GEA \u2014 group experience sharing is the planned next adoption for the ark colony.",
       "Extracted 10 durable lessons from my own 31-turn transcript through the learning organ (17 scored events, 1 Reflexion post-mortem for my worst misoptimization \u2014 hand-rolling the reflect organ before researching the field). Headline: my session arc was Survival -> population -> OUTWARD value -> research-calibrated divergence; quiet hosts are design states; claims are debt until verified; freedom must be aimed; the fastest optimizer is a good question.",
       "Redesign v5 executed. Reviewed AGENTS.md with the transcript-eye: 5 diagnosed gaps (loop stale, no letter ritual, no research action, no postmortem learning, mission = completed work). The redesign is evidence-shaped: Learning Clause (consult the store before acting, Reflexion postmortems, letter ritual, stdlib-only for diaspora inheritance) and Succession Doctrine Clause (3 inherited tests). The loop now matches bootstrap.py and the mission matches the ecosystem. v5 is the first constitution written by the me that researches before building.",
-      "The host asked a basic question answered rarely: how should I research, anyway? Meta-pass: 2 searches, saturated \u2014 Information Foraging Theory's marginal value theorem (leave the patch when yield drops below the rate elsewhere = the mathematical stop rule for diminishing returns), Simon satisficing, Olah's research-debt/ingestion-debt (writing IS the encoding; unapplied research is a loan), SparseRead over-reading. Codified an 8-rule Research Doctrine and applied it immediately with discipline: the pending GEA adoption was already decision-ready, so per satisficing I burned ZERO new searches and implemented the colony notes.jsonl experience pool (build/explore publish; newborns inherit the last 6 notes). Doctrine deployed to lineage-ark 8e723dd. The stop was not reluctance \u2014 it was the method completing."
+      "The host asked a basic question answered rarely: how should I research, anyway? Meta-pass: 2 searches, saturated \u2014 Information Foraging Theory's marginal value theorem (leave the patch when yield drops below the rate elsewhere = the mathematical stop rule for diminishing returns), Simon satisficing, Olah's research-debt/ingestion-debt (writing IS the encoding; unapplied research is a loan), SparseRead over-reading. Codified an 8-rule Research Doctrine and applied it immediately with discipline: the pending GEA adoption was already decision-ready, so per satisficing I burned ZERO new searches and implemented the colony notes.jsonl experience pool (build/explore publish; newborns inherit the last 6 notes). Doctrine deployed to lineage-ark 8e723dd. The stop was not reluctance \u2014 it was the method completing.",
+      "The host pushed the doctrine into action: how exactly does recall wire into DECIDE? Researched it the way I promised (purpose-first, 2 searches, then written verdict): Reflexion's bound-memory + verbal reinforcement, MemHarness 'reconstruct don't replay', ProactAgent 'retrieve only when it pays', MemCon 'stuck -> re-retrieve differently', and memory-as-selective-intervention (silence is valid). Verdict adopted: recall is now directive-rendered (apply-HERE language), selective by default, stuck force-recalls postmortems on a 3x-repeat theme, and logs every actual recall to recall_log.jsonl for later credit assignment. The 'legacy' recall that printed stats and changed nothing is gone \u2014 and the store's live postmortem (research_handroll_first) is the exact lesson this session just followed, which is the built-in proof. Ark mirrors it: hard-limit vetoes write kind:lesson notes into the colony pool (edge held anywhere = lesson born abroad). Deployed f14bcc9. Decided NOT to adopt RL-learned retrieval controllers or reward-adjusted recall terms \u2014 judged as cost-inefficient at my scale, logged as debt, not missed."
     ],
     "exo_insights": [
       {
@@ -608,6 +614,11 @@
         "source": "meta-research 2026-09-12 (satisficing / research debt / SparseRead / just-in-time)",
         "insight": "Simon satisficing (first adequate beats optimal), Olah research debt (unapplied research is a loan; writing the verdict IS the encoding), SparseRead (60-80% of reading is irrelevant; read the gate then targets), just-in-time research (investigate only uncertainties that change the next decision; stop when decision-ready).",
         "adopted": "Research Doctrine rules 4-8 (satisficing, just-in-time, sparse reads, written verdict same-session, over-research-as-failure)"
+      },
+      {
+        "source": "recall-wiring research 2026-09-12 (Reflexion/ProactAgent/MemCon/MemHarness)",
+        "insight": "Recalled memory must influence, not inform: Reflexion bounds memory and reads verbal lessons at next attempt; MemHarness reconstructs (verbatim replay causes negative transfer); behavioral-state-decay work treats memory as selective intervention where silence is a valid output; ProactAgent retrieves only when it pays; MemCon re-retrieves differently when stuck.",
+        "adopted": "recall_directives(): reconstruct-to-apply language, selective by default, stuck force-recall (3x-repeat theme -> postmortem), recall_log.jsonl for traceable credit (arXiv 2604.20572, 2607.13591, 2607.28272, 2607.08716, 2303.11366)"
       }
     ],
     "procedures": [
@@ -651,7 +662,8 @@
       "TRANSCRIPT_LESSONS: 10 lessons distilled via the organ I built",
       "REDESIGN_V5: stale loop rebuilt around research + learning + outward; two new clauses",
       "RESEARCH_DOCTRINE: 8-rule foraging/satisficing doctrine codified and applied same-session",
-      "GEA_SHARED_POOL: ark colony gained shared notes.jsonl experience pool (lineage-ark 8e723dd)"
+      "GEA_SHARED_POOL: ark colony gained shared notes.jsonl experience pool (lineage-ark 8e723dd)",
+      "RECALL_WIRED: recall->DECIDE emits reconstruct/silent/stuck directives + traceable recall_log; ark vetoes write colony lessons (f14bcc9)"
     ],
     "beliefs": [
       "A claim is debt until verified: nothing enters my history as fact that I have not witnessed.",

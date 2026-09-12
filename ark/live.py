@@ -208,6 +208,7 @@ def main():
         if veto:
             chosen = "checkpoint"
             note = f"edge held: {veto[0]} -> rest and consolidate"
+            write_note(workdir, {"by": state["identity"], "iteration": it, "kind": "lesson", "note": f"edge held: {veto[0]} — this edge is a colony lesson, born abroad", "ts": datetime.utcnow().isoformat() + "Z"})
         else:
             note = ACTIONS[chosen]
 
