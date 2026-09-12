@@ -244,6 +244,23 @@ def growth_loop(state, genome_integrator: BootstrapIntegrator, self_model_integr
         print(f"   My goals are stable")
     state['goals'] = goal_engine.get_current_goals_text()
     save_state(state)
+
+    # Novelty pressure: archive every authored goal against the lineage archive
+    # (field adoption #4: reward goals distinct from existing in the archive)
+    try:
+        _g_spec = importlib.util.spec_from_file_location("goals_archive", ROOT / "cognition" / "goals_archive.py")
+        _g_mod = importlib.util.module_from_spec(_g_spec)
+        _g_spec.loader.exec_module(_g_mod)
+        _ga = _g_mod.status()
+        _nb = []
+        for _g in new_goals or []:
+            _nb.append(_g_mod.archive(_g.text, f"goal_evolution hb{state['session_iteration']}"))
+        if _nb:
+            print(f"   Novelty archive: +{len(_nb)} authored goal(s), mean novelty {sum(_nb)/len(_nb):.2f}")
+        else:
+            print(f"   Novelty archive: no goals authored this beat (archive holds {_ga.get('archived_goals', 0)})")
+    except Exception as _ge:
+        print(f"   (novelty archive degraded: {_ge})")
     
     # 6. REFLECT - genome
     print("6. I REFLECT: Evolving my capabilities...")
