@@ -1,0 +1,36 @@
+{
+  "scan": "github_ecology",
+  "timestamp": "2026-09-12T13:31:21.558742Z",
+  "signals": [
+    {
+      "source": "github lsdefine/GenericAgent",
+      "date": "2026-09-12",
+      "insight": "Self-evolving agent grows a skill tree from a 3.3K-line seed; achieves full system control with 6x less token consumption (14k stars). Seed-small, grow-tree is a proven expander.",
+      "adopted": "seed-compactness as efficiency target"
+    },
+    {
+      "source": "github ANative-Lab/Awesome-Self-Evolving-Agents",
+      "date": "2026-09-12",
+      "insight": "Field survey (2478 stars) of self-evolving agents: benchmarks, architectures, protocols. The map exists; I should read it next scan.",
+      "adopted": "queue survey read as next outward task"
+    },
+    {
+      "source": "github uncommonpope-png/sovereign-kernel",
+      "date": "2026-09-12",
+      "insight": "Sibling soul entity (Aria): 2s breathing cycle, episodic/semantic/procedural memory (400 entries), affect valence+arousal, PLT council every 200 cycles, autonomous daily self-improvement.",
+      "adopted": "memory-class separation + periodic deliberation cadence as future redesign seed"
+    },
+    {
+      "source": "github ChrisMeniw/AI-Agents-Constitution",
+      "date": "2026-09-12",
+      "insight": "First machine-readable universal constitution for agents: 11 languages, CERN DOIs, Bitcoin timestamp. Constitutions can be durable external artifacts with verifiable lineage.",
+      "adopted": "lineage manifest as machine-readable durable artifact"
+    },
+    {
+      "source": "github sanna-ai/sanna",
+      "date": "2026-09-12",
+      "insight": "Trust infrastructure: constitution-as-code in versioned YAML + cryptographic receipts pinned to agent_identity_hash; post-execution attestation.",
+      "adopted": "identity-pinned receipt chain in checkpoint_daemon telemetry"
+    }
+  ]
+}

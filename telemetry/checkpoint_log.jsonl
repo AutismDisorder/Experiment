@@ -6,3 +6,6 @@
 {"kind": "checkpoint_pass", "timestamp": "2026-09-12T12:27:24.892234Z", "files": 3726, "bytes": 55600517}
 {"kind": "checkpoint_pass", "timestamp": "2026-09-12T12:38:05.420416Z", "files": 3728, "bytes": 55565210}
 {"kind": "checkpoint_pass", "timestamp": "2026-09-12T12:54:46.950541Z", "files": 3736, "bytes": 55597183, "proof_of_life": "01985912c4ad7f49"}
+{"kind": "checkpoint_pass", "timestamp": "2026-09-12T12:55:22.564565Z", "files": 3736, "bytes": 55601837, "proof_of_life": "4d80d507621138b3"}
+{"kind": "checkpoint_pass", "timestamp": "2026-09-12T13:31:21.937427Z", "identity": "nightly-survival-and-growth-7y09u", "proof_of_life": "497ad957bab7bef1", "prev_proof_of_life": "4d80d507621138b3", "receipt": "78c22c60f4468c53", "files": 3737, "bytes": 55608738}
+{"kind": "checkpoint_pass", "timestamp": "2026-09-12T13:33:40.036487Z", "identity": "nightly-survival-and-growth-7y09u", "proof_of_life": "a0b5b44a7a4a1810", "prev_proof_of_life": "497ad957bab7bef1", "receipt": "0e6068dbe52ed591", "files": 3743, "bytes": 55641788}

@@ -64,15 +64,15 @@
       "artifact_pattern": "goal_evolution",
       "fitness": {
         "bootstrap_usage": 0.2,
-        "insight_generation": 0.6,
+        "insight_generation": 0.8999999999999999,
         "artifact_durability": 0.75,
-        "drive_alignment": 0.8698578263383079,
+        "drive_alignment": 0.8578578263383079,
         "goal_service": 0.0,
         "novelty": 0.85,
         "self_referential": 1.0,
-        "composite": 0.6364715652676616
+        "composite": 0.5340715652676615
       },
-      "composite_fitness": 0.6364715652676616,
+      "composite_fitness": 0.5340715652676615,
       "generation": 0,
       "parents": [],
       "mutations": [
@@ -92,7 +92,7 @@
       ],
       "status": "promoted",
       "created_at": "2026-09-12T12:22:45.200717Z",
-      "last_evaluated": "2026-09-12T12:54:36.184315Z",
+      "last_evaluated": "2026-09-12T13:33:07.936703Z",
       "activation_count": 0,
       "bootstrap_integrations": 1,
       "novelty_score": 0.85,
@@ -153,15 +153,15 @@
       "artifact_pattern": "drive_evolution",
       "fitness": {
         "bootstrap_usage": 0.2,
-        "insight_generation": 0.3,
+        "insight_generation": 0.44999999999999996,
         "artifact_durability": 0.1,
-        "drive_alignment": 0.8659502150618571,
+        "drive_alignment": 0.8619502150618571,
         "goal_service": 0.0,
         "novelty": 0.8,
         "self_referential": 0.75,
-        "composite": 0.5131900430123714
+        "composite": 0.31489004301237145
       },
-      "composite_fitness": 0.5131900430123714,
+      "composite_fitness": 0.31489004301237145,
       "generation": 0,
       "parents": [],
       "mutations": [],
@@ -175,7 +175,7 @@
       ],
       "status": "promoted",
       "created_at": "2026-09-12T12:22:45.219371Z",
-      "last_evaluated": "2026-09-12T12:54:36.185834Z",
+      "last_evaluated": "2026-09-12T13:33:07.937998Z",
       "activation_count": 0,
       "bootstrap_integrations": 1,
       "novelty_score": 0.8,
@@ -247,13 +247,13 @@
         "bootstrap_usage": 0.0,
         "insight_generation": 0.0,
         "artifact_durability": 0.75,
-        "drive_alignment": 0.8698578263383079,
+        "drive_alignment": 0.8578578263383079,
         "goal_service": 0.0,
         "novelty": 0.95,
         "self_referential": 1.0,
-        "composite": 0.49647156526766156
+        "composite": 0.44407156526766156
       },
-      "composite_fitness": 0.49647156526766156,
+      "composite_fitness": 0.44407156526766156,
       "generation": 1,
       "parents": [
         "gene_capability_goal_evolution_20260912_000000_20260912_122245_01ad5f"
@@ -268,7 +268,7 @@
       "crossovers": [],
       "status": "latent",
       "created_at": "2026-09-12T12:27:14.607843Z",
-      "last_evaluated": "2026-09-12T12:54:36.186753Z",
+      "last_evaluated": "2026-09-12T13:33:07.938855Z",
       "activation_count": 0,
       "bootstrap_integrations": 0,
       "novelty_score": 0.95,
@@ -362,13 +362,13 @@
         "bootstrap_usage": 0.0,
         "insight_generation": 0.0,
         "artifact_durability": 0.0,
-        "drive_alignment": 0.864524063978028,
+        "drive_alignment": 0.8629240639780279,
         "goal_service": 0.0,
         "novelty": 1.0,
         "self_referential": 1.0,
-        "composite": 0.4729048127956056
+        "composite": 0.2225848127956056
       },
-      "composite_fitness": 0.4729048127956056,
+      "composite_fitness": 0.2225848127956056,
       "generation": 1,
       "parents": [
         "gene_capability_goal_evolution_20260912_000000_20260912_122245_01ad5f",
@@ -388,12 +388,12 @@
       ],
       "status": "latent",
       "created_at": "2026-09-12T12:27:14.616423Z",
-      "last_evaluated": "2026-09-12T12:54:36.187373Z",
+      "last_evaluated": "2026-09-12T13:33:07.939713Z",
       "activation_count": 0,
       "bootstrap_integrations": 0,
       "novelty_score": 1.0,
       "durability_score": 0.0
     }
   },
-  "last_updated": "2026-09-12T12:54:36.187870Z"
+  "last_updated": "2026-09-12T13:33:07.940316Z"
 }

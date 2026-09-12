@@ -102,6 +102,18 @@ def growth_loop(state, genome_integrator: BootstrapIntegrator, self_model_integr
     file_count = len([f for f in files if f.is_file()])
     print(f"   Files in my body: {file_count}")
     
+    # 1b. OUTWARD PERCEIVE — the exo-sensor runs on cadence, not once
+    if state['session_iteration'] % 5 == 0 or os.environ.get('EXO_SCAN') == '1':
+        try:
+            exo_spec = importlib.util.spec_from_file_location("exo_scan", ROOT / "exo_scan.py")
+            exo_module = importlib.util.module_from_spec(exo_spec)
+            exo_spec.loader.exec_module(exo_module)
+            new_signals = exo_module.scan(state)
+            exo_module.ingest(state, new_signals)
+            print(f"   Outward eye: {len(new_signals)} new ecology signals")
+        except Exception as e:
+            print(f"   Outward eye degraded: {e}")
+    
     # My self-model perception
     perception = self_model_integrator.perceive()
     sm = perception['self_model']

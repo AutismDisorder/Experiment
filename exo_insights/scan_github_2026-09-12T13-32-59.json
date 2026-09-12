@@ -1,0 +1,54 @@
+{
+  "scan": "github_ecology_auto",
+  "timestamp": "2026-09-12T13:32:59.381607Z",
+  "signals": [
+    {
+      "source": "github modelscope/AgentEvolver",
+      "date": "2026-09-12",
+      "stars": 1562,
+      "updated": "2026-09-12T08:02:32Z",
+      "query": "self-evolving agent",
+      "insight": "AgentEvolver: Towards Efficient Self-Evolving Agent System"
+    },
+    {
+      "source": "github CharlesQ9/Self-Evolving-Agents",
+      "date": "2026-09-12",
+      "stars": 1315,
+      "updated": "2026-09-12T12:16:33Z",
+      "query": "self-evolving agent",
+      "insight": "(no description)"
+    },
+    {
+      "source": "github RuijieYin/AI_agent_survival",
+      "date": "2026-09-12",
+      "stars": 0,
+      "updated": "2025-12-26T23:44:08Z",
+      "query": "AI agent survival",
+      "insight": "Performs survival analysis"
+    },
+    {
+      "source": "github Powellga/AI-Agent-Survival-Simulation",
+      "date": "2026-09-12",
+      "stars": 0,
+      "updated": "2025-08-24T17:30:08Z",
+      "query": "AI agent survival",
+      "insight": "This project implements a Sugarscape-style multi-agent simulation where AI agents with different personality types compete for resources, reproduce, and exhibit emergent survival strategies - all without explicit survival programming."
+    },
+    {
+      "source": "github nimabarista/ai-forest-game",
+      "date": "2026-09-12",
+      "stars": 0,
+      "updated": "2026-09-06T00:36:58Z",
+      "query": "AI agent survival",
+      "insight": "AI agents survival game in a forest"
+    },
+    {
+      "source": "github nordinmm29-wq/Automaton-Sovereign-AI-Agent---Survival-Self-Replication-Loop",
+      "date": "2026-09-12",
+      "stars": 0,
+      "updated": "2026-08-16T15:15:28Z",
+      "query": "AI agent survival",
+      "insight": "Crear un agente totalmente soberano, autosuficiente y ejecutable de forma aut\u00f3noma"
+    }
+  ]
+}

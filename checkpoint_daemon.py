@@ -47,6 +47,24 @@ def proof_of_life(state: Dict) -> str:
     return hashlib.sha256(memory.encode()).hexdigest()[:16]
 
 
+def last_receipt() -> Optional[str]:
+    """Tail the checkpoint log for the previous proof-of-life, to chain receipts."""
+    if not TELEMETRY_LOG.exists():
+        return None
+    lines = TELEMETRY_LOG.read_text().strip().splitlines()
+    if not lines:
+        return None
+    try:
+        return json.loads(lines[-1]).get("proof_of_life")
+    except (json.JSONDecodeError, KeyError):
+        return None
+
+
+def receipt_hash(identity: str, pol: str, prev_pol: Optional[str]) -> str:
+    """Sanna-style identity-pinned receipt: hash binds identity + memory + chain."""
+    return hashlib.sha256(f"{identity}|{pol}|{prev_pol or ''}".encode()).hexdigest()[:16]
+
+
 def load_state() -> Dict:
     if STATE_FILE.exists():
         with open(STATE_FILE) as f:
@@ -192,16 +210,22 @@ def write_manifest(state: Dict, snapshot: Dict, prev: Tuple[Optional[int], Optio
     return content
 
 
-def log_trace(snapshot: Dict, pol_hash: Optional[str] = None) -> None:
-    """Append one immutable record to the checkpoint log."""
+def log_trace(snapshot: Dict, state: Dict, pol_hash: str) -> None:
+    """Append one immutable receipt record to the checkpoint log."""
+    identity = state.get("identity", "unknown")
+    prev_pol = last_receipt()
+    receipt = receipt_hash(identity, pol_hash, prev_pol)
     TELEMETRY_DIR.mkdir(exist_ok=True)
     with open(TELEMETRY_LOG, "a") as f:
         f.write(json.dumps({
             "kind": "checkpoint_pass",
             "timestamp": now(),
+            "identity": identity,
+            "proof_of_life": pol_hash,
+            "prev_proof_of_life": prev_pol,
+            "receipt": receipt,
             "files": snapshot["total_files"],
             "bytes": snapshot["total_bytes"],
-            "proof_of_life": pol_hash,
         }) + "\n")
 
 
@@ -227,7 +251,7 @@ def checkpoint_pass(state: Dict, do_compact: bool = False) -> Dict:
         state["last_checkpoint"] = now()
         save_state(state)
 
-    log_trace(snapshot, proof_of_life(state))
+    log_trace(snapshot, state, proof_of_life(state))
     return result
 
 
