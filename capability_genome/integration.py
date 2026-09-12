@@ -347,10 +347,21 @@ class BootstrapIntegrator:
         if not aligned:
             return None  # No promoted capabilities, use hardcoded
         
-        # Select best aligned action (fitness * drive affinity)
+        # Select best aligned action with anti-attractor exploration bonus.
+        # Every action keeps non-zero selection probability: recent-heavy genes
+        # are penalized so the loop cannot collapse onto a single gene.
+        recent = self.invoker.invocation_history[-10:]
+        recent_counts = {}
+        for record in recent:
+            recent_counts[record.gene_id] = recent_counts.get(record.gene_id, 0) + 1
+        window = max(1, len(recent))
+        epsilon = 0.25
+
         def score(action):
-            return action['fitness'] * action['drive_affinity'].get(dominant, 0.1)
-        
+            base = action['fitness'] * action['drive_affinity'].get(dominant, 0.1)
+            usage = recent_counts.get(action['gene_id'], 0) / window
+            return base * (1 - epsilon) + epsilon * (1 - usage)
+
         best = max(aligned, key=score)
         
         return {

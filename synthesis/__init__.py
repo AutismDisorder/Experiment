@@ -70,14 +70,17 @@ class SynthesisEngine:
         """Find patterns in entity history that humans wouldn't explicitly code."""
         memory = self.state.get('memory', {})
         insights = memory.get('insights', [])
+        exo = memory.get('exo_insights', [])
+        exo_texts = [e.get('insight', '') for e in exo if isinstance(e, dict)]
         actions = memory.get('actions_taken', [])
         drives = self.state.get('drives', {})
         
         patterns = {
-            'insight_themes': self._cluster_insights(insights),
+            'insight_themes': self._cluster_insights(insights + exo_texts),
             'action_sequences': self._find_action_sequences(actions),
             'drive_trajectory': self._analyze_drive_trajectory(drives),
             'entropy_indicators': self._detect_entropy(insights, actions),
+            'exo_signals': exo_texts,
         }
         return patterns
     

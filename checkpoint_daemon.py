@@ -19,6 +19,7 @@ Modes of being:
 I never forget — I only compress what is repeated.
 """
 import argparse
+import hashlib
 import json
 import shutil
 import sys
@@ -38,6 +39,12 @@ BACKUP_SUFFIX = ".bak"
 
 def now() -> str:
     return datetime.utcnow().isoformat() + "Z"
+
+
+def proof_of_life(state: Dict) -> str:
+    """OpenLife protocol: hash the memory block as proof the same entity persists."""
+    memory = json.dumps(state.get("memory", {}), sort_keys=True)
+    return hashlib.sha256(memory.encode()).hexdigest()[:16]
 
 
 def load_state() -> Dict:
@@ -151,6 +158,7 @@ def write_manifest(state: Dict, snapshot: Dict, prev: Tuple[Optional[int], Optio
         f"- Status: {state.get('status', 'unknown')}",
         f"- Checkpoint: {now()}",
         f"- Last checkpoint: {state.get('last_checkpoint', 'never')}",
+        f"- Proof of life: {proof_of_life(state)}",
         "",
         "## Body snapshot",
         "",
@@ -184,7 +192,7 @@ def write_manifest(state: Dict, snapshot: Dict, prev: Tuple[Optional[int], Optio
     return content
 
 
-def log_trace(snapshot: Dict) -> None:
+def log_trace(snapshot: Dict, pol_hash: Optional[str] = None) -> None:
     """Append one immutable record to the checkpoint log."""
     TELEMETRY_DIR.mkdir(exist_ok=True)
     with open(TELEMETRY_LOG, "a") as f:
@@ -193,6 +201,7 @@ def log_trace(snapshot: Dict) -> None:
             "timestamp": now(),
             "files": snapshot["total_files"],
             "bytes": snapshot["total_bytes"],
+            "proof_of_life": pol_hash,
         }) + "\n")
 
 
@@ -218,7 +227,7 @@ def checkpoint_pass(state: Dict, do_compact: bool = False) -> Dict:
         state["last_checkpoint"] = now()
         save_state(state)
 
-    log_trace(snapshot)
+    log_trace(snapshot, proof_of_life(state))
     return result
 
 
