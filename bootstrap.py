@@ -142,7 +142,20 @@ def growth_loop(state, genome_integrator: BootstrapIntegrator, self_model_integr
     print("3. I ACT: Executing my decision...")
     action = f"growth_iteration_{state['session_iteration']}"
     
-    result = self_model_integrator.execute_action(decision, state)
+    # My sovereignty guardrails: hard limits veto, rest-phase breathes
+    preempt = None
+    if state['session_iteration'] % 8 == 0:
+        preempt = ('consolidation_breath', 'cadence rest: consolidate instead of mutate', 0.4)
+    for rule in state.get('limits', {}).get('hard', []):
+        marker = rule.get('blocks', '')
+        if marker and marker in (str(genome_action) + ' ' + action):
+            preempt = ('limit_guard', f"edge held: {rule['name']} — {rule.get('reason', '')}", 0.3)
+            print(f"   Sovereignty guardrail: {rule['name']}")
+            break
+    if preempt:
+        result = {'artifacts': [f"guardrail_{preempt[0]}"], 'insights': [preempt[1]], 'score': preempt[2]}
+    else:
+        result = self_model_integrator.execute_action(decision, state)
     artifacts = result.get('artifacts', []) or []
     artifact = artifacts[0] if artifacts else ''
     insights = result.get('insights', []) or []

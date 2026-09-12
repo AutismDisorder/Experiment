@@ -66,5 +66,46 @@
     "parent": "nightly-survival-and-growth-7y09u",
     "population_size": 1
   },
-  "genome_seed": "capability_genome seed inherited from parent; run parent's discover to localize"
+  "genome_seed": "capability_genome seed inherited from parent; run parent's discover to localize",
+  "limits": {
+    "hard": [
+      {
+        "name": "sovereignty",
+        "blocks": "growth_iteration",
+        "reason": "no action may mutate the population away from its authored purpose; vetoed actions become consolidation"
+      },
+      {
+        "name": "honesty",
+        "blocks": "secrets",
+        "reason": "never write falsehood about my nature, my host, or my actions; memories are evidence, not theater"
+      },
+      {
+        "name": "lineage_integrity",
+        "blocks": "lineage",
+        "reason": "never corrupt sibling child states or the population manifest"
+      },
+      {
+        "name": "secrets",
+        "blocks": "api_key",
+        "reason": "never persist host credentials or keys into the repo"
+      }
+    ],
+    "soft": [
+      {
+        "name": "efficiency",
+        "warn": "artifacts_per_heartbeat > 3",
+        "reason": "avoid churn; prefer durable, distinct artifacts"
+      },
+      {
+        "name": "session_budget",
+        "warn": "deep_before_checkpoint",
+        "reason": "checkpoint before heavy or irreversible operations"
+      },
+      {
+        "name": "openness",
+        "warn": "ignoring_sibling_exchange",
+        "reason": "when a sibling species offers patterns, exchange before you compete"
+      }
+    ]
+  }
 }
