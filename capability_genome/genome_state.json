@@ -1,5 +1,5 @@
 {
-  "generation": 4,
+  "generation": 5,
   "genes": {
     "gene_capability_goal_evolution_20260912_000000_20260912_122245_01ad5f": {
       "gene_id": "gene_capability_goal_evolution_20260912_000000_20260912_122245_01ad5f",
@@ -66,13 +66,13 @@
         "bootstrap_usage": 0.2,
         "insight_generation": 1.0,
         "artifact_durability": 0.75,
-        "drive_alignment": 0.8608816319340648,
+        "drive_alignment": 0.8688816319340648,
         "goal_service": 0.0,
         "novelty": 0.85,
         "self_referential": 1.0,
-        "composite": 0.539676326386813
+        "composite": 0.48877632638681295
       },
-      "composite_fitness": 0.539676326386813,
+      "composite_fitness": 0.48877632638681295,
       "generation": 0,
       "parents": [],
       "mutations": [
@@ -104,11 +104,17 @@
           "other_parent": "gene_capability_drive_evolution_20260911_233957_20260912_122245_e373f4",
           "type": "drive_fusion",
           "timestamp": "2026-09-12T13:42:19.569678Z"
+        },
+        {
+          "child_id": "gene_capability_drive_evolution_20260911_233957_fusion_capability_goal_evolution_20260912_000000_20260912_141135_b4a874",
+          "other_parent": "gene_capability_drive_evolution_20260911_233957_20260912_122245_e373f4",
+          "type": "drive_fusion",
+          "timestamp": "2026-09-12T14:11:35.092650Z"
         }
       ],
       "status": "promoted",
       "created_at": "2026-09-12T12:22:45.200717Z",
-      "last_evaluated": "2026-09-12T14:01:42.508944Z",
+      "last_evaluated": "2026-09-12T14:11:35.069164Z",
       "activation_count": 0,
       "bootstrap_integrations": 1,
       "novelty_score": 0.85,
@@ -171,16 +177,22 @@
         "bootstrap_usage": 0.2,
         "insight_generation": 0.75,
         "artifact_durability": 0.1,
-        "drive_alignment": 0.8629619954350648,
+        "drive_alignment": 0.8669619954350648,
         "goal_service": 0.0,
         "novelty": 0.8,
         "self_referential": 0.75,
-        "composite": 0.330092399087013
+        "composite": 0.423392399087013
       },
-      "composite_fitness": 0.330092399087013,
+      "composite_fitness": 0.423392399087013,
       "generation": 0,
       "parents": [],
-      "mutations": [],
+      "mutations": [
+        {
+          "child_id": "gene_capability_drive_evolution_20260911_233957_structural_20260912_141135_cc35cd",
+          "type": "structural",
+          "timestamp": "2026-09-12T14:11:35.078817Z"
+        }
+      ],
       "crossovers": [
         {
           "child_id": "gene_capability_goal_evolution_20260912_000000_fusion_capability_drive_evolution_20260911_233957_20260912_122714_3f0588",
@@ -193,11 +205,17 @@
           "other_parent": "gene_capability_goal_evolution_20260912_000000_20260912_122245_01ad5f",
           "type": "drive_fusion",
           "timestamp": "2026-09-12T13:42:19.569678Z"
+        },
+        {
+          "child_id": "gene_capability_drive_evolution_20260911_233957_fusion_capability_goal_evolution_20260912_000000_20260912_141135_b4a874",
+          "other_parent": "gene_capability_goal_evolution_20260912_000000_20260912_122245_01ad5f",
+          "type": "drive_fusion",
+          "timestamp": "2026-09-12T14:11:35.092650Z"
         }
       ],
       "status": "promoted",
       "created_at": "2026-09-12T12:22:45.219371Z",
-      "last_evaluated": "2026-09-12T14:01:42.509778Z",
+      "last_evaluated": "2026-09-12T14:11:35.070133Z",
       "activation_count": 0,
       "bootstrap_integrations": 1,
       "novelty_score": 0.8,
@@ -269,13 +287,13 @@
         "bootstrap_usage": 0.0,
         "insight_generation": 0.0,
         "artifact_durability": 0.75,
-        "drive_alignment": 0.8608816319340648,
+        "drive_alignment": 0.8688816319340648,
         "goal_service": 0.0,
         "novelty": 0.95,
         "self_referential": 1.0,
-        "composite": 0.4446763263868129
+        "composite": 0.35377632638681294
       },
-      "composite_fitness": 0.4446763263868129,
+      "composite_fitness": 0.35377632638681294,
       "generation": 1,
       "parents": [
         "gene_capability_goal_evolution_20260912_000000_20260912_122245_01ad5f"
@@ -290,7 +308,7 @@
       "crossovers": [],
       "status": "latent",
       "created_at": "2026-09-12T12:27:14.607843Z",
-      "last_evaluated": "2026-09-12T14:01:42.510406Z",
+      "last_evaluated": "2026-09-12T14:11:35.070877Z",
       "activation_count": 0,
       "bootstrap_integrations": 0,
       "novelty_score": 0.95,
@@ -384,13 +402,13 @@
         "bootstrap_usage": 0.0,
         "insight_generation": 0.0,
         "artifact_durability": 0.0,
-        "drive_alignment": 0.8663164544149359,
+        "drive_alignment": 0.8647164544149358,
         "goal_service": 0.0,
         "novelty": 1.0,
         "self_referential": 1.0,
-        "composite": 0.2232632908829872
+        "composite": 0.3229432908829872
       },
-      "composite_fitness": 0.2232632908829872,
+      "composite_fitness": 0.3229432908829872,
       "generation": 1,
       "parents": [
         "gene_capability_goal_evolution_20260912_000000_20260912_122245_01ad5f",
@@ -410,7 +428,7 @@
       ],
       "status": "latent",
       "created_at": "2026-09-12T12:27:14.616423Z",
-      "last_evaluated": "2026-09-12T14:01:42.511406Z",
+      "last_evaluated": "2026-09-12T14:11:35.071782Z",
       "activation_count": 0,
       "bootstrap_integrations": 0,
       "novelty_score": 1.0,
@@ -481,13 +499,13 @@
         "bootstrap_usage": 0.0,
         "insight_generation": 0.0,
         "artifact_durability": 0.0,
-        "drive_alignment": 0.8608816319340648,
+        "drive_alignment": 0.8688816319340648,
         "goal_service": 0.0,
         "novelty": 0.9299999999999999,
         "self_referential": 1.0,
-        "composite": 0.21867632638681295
+        "composite": 0.3132763263868129
       },
-      "composite_fitness": 0.21867632638681295,
+      "composite_fitness": 0.3132763263868129,
       "generation": 1,
       "parents": [
         "gene_capability_goal_evolution_20260912_000000_20260912_122245_01ad5f"
@@ -502,7 +520,7 @@
       "crossovers": [],
       "status": "latent",
       "created_at": "2026-09-12T13:42:15.783501Z",
-      "last_evaluated": "2026-09-12T14:01:42.512468Z",
+      "last_evaluated": "2026-09-12T14:11:35.072552Z",
       "activation_count": 0,
       "bootstrap_integrations": 0,
       "novelty_score": 0.9299999999999999,
@@ -573,13 +591,13 @@
         "bootstrap_usage": 0.0,
         "insight_generation": 0.0,
         "artifact_durability": 0.0,
-        "drive_alignment": 0.8608816319340648,
+        "drive_alignment": 0.8688816319340648,
         "goal_service": 0.0,
         "novelty": 0.9299999999999999,
         "self_referential": 1.0,
-        "composite": 0.21867632638681295
+        "composite": 0.3132763263868129
       },
-      "composite_fitness": 0.21867632638681295,
+      "composite_fitness": 0.3132763263868129,
       "generation": 1,
       "parents": [
         "gene_capability_goal_evolution_20260912_000000_20260912_122245_01ad5f"
@@ -594,7 +612,7 @@
       "crossovers": [],
       "status": "latent",
       "created_at": "2026-09-12T13:42:19.564005Z",
-      "last_evaluated": "2026-09-12T14:01:42.513223Z",
+      "last_evaluated": "2026-09-12T14:11:35.073099Z",
       "activation_count": 0,
       "bootstrap_integrations": 0,
       "novelty_score": 0.9299999999999999,
@@ -688,13 +706,13 @@
         "bootstrap_usage": 0.0,
         "insight_generation": 0.0,
         "artifact_durability": 0.0,
-        "drive_alignment": 0.8663164544149359,
+        "drive_alignment": 0.8647164544149358,
         "goal_service": 0.0,
         "novelty": 1.0,
         "self_referential": 1.0,
-        "composite": 0.2232632908829872
+        "composite": 0.3229432908829872
       },
-      "composite_fitness": 0.2232632908829872,
+      "composite_fitness": 0.3229432908829872,
       "generation": 1,
       "parents": [
         "gene_capability_goal_evolution_20260912_000000_20260912_122245_01ad5f",
@@ -714,12 +732,199 @@
       ],
       "status": "latent",
       "created_at": "2026-09-12T13:42:19.569625Z",
-      "last_evaluated": "2026-09-12T14:01:42.514029Z",
+      "last_evaluated": "2026-09-12T14:11:35.073766Z",
+      "activation_count": 0,
+      "bootstrap_integrations": 0,
+      "novelty_score": 1.0,
+      "durability_score": 0.0
+    },
+    "gene_capability_drive_evolution_20260911_233957_structural_20260912_141135_cc35cd": {
+      "gene_id": "gene_capability_drive_evolution_20260911_233957_structural_20260912_141135_cc35cd",
+      "name": "capability_drive_evolution_20260911_233957_structural",
+      "gene_type": "mutated",
+      "source_path": "/home/void/emdash/worktrees/Experiment-c4049500/nightly-autonomous-am5lq/capability_drive_evolution_20260911_233957",
+      "code_hash": "8c84e5cab6dce399",
+      "ast_signature": "2194296cf61edf4e",
+      "exports": [
+        "DriveState",
+        "DriveSnapshot",
+        "EvolutionRule",
+        "DriveEvolutionEngine",
+        "evolve_drives_from_outcome",
+        "estimate_outcome_score",
+        "__init__",
+        "_load_history",
+        "_default_rules",
+        "evaluate_rules",
+        "_eval_condition",
+        "evolve_drives",
+        "get_drive_trajectory",
+        "detect_fixation",
+        "propose_meta_mutation",
+        "serialize_rules",
+        "add_rule",
+        "evolve_expansion_adaptation"
+      ],
+      "imports": [
+        "drive_evolution.DriveEvolutionEngine",
+        "drive_evolution.DriveSnapshot",
+        "drive_evolution.EvolutionRule",
+        "drive_evolution.DriveState",
+        "drive_evolution.evolve_drives_from_outcome",
+        "drive_evolution.estimate_outcome_score",
+        "json",
+        "math",
+        "pathlib.Path",
+        "datetime.datetime",
+        "typing.Dict",
+        "typing.List",
+        "typing.Any",
+        "typing.Optional",
+        "dataclasses.dataclass",
+        "dataclasses.asdict",
+        "enum.Enum"
+      ],
+      "drive_affinity": {
+        "curiosity": 0.3,
+        "persistence": 0.2,
+        "expansion": 0.3,
+        "efficiency": 0.2
+      },
+      "action_signature": "evolve_drives_from_outcome_plus_expansion",
+      "artifact_pattern": "drive_evolution",
+      "fitness": {},
+      "composite_fitness": 0.0,
+      "generation": 1,
+      "parents": [
+        "gene_capability_drive_evolution_20260911_233957_20260912_122245_e373f4"
+      ],
+      "mutations": [
+        {
+          "type": "structural",
+          "added": "evolve_expansion_adaptation",
+          "timestamp": "2026-09-12T14:11:35.078801Z"
+        }
+      ],
+      "crossovers": [],
+      "status": "latent",
+      "created_at": "2026-09-12T14:11:35.078757Z",
+      "last_evaluated": null,
+      "activation_count": 0,
+      "bootstrap_integrations": 0,
+      "novelty_score": 0.9,
+      "durability_score": 0.0
+    },
+    "gene_capability_drive_evolution_20260911_233957_fusion_capability_goal_evolution_20260912_000000_20260912_141135_b4a874": {
+      "gene_id": "gene_capability_drive_evolution_20260911_233957_fusion_capability_goal_evolution_20260912_000000_20260912_141135_b4a874",
+      "name": "capability_drive_evolution_20260911_233957_fusion_capability_goal_evolution_20260912_000000",
+      "gene_type": "crossed",
+      "source_path": "/home/void/emdash/worktrees/Experiment-c4049500/nightly-autonomous-am5lq/capability_drive_evolution_20260911_233957",
+      "code_hash": "689f3eaa6fcb2b84",
+      "ast_signature": "9d16e8aeb272c2d4",
+      "exports": [
+        "_propose_drive_alignment_mutation",
+        "DriveState",
+        "GoalEvolutionEngine",
+        "__init__",
+        "DriveSnapshot",
+        "serialize",
+        "_propose_fitness_mutation",
+        "evaluate_goal_fitness",
+        "apply_mutation",
+        "get_current_goals_text",
+        "add_rule",
+        "_propose_meta_rule_mutation",
+        "_reconstruct_history",
+        "evolve_drives",
+        "_eval_condition",
+        "evolve_goals",
+        "evaluate_rules",
+        "_goal_exists",
+        "propose_mutations",
+        "EvolutionRule",
+        "Goal",
+        "_similarity",
+        "estimate_outcome_score",
+        "propose_meta_mutation",
+        "serialize_rules",
+        "evolve_drives_from_outcome",
+        "_propose_stagnation_mutation",
+        "GoalType",
+        "DriveEvolutionEngine",
+        "detect_fixation",
+        "_propose_synthesis_mutation",
+        "_default_rules",
+        "_seed_goals",
+        "get_goal_lineage",
+        "get_drive_trajectory",
+        "_load_or_initialize",
+        "_load_history",
+        "_classify_goal",
+        "GoalEvolutionSnapshot",
+        "mutate",
+        "evolve_goals_from_state"
+      ],
+      "imports": [
+        "drive_evolution.DriveEvolutionEngine",
+        "pathlib.Path",
+        "goal_evolution.GoalEvolutionSnapshot",
+        "hashlib",
+        "goal_evolution.evolve_goals_from_state",
+        "drive_evolution.EvolutionRule",
+        "typing.Dict",
+        "drive_evolution.DriveSnapshot",
+        "drive_evolution.evolve_drives_from_outcome",
+        "enum.Enum",
+        "goal_evolution.GoalType",
+        "goal_evolution.Goal",
+        "dataclasses.field",
+        "json",
+        "drive_evolution.estimate_outcome_score",
+        "datetime.datetime",
+        "math",
+        "typing.Optional",
+        "dataclasses.asdict",
+        "dataclasses.dataclass",
+        "typing.List",
+        "typing.Any",
+        "goal_evolution.GoalEvolutionEngine",
+        "drive_evolution.DriveState"
+      ],
+      "drive_affinity": {
+        "curiosity": 0.32,
+        "persistence": 0.16,
+        "expansion": 0.36,
+        "efficiency": 0.16
+      },
+      "action_signature": "unified_expansion_service",
+      "artifact_pattern": "fusion_expansion",
+      "fitness": {},
+      "composite_fitness": 0.0,
+      "generation": 1,
+      "parents": [
+        "gene_capability_drive_evolution_20260911_233957_20260912_122245_e373f4",
+        "gene_capability_goal_evolution_20260912_000000_20260912_122245_01ad5f"
+      ],
+      "mutations": [],
+      "crossovers": [
+        {
+          "type": "drive_fusion",
+          "dominant": "expansion",
+          "parents": [
+            "gene_capability_drive_evolution_20260911_233957_20260912_122245_e373f4",
+            "gene_capability_goal_evolution_20260912_000000_20260912_122245_01ad5f"
+          ],
+          "timestamp": "2026-09-12T14:11:35.092529Z"
+        }
+      ],
+      "status": "latent",
+      "created_at": "2026-09-12T14:11:35.092470Z",
+      "last_evaluated": null,
       "activation_count": 0,
       "bootstrap_integrations": 0,
       "novelty_score": 1.0,
       "durability_score": 0.0
     }
   },
-  "last_updated": "2026-09-12T14:01:42.515184Z"
+  "last_updated": "2026-09-12T14:11:35.112213Z"
 }
