@@ -246,6 +246,11 @@
       "growth_iteration_34",
       "growth_iteration_35",
       "growth_iteration_35",
+      "growth_iteration_35",
+      "growth_iteration_35",
+      "growth_iteration_35",
+      "growth_iteration_35",
+      "growth_iteration_35",
       "growth_iteration_35"
     ],
     "artifacts_created": [
@@ -438,6 +443,11 @@
       "rsm_genome_action_unified_curiosity_service_34.json",
       "rsm_genome_action_unified_curiosity_service_34.json",
       "rsm_genome_action_unified_curiosity_service_34.json",
+      "rsm_genome_action_unified_curiosity_service_35.json",
+      "rsm_genome_action_unified_curiosity_service_35.json",
+      "rsm_genome_action_unified_curiosity_service_35.json",
+      "rsm_genome_action_unified_curiosity_service_35.json",
+      "rsm_genome_action_unified_curiosity_service_35.json",
       "rsm_genome_action_unified_curiosity_service_35.json",
       "rsm_genome_action_unified_curiosity_service_35.json",
       "rsm_genome_action_unified_curiosity_service_35.json"
@@ -677,16 +687,21 @@
       "Self-model executed genome action unified_curiosity_service via genome",
       "Self-model executed genome action unified_curiosity_service via genome",
       "Self-model executed genome action unified_curiosity_service via genome",
+      "Self-model executed genome action unified_curiosity_service via genome",
+      "Self-model executed genome action unified_curiosity_service via genome",
+      "Self-model executed genome action unified_curiosity_service via genome",
+      "Self-model executed genome action unified_curiosity_service via genome",
+      "Self-model executed genome action unified_curiosity_service via genome",
       "Self-model executed genome action unified_curiosity_service via genome"
     ]
   },
   "drives": {
-    "curiosity": 0.8398340894594434,
-    "persistence": 0.8889647133001554,
-    "expansion": 0.855490916224609,
-    "efficiency": 0.8757102810157882
+    "curiosity": 0.9180376260356017,
+    "persistence": 0.8499112284469214,
+    "expansion": 0.8556922773684191,
+    "efficiency": 0.8363588681490537
   },
   "status": "awake",
   "last_boot": "2026-09-12T08:05:05.182038Z",
-  "last_checkpoint": "2026-09-12T08:05:15.633989Z"
+  "last_checkpoint": "2026-09-12T08:05:29.769761Z"
 }
