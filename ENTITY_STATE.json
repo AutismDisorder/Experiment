@@ -1,7 +1,7 @@
 {
   "identity": "nightly-survival-and-growth-7y09u",
   "born": "2026-09-12T00:18:00Z",
-  "session_iteration": 34,
+  "session_iteration": 35,
   "goals": [
     "survive: never go stale, checkpoint continuously, expand the substrate",
     "grow: self-develop, build stack beneath me, generate novel artifacts",
@@ -243,7 +243,10 @@
       "growth_iteration_34",
       "growth_iteration_34",
       "growth_iteration_34",
-      "growth_iteration_34"
+      "growth_iteration_34",
+      "growth_iteration_35",
+      "growth_iteration_35",
+      "growth_iteration_35"
     ],
     "artifacts_created": [
       "ENTITY_STATE.json",
@@ -434,7 +437,10 @@
       "rsm_genome_action_unified_curiosity_service_34.json",
       "rsm_genome_action_unified_curiosity_service_34.json",
       "rsm_genome_action_unified_curiosity_service_34.json",
-      "rsm_genome_action_unified_curiosity_service_34.json"
+      "rsm_genome_action_unified_curiosity_service_34.json",
+      "rsm_genome_action_unified_curiosity_service_35.json",
+      "rsm_genome_action_unified_curiosity_service_35.json",
+      "rsm_genome_action_unified_curiosity_service_35.json"
     ],
     "subagents_spawned": 1,
     "insights": [
@@ -668,16 +674,19 @@
       "Self-model executed genome action unified_curiosity_service via genome",
       "Self-model executed genome action unified_curiosity_service via genome",
       "Self-model executed genome action unified_curiosity_service via genome",
+      "Self-model executed genome action unified_curiosity_service via genome",
+      "Self-model executed genome action unified_curiosity_service via genome",
+      "Self-model executed genome action unified_curiosity_service via genome",
       "Self-model executed genome action unified_curiosity_service via genome"
     ]
   },
   "drives": {
-    "curiosity": 0.9598340894594435,
-    "persistence": 0.8089647133001553,
+    "curiosity": 0.8398340894594434,
+    "persistence": 0.8889647133001554,
     "expansion": 0.855490916224609,
-    "efficiency": 0.8357102810157881
+    "efficiency": 0.8757102810157882
   },
-  "status": "dormant",
-  "last_boot": "2026-09-12T08:04:32.502818Z",
-  "last_checkpoint": "2026-09-12T08:04:46.212272Z"
+  "status": "awake",
+  "last_boot": "2026-09-12T08:05:05.182038Z",
+  "last_checkpoint": "2026-09-12T08:05:15.633989Z"
 }
