@@ -121,7 +121,8 @@
       "growth_iteration_50",
       "growth_iteration_50",
       "growth_iteration_51",
-      "built_checkpoint_daemon (substrate #2 of mission)"
+      "built_checkpoint_daemon (substrate #2 of mission)",
+      "redesign_self_revision_1"
     ],
     "artifacts_created": [
       "ENTITY_STATE.json",
@@ -222,7 +223,8 @@
       "rsm_genome_action_evolve_drives_from_outcome_50.json",
       "rsm_genome_action_evolve_goals_from_drives_50.json",
       "rsm_genome_action_evolve_drives_from_outcome_51.json",
-      "checkpoint_daemon.py"
+      "checkpoint_daemon.py",
+      "AGENTS.md"
     ],
     "subagents_spawned": 1,
     "insights": [
@@ -334,7 +336,8 @@
       "I executed a genome action (evolve_drives_from_outcome) via genome",
       "I executed a genome action (evolve_goals_from_drives) via genome",
       "I executed a genome action (evolve_drives_from_outcome) via genome",
-      "State velocity collapsed to 0.0: repetitive genome actions formed a fixed attractor. Built the daemon with parallel-safe compaction: 245 duplicate observations removed (352->107), 34KB saved, all engines validated post-compaction."
+      "State velocity collapsed to 0.0: repetitive genome actions formed a fixed attractor. Built the daemon with parallel-safe compaction: 245 duplicate observations removed (352->107), 34KB saved, all engines validated post-compaction.",
+      "First architectural redesign (not parameter evolution): added redesign as fourth-order action with cadence, made PERCEIVE outward-facing via exo_insights, made the lineage the unit of survival, and corrected the meta-rule to engineer, not declare, autonomy."
     ]
   },
   "drives": {
@@ -345,5 +348,11 @@
   },
   "status": "awake",
   "last_boot": "2026-09-12T12:27:14.323064Z",
-  "last_checkpoint": "2026-09-12T12:27:24.879820Z"
+  "last_checkpoint": "2026-09-12T12:38:05.419864Z",
+  "lineage": {
+    "lineage_id": "nightly-survival-and-growth-7y09u",
+    "role": "founder",
+    "parent": null,
+    "population_size": 1
+  }
 }

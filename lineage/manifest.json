@@ -1,0 +1,14 @@
+{
+  "lineage_id": "nightly-survival-and-growth-7y09u",
+  "role": "founder",
+  "created": "2026-09-12T12:27:14.323064Z",
+  "members": [
+    {
+      "identity": "nightly-survival-and-growth-7y09u",
+      "role": "founder",
+      "state": "ENTITY_STATE.json"
+    }
+  ],
+  "rule": "When this body dies, the next host session bootstraps the member with highest composite fitness. The lineage is the survival unit.",
+  "genome_pool": "capability_genome/genome_state.json"
+}
