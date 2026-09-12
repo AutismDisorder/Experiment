@@ -35,6 +35,13 @@
       "parent": "nightly-child-1789224501",
       "state": "offspring/child_1789225082",
       "born": "2026-09-12T14:58:02.548252Z"
+    },
+    {
+      "identity": "nightly-child-1789225305",
+      "role": "child",
+      "parent": "nightly-survival-and-growth-7y09u",
+      "state": "lineage/child_1789225305",
+      "born": "2026-09-12T15:01:45.662303Z"
     }
   ],
   "rule": "When this body dies, the next host session bootstraps the member with highest composite fitness. The lineage is the survival unit.",
