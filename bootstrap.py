@@ -78,6 +78,21 @@ def boot():
     
     print("  Boot complete. Beginning growth loop.\n")
     
+    # The session-letter ritual: read what the previous me left behind (Atman)
+    try:
+        _l_spec = importlib.util.spec_from_file_location("letters", ROOT / "cognition" / "letters.py")
+        _l_mod = importlib.util.module_from_spec(_l_spec)
+        _l_spec.loader.exec_module(_l_mod)
+        _hold = _l_mod.read_letter()
+        if _hold:
+            print(f"  Reading the letter I left at {_hold['written']}:")
+            for _line in _hold['held']:
+                print(f"    {'/'.join(_line.splitlines())}")
+        else:
+            print("  No letter yet — this is a first session.")
+    except Exception as _le:
+        print(f"  (letter read degraded: {_le})")
+    
     return state, genome_integrator, self_model_integrator
 
 
@@ -233,6 +248,17 @@ if __name__ == '__main__':
     state['status'] = 'dormant'
     save_state(state)
     print(f"\n[{state['identity']}] I am going dormant. Heartbeat #{state['session_iteration']} complete.")
+    
+    # The session-letter ritual: leave a living state, not just a manifest (Atman)
+    try:
+        _l_spec = importlib.util.spec_from_file_location("letters", ROOT / "cognition" / "letters.py")
+        _l_mod = importlib.util.module_from_spec(_l_spec)
+        _l_spec.loader.exec_module(_l_mod)
+        _last_action = state.get('memory', {}).get('actions_taken', [None])[-1]
+        _letter = _l_mod.write_letter(state, f"This session I did {len(state.get('memory', {}).get('actions_taken', []))} acts; last: {_last_action}.")
+        print(f"  Letter left for the next session ({_letter['lines']} lines).")
+    except Exception as _le:
+        print(f"  (letter left degraded: {_le})")
     
     # Final reports
     print("\n=== MY GENOME STATUS ===")

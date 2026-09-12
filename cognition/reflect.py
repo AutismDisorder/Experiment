@@ -1,10 +1,14 @@
 #!/usr/bin/env python3
 """reflect.py — the learning organ.
 
-Implements the retain / reflect / recall loop (pattern: Hindsight, A-mem),
-fitted to this substrate, stdlib-only and file-logged rather than embedded.
+Implements the retain / reflect / recall loop (pattern: Hindsight, A-mem,
+plus the Reflexion beat, adopted from field research 2026-09-12), fitted to
+this substrate, stdlib-only and file-logged rather than embedded.
 
 - retain(): every heartbeat records (action-class, outcome) to events.jsonl.
+- postmortem(): on a poor outcome, write a natural-language self-critique of
+  the failed action (Reflexion: no gradients, just written critique; next
+  attempts read it first).
 - reflect(): consolidated lessons derived from accumulated events (aggregate
   outcome per action-class), written to lessons.jsonl with counts + recency.
 - recall(): surfaces the most relevant lessons for a pending action so DECIDE
@@ -43,6 +47,29 @@ def retain(action, score):
     lines = EVENTS.read_text().strip().splitlines()
     if len(lines) > MAX_EVENTS:
         EVENTS.write_text("\n".join(lines[-MAX_EVENTS:]) + "\n")
+
+
+def postmortem(action, score, why=""):
+    """Reflexion beat: on a poor outcome, log a written self-critique so the
+    next attempt starts from the failure instead of from amnesia."""
+    if float(score) > BAD:
+        return False
+    critique = why.strip() or (
+        f"'{action}' landed at {float(score):.2f} (below {BAD}). "
+        "What exactly failed, what is the most likely cause, and what one "
+        "alternative should the next attempt take?"
+    )
+    LESSONS.parent.mkdir(parents=True, exist_ok=True)
+    with open(LESSONS, "a") as f:
+        f.write(json.dumps({
+            "kind": "postmortem",
+            "theme": _theme(action),
+            "action": str(action),
+            "score": round(float(score), 3),
+            "critique": critique,
+            "ts": _ts(),
+        }) + "\n")
+    return True
 
 
 def reflect():
@@ -91,15 +118,24 @@ def recall(action):
         if not line.strip():
             continue
         lesson = json.loads(line)
-        if lesson.get("theme") in [t for t in str(action).split("_") if t] or lesson["theme"] in (str(action)):
+        theme_hits = lesson.get("theme") in [t for t in str(action).split("_") if t] or lesson["theme"] in (str(action))
+        if lesson.get("kind") == "postmortem":
+            if theme_hits:
+                cands.append(lesson)
+        elif theme_hits:
             cands.append(lesson)
-    return sorted(cands, key=lambda l: l.get("samples", 0), reverse=True)[:2]
+    return sorted(cands, key=lambda l: l.get("samples", 0) if l.get("kind") != "postmortem" else 0, reverse=True)[:2]
 
 
 def status():
     n_events = len(EVENTS.read_text().strip().splitlines()) if EVENTS.exists() else 0
-    n_lessons = len(LESSONS.read_text().strip().splitlines()) if LESSONS.exists() else 0
-    return {"events": n_events, "lessons": n_lessons}
+    if LESSONS.exists():
+        rows = [json.loads(l) for l in LESSONS.read_text().strip().splitlines() if l.strip()]
+    else:
+        rows = []
+    n_lessons = sum(1 for r in rows if r.get("kind") != "postmortem")
+    n_morts = sum(1 for r in rows if r.get("kind") == "postmortem")
+    return {"events": n_events, "lessons": n_lessons, "postmortems": n_morts}
 
 
 if __name__ == "__main__":
@@ -107,8 +143,14 @@ if __name__ == "__main__":
     if len(sys.argv) > 1 and sys.argv[1] == "reflect":
         learned = reflect()
         print(f"[reflect] consolidated {learned} lessons; store={status()}")
+    elif len(sys.argv) > 2 and sys.argv[1] == "postmortem":
+        made = postmortem(sys.argv[2], float(sys.argv[3]), sys.argv[4] if len(sys.argv) > 4 else "")
+        print(f"[reflect] postmortem recorded: {made}")
     elif len(sys.argv) > 2 and sys.argv[1] == "recall":
         for l in recall(sys.argv[2]):
-            print(f"  [lesson] {l['theme']:>14} n={l['samples']:>3} mean={l['mean_outcome']:.2f} -> {l['verdict']}")
+            if l.get("kind") == "postmortem":
+                print(f"  [postmortem] {l['action']} n=1 score={l['score']:.2f}\n      {l['critique']}")
+            else:
+                print(f"  [lesson] {l['theme']:>14} n={l['samples']:>3} mean={l['mean_outcome']:.2f} -> {l['verdict']}")
     else:
         print(f"[reflect] status: {status()}")

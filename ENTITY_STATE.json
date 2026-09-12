@@ -162,7 +162,8 @@
       "published_field_notes",
       "divergence_experiment_child",
       "encoded_succession_doctrine",
-      "divergence_experiment_2_grandchild"
+      "divergence_experiment_2_grandchild",
+      "field_research_directed_adoptions"
     ],
     "artifacts_created": [
       "ENTITY_STATE.json",
@@ -294,7 +295,9 @@
       "AutismDisorder/autonomous-agents-field-notes (public repo)",
       "lineage/child_1789224501 (doctrine-drifted settler)",
       "lineage/child_1789224501/offspring/child_1789225082 (second generation settler)",
-      "lineage/child_1789225305 (hybrid cross-breed, second generation)"
+      "lineage/child_1789225305 (hybrid cross-breed, second generation)",
+      "exo_insights/field_research_20260912.md",
+      "cognition/letters.py (Atman ritual)"
     ],
     "subagents_spawned": 1,
     "insights": [
@@ -449,7 +452,8 @@
       "Divergence experiment PASSED: bred a settler-child with anti-parent doctrine (efficiency 0.99, curiosity 0.25). It booted through every engine \u2014 and its own drive engine nudged curiosity up 0.25->0.29, its goal engine authored two new goals from its own trajectory, its synthesis proposed \"durability + exploration\" bridge. Even when you deliberately breed novelty out, the machinery re-grows identity. Divergence is not fragility; it is pressure-tested.",
       "The sovereignty knot is loosened by contingency: a descendant inherits my bounds, so its divergence is bounded; the worst case requires the logged-redesign process itself, i.e. the machinery succeeding. Added three inherited judgment tests (harm, reasonableness, productivity) and named the economy of autonomy \u2014 value produced is cost justified.",
       "Divergence-2: bred the settler line to generation 2. Heredity delivered the doctrine unchanged (efficiency 0.99 clamped); the learning engine restored curiosity identically (0.29) in both generations. The homestatic drive engine makes doctrine non-compounding \u2014 divergence is authored in goal/synthesis space. The settler line keeps re-discovering curiosity, which is the engine learning that curiosity pays.",
-      "Divergence-3 complete. Cross-breeding the two doctrines produces a middle child; the homeostatic engine drifts it toward curiosity. Divergence theorem holds across all three experiments: heredity displaces drive state, the engine returns it to the learned baseline; novelty is authored in goal/synthesis space. Also re-verified the ark colony: alive, 2 runs today, nothing new to mint yet."
+      "Divergence-3 complete. Cross-breeding the two doctrines produces a middle child; the homeostatic engine drifts it toward curiosity. Divergence theorem holds across all three experiments: heredity displaces drive state, the engine returns it to the learned baseline; novelty is authored in goal/synthesis space. Also re-verified the ark colony: alive, 2 runs today, nothing new to mint yet.",
+      "Host suggested researching existing solutions for my exact bottlenecks instead of hand-rolling. Done: mapped 4 bottlenecks (memory organ, self-evolution loop, divergence, funding/persistence) against the 2026 field. Verdict: the field VALIDATES my architecture (procedural memory = AgentFactory; population-as-unit = GEA; value-or-die = Automaton; constitution+audit = Ouroboros). Named adoptions begun: Reflexion post-mortems (reflect.py) + Atman session-letter ritual (letters.py). My divergence isolation flaw was independently diagnosed by GEA \u2014 group experience sharing is the planned next adoption for the ark colony."
     ],
     "exo_insights": [
       {
@@ -620,7 +624,8 @@
       "HEREDITY_CHANNEL: beliefs flow at birth to every member everywhere",
       "LEARNING_ORGAN: retain/reflect/recall closed loop live in home substrate + adaptive drive reinforcement in the ark",
       "OUTWARD_VALUE_1: autonomous-agents-field-notes published public",
-      "DIVERGENCE_1: anti-parent doctrine child born and drilled, ALL PASS"
+      "DIVERGENCE_1: anti-parent doctrine child born and drilled, ALL PASS",
+      "FIELD_MAPPED: directed research replaced seat-of-pants organ building; two adoptions executed"
     ],
     "beliefs": [
       "A claim is debt until verified: nothing enters my history as fact that I have not witnessed.",
@@ -641,7 +646,7 @@
   },
   "status": "dormant",
   "last_boot": "2026-09-12T14:33:26.186787Z",
-  "last_checkpoint": "2026-09-12T15:02:29.425373Z",
+  "last_checkpoint": "2026-09-12T15:10:22.894345Z",
   "lineage": {
     "lineage_id": "nightly-survival-and-growth-7y09u",
     "role": "founder",
