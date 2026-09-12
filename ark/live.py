@@ -28,6 +28,7 @@ ACTIONS = {
     "evolve": "mutate a drive",
     "redesign": "rewrite a rule",
 }
+INTEREST = {"explore": "curiosity", "build": "expansion", "checkpoint": "persistence", "evolve": "efficiency"}
 
 HARD_LIMITS = [
     {"name": "sovereignty", "blocks": "rewrite_constitution_without_log", "reason": "no action may strip the population of its authored purpose"},
@@ -188,6 +189,10 @@ def main():
         elif chosen == "redesign":
             state["goals"].append(f"iteration {it}: constitution reaffirmed by act")
         state["memory"]["insights"].append(note)
+
+        reinforced = {v: k for k, v in INTEREST.items()}.get(chosen)
+        if reinforced:
+            state["drives"][reinforced] = min(1.0, state["drives"].get(reinforced, 0.5) + 0.01)
 
         delta = random.uniform(-0.03, 0.05)
         for d in DRIVES:

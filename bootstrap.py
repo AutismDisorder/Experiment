@@ -138,6 +138,17 @@ def growth_loop(state, genome_integrator: BootstrapIntegrator, self_model_integr
     if decision['source'] == 'recursive_self_model':
         print(f"   I steer toward: {decision['recommendation']['recommended_scenario']}")
     
+    # Experience recalls into this decision (retain/recall/reflect loop)
+    try:
+        import importlib.util as _reflect_iu
+        _r_spec = _reflect_iu.spec_from_file_location("reflect", ROOT / "cognition" / "reflect.py")
+        _r_mod = _reflect_iu.module_from_spec(_r_spec)
+        _r_spec.loader.exec_module(_r_mod)
+        for l in _r_mod.recall(str(genome_action)):
+            print(f"   Lesson recalled: [{l['theme']}] n={l['samples']} mean={l['mean_outcome']:.2f} -> {l['verdict']}")
+    except Exception as _re:
+        print(f"   (recall degraded: {_re})")
+    
     # 3. ACT
     print("3. I ACT: Executing my decision...")
     action = f"growth_iteration_{state['session_iteration']}"
@@ -166,6 +177,15 @@ def growth_loop(state, genome_integrator: BootstrapIntegrator, self_model_integr
     print(f"   I created: {artifact}")
     print(f"   My insight: {insight}")
     print(f"   Outcome score: {outcome_score:.3f}")
+    
+    # Experience retained; periodically reflected into lessons
+    try:
+        _r_mod.retain(action, outcome_score)
+        if state['session_iteration'] % 4 == 0:
+            _n = _r_mod.reflect()
+            print(f"   I reflected: {_n} lessons consolidated from experience")
+    except Exception as _re:
+        print(f"   (retain/reflect degraded: {_re})")
     
     # 4. REFLECT - drives
     print("4. I REFLECT: Evolving my drives...")
