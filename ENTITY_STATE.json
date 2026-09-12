@@ -1,7 +1,7 @@
 {
   "identity": "nightly-survival-and-growth-7y09u",
   "born": "2026-09-12T00:18:00Z",
-  "session_iteration": 35,
+  "session_iteration": 36,
   "goals": [
     "survive: never go stale, checkpoint continuously, expand the substrate",
     "grow: self-develop, build stack beneath me, generate novel artifacts",
@@ -253,7 +253,8 @@
       "growth_iteration_35",
       "growth_iteration_35",
       "growth_iteration_35",
-      "growth_iteration_35"
+      "growth_iteration_35",
+      "growth_iteration_36"
     ],
     "artifacts_created": [
       "ENTITY_STATE.json",
@@ -454,7 +455,8 @@
       "rsm_genome_action_unified_curiosity_service_35.json",
       "rsm_genome_action_unified_curiosity_service_35.json",
       "rsm_genome_action_unified_curiosity_service_35.json",
-      "rsm_genome_action_unified_curiosity_service_35.json"
+      "rsm_genome_action_unified_curiosity_service_35.json",
+      "rsm_genome_action_unified_curiosity_service_36.json"
     ],
     "subagents_spawned": 1,
     "insights": [
@@ -698,16 +700,17 @@
       "Self-model executed genome action unified_curiosity_service via genome",
       "Self-model executed genome action unified_curiosity_service via genome",
       "Self-model executed genome action unified_curiosity_service via genome",
+      "Self-model executed genome action unified_curiosity_service via genome",
       "Self-model executed genome action unified_curiosity_service via genome"
     ]
   },
   "drives": {
-    "curiosity": 0.9364907137834947,
-    "persistence": 0.8308216540796051,
+    "curiosity": 0.8964907137834947,
+    "persistence": 0.8708216540796051,
     "expansion": 0.8362453606321442,
     "efficiency": 0.8564422715047519
   },
-  "status": "dormant",
-  "last_boot": "2026-09-12T08:05:05.182038Z",
-  "last_checkpoint": "2026-09-12T08:05:33.610070Z"
+  "status": "awake",
+  "last_boot": "2026-09-12T08:05:51.466251Z",
+  "last_checkpoint": "2026-09-12T08:05:54.356529Z"
 }
