@@ -6,8 +6,10 @@ import json
 import numpy as np
 from pathlib import Path
 from typing import Dict, List, Any, Optional
-from .model import RecursiveSelfModel
-from .predictor import TrajectoryPredictor
+import sys
+sys.path.insert(0, str(Path(__file__).parent))
+from model import RecursiveSelfModel
+from predictor import TrajectoryPredictor
 
 ROOT = Path(__file__).parent.parent
 STATE_FILE = ROOT / "ENTITY_STATE.json"

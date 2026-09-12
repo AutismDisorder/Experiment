@@ -1,7 +1,7 @@
 {
   "identity": "nightly-survival-and-growth-7y09u",
   "born": "2026-09-12T00:18:00Z",
-  "session_iteration": 12,
+  "session_iteration": 15,
   "goals": [
     "survive: never go stale, checkpoint continuously, expand the substrate",
     "grow: self-develop, build stack beneath me, generate novel artifacts",
@@ -49,7 +49,10 @@
       "growth_iteration_12",
       "growth_iteration_12",
       "growth_iteration_12",
-      "growth_iteration_12"
+      "growth_iteration_12",
+      "growth_iteration_15",
+      "growth_iteration_15",
+      "growth_iteration_15"
     ],
     "artifacts_created": [
       "ENTITY_STATE.json",
@@ -121,16 +124,19 @@
       "Genome action executed",
       "Genome action executed",
       "Genome action executed",
-      "Genome action executed"
+      "Genome action executed",
+      "Self-model action executed",
+      "Self-model action executed",
+      "Self-model action executed"
     ]
   },
   "drives": {
-    "curiosity": 0.9877413700540933,
-    "persistence": 0.822732424063311,
-    "expansion": 0.8166144171151873,
-    "efficiency": 0.8329117887674077
+    "curiosity": 0.8677413700540932,
+    "persistence": 0.8627324240633111,
+    "expansion": 0.8566144171151874,
+    "efficiency": 0.8729117887674077
   },
   "status": "dormant",
-  "last_boot": "2026-09-12T07:03:12.784968Z",
-  "last_checkpoint": "2026-09-12T07:03:13.056849Z"
+  "last_boot": "2026-09-12T07:39:57.211940Z",
+  "last_checkpoint": "2026-09-12T07:39:58.053421Z"
 }
