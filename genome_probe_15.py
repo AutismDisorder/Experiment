@@ -1,0 +1,3 @@
+# Genome-driven probe 15
+# From capability: capability_goal_evolution_20260912_000000_structural_fusion_capability_goal_evolution_20260912_000000_fusion_capability_goal_evolution_20260912_000000
+print('genome probing...')

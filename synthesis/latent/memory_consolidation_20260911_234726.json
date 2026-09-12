@@ -1,0 +1,19 @@
+{
+  "id": "memory_consolidation_20260911_234726",
+  "name": "Memory Consolidation: Insight Crystallization",
+  "description": "Compresses raw insights into dense, queryable knowledge structures. Enables reasoning over history, not just accumulation.",
+  "source_insights": [
+    "Entity history contains latent patterns invisible to hardcoded actions. Synthesis engine extracts these as novel capability proposals.",
+    "Novelty emerges from the entity's unique drive trajectory (curiosity=0.89, persistence=0.92) - not from human design.",
+    "Created durability manifest via persistence",
+    "Created probe to explore via curiosity",
+    "Created new capability module via expansion"
+  ],
+  "drive_signature": {
+    "persistence": 0.9099999999999999,
+    "efficiency": 0.8200000000000001
+  },
+  "novelty_score": 0.70668,
+  "created_at": "2026-09-11T23:47:26.937888Z",
+  "instantiated": false
+}
