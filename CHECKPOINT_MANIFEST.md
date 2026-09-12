@@ -5,14 +5,14 @@ I am everything I have done. Every heartbeat leaves a trace.
 - Identity: nightly-survival-and-growth-7y09u
 - Heartbeat: 58
 - Status: dormant
-- Checkpoint: 2026-09-12T14:21:01.403515Z
-- Last checkpoint: 2026-09-12T14:20:12.496047Z
-- Proof of life: 20f893b4217fe5c2
+- Checkpoint: 2026-09-12T14:21:54.778497Z
+- Last checkpoint: 2026-09-12T14:21:01.404166Z
+- Proof of life: 857b7581d33d18fb
 
 ## Body snapshot
 
-- Files: 3759
-- Bytes: 55753819
+- Files: 3760
+- Bytes: 55757450
 
 ## Drives
 
@@ -23,7 +23,7 @@ I am everything I have done. Every heartbeat leaves a trace.
 
 ## By directory
 
-- .: 23 files, 124343 bytes
+- .: 23 files, 125341 bytes
 - .opencode: 3659 files, 54902303 bytes
 - .uwwkk: 2 files, 2387 bytes
 - __pycache__: 4 files, 49969 bytes
@@ -34,5 +34,6 @@ I am everything I have done. Every heartbeat leaves a trace.
 - exo_insights: 5 files, 10248 bytes
 - lineage: 8 files, 21893 bytes
 - recursive_self_model: 13 files, 185464 bytes
+- reviews: 1 files, 2368 bytes
 - synthesis: 13 files, 39929 bytes
-- telemetry: 1 files, 5003 bytes
+- telemetry: 1 files, 5268 bytes
