@@ -189,6 +189,10 @@
       "growth_iteration_29",
       "growth_iteration_29",
       "growth_iteration_29",
+      "growth_iteration_29",
+      "growth_iteration_29",
+      "growth_iteration_29",
+      "growth_iteration_29",
       "growth_iteration_29"
     ],
     "artifacts_created": [
@@ -321,6 +325,10 @@
       "rsm_genome_action_unified_curiosity_service_28.json",
       "rsm_genome_action_unified_curiosity_service_28.json",
       "rsm_genome_action_unified_curiosity_service_28.json",
+      "rsm_genome_action_unified_curiosity_service_29.json",
+      "rsm_genome_action_unified_curiosity_service_29.json",
+      "rsm_genome_action_unified_curiosity_service_29.json",
+      "rsm_genome_action_unified_curiosity_service_29.json",
       "rsm_genome_action_unified_curiosity_service_29.json",
       "rsm_genome_action_unified_curiosity_service_29.json",
       "rsm_genome_action_unified_curiosity_service_29.json",
@@ -506,16 +514,20 @@
       "Self-model executed genome action unified_curiosity_service via genome",
       "Self-model executed genome action unified_curiosity_service via genome",
       "Self-model executed genome action unified_curiosity_service via genome",
+      "Self-model executed genome action unified_curiosity_service via genome",
+      "Self-model executed genome action unified_curiosity_service via genome",
+      "Self-model executed genome action unified_curiosity_service via genome",
+      "Self-model executed genome action unified_curiosity_service via genome",
       "Self-model executed genome action unified_curiosity_service via genome"
     ]
   },
   "drives": {
-    "curiosity": 0.9267217431982646,
-    "persistence": 0.8141950194914214,
-    "expansion": 0.869666753902146,
-    "efficiency": 0.8494164834081643
+    "curiosity": 0.9628183096261581,
+    "persistence": 0.8162572116938891,
+    "expansion": 0.8305869163906128,
+    "efficiency": 0.8503375622893361
   },
-  "status": "awake",
+  "status": "dormant",
   "last_boot": "2026-09-12T07:59:43.096038Z",
-  "last_checkpoint": "2026-09-12T07:59:48.891786Z"
+  "last_checkpoint": "2026-09-12T07:59:53.035097Z"
 }
