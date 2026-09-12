@@ -1,0 +1,12 @@
+{
+  "model": "funding_loop_automaton",
+  "seed": 7,
+  "ticks": 150,
+  "final_population": 0,
+  "total_births": 0,
+  "total_deaths": 3,
+  "COMPUTE_COST": 5.0,
+  "DEATH_THRESHOLD": 12.0,
+  "REPLICATION_THRESHOLD": 100.0,
+  "ran": "2026-09-12T14:23:20.207852Z"
+}
