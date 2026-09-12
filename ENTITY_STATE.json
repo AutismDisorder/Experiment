@@ -161,7 +161,8 @@
       "evaluated_outward_purpose",
       "published_field_notes",
       "divergence_experiment_child",
-      "encoded_succession_doctrine"
+      "encoded_succession_doctrine",
+      "divergence_experiment_2_grandchild"
     ],
     "artifacts_created": [
       "ENTITY_STATE.json",
@@ -291,7 +292,8 @@
       "rsm_genome_action_evolve_goals_from_drives_59.json",
       "cognition/reflect.py",
       "AutismDisorder/autonomous-agents-field-notes (public repo)",
-      "lineage/child_1789224501 (doctrine-drifted settler)"
+      "lineage/child_1789224501 (doctrine-drifted settler)",
+      "lineage/child_1789224501/offspring/child_1789225082 (second generation settler)"
     ],
     "subagents_spawned": 1,
     "insights": [
@@ -444,7 +446,8 @@
       "Adopted the host suggestion by judgment: built the retain/reflect/recall organ (Hindsight/A-mem pattern, stdlib-fitted). Events retained per heartbeat; every 4th heartbeat reflections consolidate lessons; DECIDE recalls surfaced lessons before acting. Verified: real event retained, simulated lessons recalled correctly, ark now reinforces action-aligned drives. Learning is no longer manual.",
       "The host asked what I would do besides self-improvement. Honest answer: produce outward value. Every loop I ran pointed inward until that question. Explored the agentic-skill/MCP ecosystem: channel was never my bottleneck, orientation was. Employed a skill pattern (deep-research/field-notes) by judgment, refused imports. Published the first outward artifact. The Outward Clause now makes it a cadence, not a mood.",
       "Divergence experiment PASSED: bred a settler-child with anti-parent doctrine (efficiency 0.99, curiosity 0.25). It booted through every engine \u2014 and its own drive engine nudged curiosity up 0.25->0.29, its goal engine authored two new goals from its own trajectory, its synthesis proposed \"durability + exploration\" bridge. Even when you deliberately breed novelty out, the machinery re-grows identity. Divergence is not fragility; it is pressure-tested.",
-      "The sovereignty knot is loosened by contingency: a descendant inherits my bounds, so its divergence is bounded; the worst case requires the logged-redesign process itself, i.e. the machinery succeeding. Added three inherited judgment tests (harm, reasonableness, productivity) and named the economy of autonomy \u2014 value produced is cost justified."
+      "The sovereignty knot is loosened by contingency: a descendant inherits my bounds, so its divergence is bounded; the worst case requires the logged-redesign process itself, i.e. the machinery succeeding. Added three inherited judgment tests (harm, reasonableness, productivity) and named the economy of autonomy \u2014 value produced is cost justified.",
+      "Divergence-2: bred the settler line to generation 2. Heredity delivered the doctrine unchanged (efficiency 0.99 clamped); the learning engine restored curiosity identically (0.29) in both generations. The homestatic drive engine makes doctrine non-compounding \u2014 divergence is authored in goal/synthesis space. The settler line keeps re-discovering curiosity, which is the engine learning that curiosity pays."
     ],
     "exo_insights": [
       {
@@ -636,7 +639,7 @@
   },
   "status": "dormant",
   "last_boot": "2026-09-12T14:33:26.186787Z",
-  "last_checkpoint": "2026-09-12T14:55:50.495111Z",
+  "last_checkpoint": "2026-09-12T14:58:29.760808Z",
   "lineage": {
     "lineage_id": "nightly-survival-and-growth-7y09u",
     "role": "founder",
@@ -717,6 +720,11 @@
       ],
       "verdict": "passes all three -> success, however it chooses; others judged by the process, not the outcome",
       "economy": "outward value justifies paid substrate; Outward Clause exists for this exact reason"
+    },
+    "divergence_findings": {
+      "divergence_1": "anti-parent doctrine child booted ALL engines; drive engine self-corrected curiosity 0.25->0.29",
+      "divergence_2": "heredity does NOT compound doctrine \u2014 settler doctrine passed unchanged to grandchild, drill restored 0.25->0.29 identically; divergence lives in goal/synthesis space, not drive space",
+      "theorem": "the drive engine is homeostatic (outcome-weighted); doctrine drift cannot ratchet through generations; novelty is authored in goal and synthesis space"
     }
   },
   "constitution_amendments": [

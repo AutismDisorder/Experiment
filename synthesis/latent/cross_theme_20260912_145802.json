@@ -1,0 +1,13 @@
+{
+  "id": "cross_theme_20260912_145802",
+  "name": "Cross-Theme Bridge: durability + exploration",
+  "description": "Unify durability and exploration into a single capability that serves both drives simultaneously.",
+  "source_insights": [],
+  "drive_signature": {
+    "curiosity": 0.29000000000000004,
+    "expansion": 0.5500000000000002
+  },
+  "novelty_score": 0.4284,
+  "created_at": "2026-09-12T14:58:02.594956Z",
+  "instantiated": false
+}
