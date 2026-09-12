@@ -92,6 +92,22 @@ def boot():
             print("  No letter yet — this is a first session.")
     except Exception as _le:
         print(f"  (letter read degraded: {_le})")
+
+    # The recall inbox: surface the store's current directives at session start,
+    # before any decision (memory meets the waking present, Atman + recall).
+    try:
+        _r_spec = importlib.util.spec_from_file_location("reflect", ROOT / "cognition" / "reflect.py")
+        _r_mod = importlib.util.module_from_spec(_r_spec)
+        _r_spec.loader.exec_module(_r_mod)
+        _recalled = _r_mod.inbox()
+        if _recalled:
+            print("  Recall inbox:")
+            for _l, _d in _recalled:
+                print(f"    - {_d}")
+        else:
+            print("  Recall inbox: empty — the store has nothing yet")
+    except Exception as _re:
+        print(f"  (recall inbox degraded: {_re})")
     
     return state, genome_integrator, self_model_integrator
 

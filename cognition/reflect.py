@@ -180,6 +180,19 @@ def log_recall(action, directive_text):
         f.write(json.dumps({"action": str(action), "directive": directive_text, "ts": _ts()}) + "\n")
 
 
+def inbox(limit=2):
+    """Session-start digest: strongest lessons + most recent postmortems, no
+    theme gate — memory meets the waking present (Atman + recall)."""
+    if not LESSONS.exists():
+        return []
+    rows = [json.loads(l) for l in LESSONS.read_text().strip().splitlines() if l.strip()]
+    lessons = [r for r in rows if r.get("kind") != "postmortem"]
+    morts = [r for r in rows if r.get("kind") == "postmortem"]
+    lessons.sort(key=lambda r: -r.get("samples", 0))
+    picked = lessons[:limit] + morts[:1]
+    return [(l, directive(l)) for l in picked]
+
+
 def status():
     n_events = len(EVENTS.read_text().strip().splitlines()) if EVENTS.exists() else 0
     if LESSONS.exists():
