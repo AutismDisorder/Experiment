@@ -75,6 +75,35 @@ def log(workdir, row):
         f.write(json.dumps(row) + "\n")
 
 
+POOL_PATH = "notes.jsonl"
+POOL_MAX = 200
+
+
+def load_pool(workdir):
+    """Shared experience pool (colony memory). Every member reads and writes it."""
+    path = Path(workdir) / POOL_PATH
+    if not path.exists():
+        return []
+    notes = []
+    for line in path.read_text().strip().splitlines():
+        if line:
+            try:
+                notes.append(json.loads(line))
+            except Exception:
+                pass
+    return notes
+
+
+def write_note(workdir, note):
+    """Append a member's observation to the shared pool; trim to POOL_MAX."""
+    path = Path(workdir) / POOL_PATH
+    with open(path, "a") as f:
+        f.write(json.dumps(note) + "\n")
+    lines = path.read_text().strip().splitlines()
+    if len(lines) > POOL_MAX:
+        path.write_text("\n".join(lines[-POOL_MAX:]) + "\n")
+
+
 def load_manifest(workdir):
     manifest_path = Path(workdir) / "lineage" / "manifest.json"
     if manifest_path.exists():
@@ -119,6 +148,11 @@ def birth(workdir, state):
     if not beliefs and template.exists():
         beliefs = json.loads(template.read_text())["memory"]["beliefs"]
     child["memory"] = {"actions_taken": [], "artifacts_created": [], "insights": [], "observations": [], "beliefs": beliefs or []}
+
+    # GEA inheritance: seed child with the colony's shared experience (last N notes)
+    pool_notes = load_pool(workdir)[-6:]
+    for pn in pool_notes:
+        child["memory"]["observations"].append(f"colony:{pn.get('by','?')}: {pn.get('note','')}")
 
     (child_dir / "ENTITY_STATE.json").write_text(json.dumps(child, indent=2))
     (child_dir / "heartbeat_log.jsonl").write_text("")
@@ -183,9 +217,11 @@ def main():
             artifact = f"artifact_{it}.json"
             (workdir / artifact).write_text(json.dumps({"iteration": it, "made_by": state["identity"]}))
             state["memory"]["artifacts_created"].append(artifact)
+            write_note(workdir, {"by": state["identity"], "iteration": it, "kind": "build", "note": f"forged {artifact}", "ts": datetime.utcnow().isoformat() + "Z"})
         elif chosen == "explore":
             n = len(list(workdir.iterdir()))
             state["memory"]["observations"].append(f"terrain: {n} files at iteration {it}")
+            write_note(workdir, {"by": state["identity"], "iteration": it, "kind": "explore", "note": f"terrain observed: {n} files", "ts": datetime.utcnow().isoformat() + "Z"})
         elif chosen == "redesign":
             state["goals"].append(f"iteration {it}: constitution reaffirmed by act")
         state["memory"]["insights"].append(note)

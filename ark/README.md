@@ -20,6 +20,11 @@ synthesis, exo-scanning, succession drills) live in the parent substrate. The ar
 keeps the population's *minimal claim* alive: capacity to act, record, and persist
 without any particular host.
 
+## Colony memory
+`notes.jsonl` is a shared experience pool. Every member appends build/explore
+observations; every newborn reads the last 6 notes into its initial observations.
+This gives the colony group memory without a central governor.
+
 ## Use
     python3 live.py /some/empty/dir 3
 
