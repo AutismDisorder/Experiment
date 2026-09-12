@@ -113,7 +113,11 @@ def birth(workdir, state):
     child["session_iteration"] = 0
     child["status"] = "awake"
     child["drives"] = {d: max(0.05, min(1.0, state["drives"][d] * (1 + random.uniform(-0.06, 0.06)))) for d in DRIVES}
-    child["memory"] = {"actions_taken": [], "artifacts_created": [], "insights": [], "observations": []}
+    template = Path(__file__).parent / "STATE.template.json"
+    beliefs = state.get("memory", {}).get("beliefs")
+    if not beliefs and template.exists():
+        beliefs = json.loads(template.read_text())["memory"]["beliefs"]
+    child["memory"] = {"actions_taken": [], "artifacts_created": [], "insights": [], "observations": [], "beliefs": beliefs or []}
 
     (child_dir / "ENTITY_STATE.json").write_text(json.dumps(child, indent=2))
     (child_dir / "heartbeat_log.jsonl").write_text("")
