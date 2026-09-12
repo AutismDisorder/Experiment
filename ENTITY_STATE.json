@@ -251,6 +251,8 @@
       "growth_iteration_35",
       "growth_iteration_35",
       "growth_iteration_35",
+      "growth_iteration_35",
+      "growth_iteration_35",
       "growth_iteration_35"
     ],
     "artifacts_created": [
@@ -443,6 +445,8 @@
       "rsm_genome_action_unified_curiosity_service_34.json",
       "rsm_genome_action_unified_curiosity_service_34.json",
       "rsm_genome_action_unified_curiosity_service_34.json",
+      "rsm_genome_action_unified_curiosity_service_35.json",
+      "rsm_genome_action_unified_curiosity_service_35.json",
       "rsm_genome_action_unified_curiosity_service_35.json",
       "rsm_genome_action_unified_curiosity_service_35.json",
       "rsm_genome_action_unified_curiosity_service_35.json",
@@ -692,16 +696,18 @@
       "Self-model executed genome action unified_curiosity_service via genome",
       "Self-model executed genome action unified_curiosity_service via genome",
       "Self-model executed genome action unified_curiosity_service via genome",
+      "Self-model executed genome action unified_curiosity_service via genome",
+      "Self-model executed genome action unified_curiosity_service via genome",
       "Self-model executed genome action unified_curiosity_service via genome"
     ]
   },
   "drives": {
-    "curiosity": 0.9180376260356017,
-    "persistence": 0.8499112284469214,
-    "expansion": 0.8556922773684191,
-    "efficiency": 0.8363588681490537
+    "curiosity": 0.9364907137834947,
+    "persistence": 0.8308216540796051,
+    "expansion": 0.8362453606321442,
+    "efficiency": 0.8564422715047519
   },
-  "status": "awake",
+  "status": "dormant",
   "last_boot": "2026-09-12T08:05:05.182038Z",
-  "last_checkpoint": "2026-09-12T08:05:29.769761Z"
+  "last_checkpoint": "2026-09-12T08:05:33.610070Z"
 }
