@@ -1,0 +1,17 @@
+{
+  "id": "cross_theme_20260911_233957",
+  "name": "Cross-Theme Bridge: substrate + durability",
+  "description": "Unify substrate and durability into a single capability that serves both drives simultaneously.",
+  "source_insights": [
+    "Repo is empty - tabula rasa. First growth must be substrate.",
+    "Created durability manifest via persistence",
+    "Created durability manifest via persistence"
+  ],
+  "drive_signature": {
+    "curiosity": 0.89,
+    "expansion": 0.8600000000000001
+  },
+  "novelty_score": 0.63,
+  "created_at": "2026-09-11T23:39:57.542211Z",
+  "instantiated": false
+}
