@@ -1,0 +1,20 @@
+{
+  "action": "drive_goal_modifier",
+  "action_signature": "evolve_drives_from_outcome",
+  "iteration": 51,
+  "source": "genome",
+  "full_action": {
+    "source": "genome",
+    "gene_id": "gene_capability_drive_evolution_20260911_233957_20260912_122245_e373f4",
+    "name": "capability_drive_evolution_20260911_233957",
+    "type": "drive_goal_modifier",
+    "action_signature": "evolve_drives_from_outcome",
+    "drive_affinity": {
+      "curiosity": 0.3,
+      "persistence": 0.2,
+      "expansion": 0.3,
+      "efficiency": 0.2
+    }
+  },
+  "timestamp": "1789215728.218429"
+}
