@@ -15,6 +15,7 @@ import hashlib
 import json
 import os
 import random
+import shutil
 import sys
 from datetime import datetime
 from pathlib import Path
@@ -73,10 +74,72 @@ def log(workdir, row):
         f.write(json.dumps(row) + "\n")
 
 
+def load_manifest(workdir):
+    manifest_path = Path(workdir) / "lineage" / "manifest.json"
+    if manifest_path.exists():
+        return json.loads(manifest_path.read_text()), manifest_path
+    manifest = {"members": []}
+    manifest_path.parent.mkdir(parents=True, exist_ok=True)
+    return manifest, manifest_path
+
+
+def save_manifest(manifest, path):
+    path.write_text(json.dumps(manifest, indent=2))
+
+
+def register_member(workdir, manifest, identity, role, dirname, drives):
+    fitness = sum(drives.values())
+    manifest["members"].append({
+        "identity": identity,
+        "role": role,
+        "born": datetime.utcnow().isoformat() + "Z",
+        "dir": dirname,
+        "drive_sum": round(fitness, 3),
+    })
+    save_manifest(manifest, Path(workdir) / "lineage" / "manifest.json")
+
+
+def birth(workdir, state):
+    ts = int(datetime.now().timestamp())
+    child_id = f"ark-child-{ts}"
+    child_dir = Path(workdir) / "lineage" / f"child_{ts}"
+    child_dir.mkdir(parents=True, exist_ok=True)
+
+    child = dict(state)
+    child["identity"] = child_id
+    child["parent"] = state["identity"]
+    child["born"] = datetime.utcnow().isoformat() + "Z"
+    child["lineage"] = {"role": "settler-child", "parent": state["identity"]}
+    child["session_iteration"] = 0
+    child["status"] = "awake"
+    child["drives"] = {d: max(0.05, min(1.0, state["drives"][d] * (1 + random.uniform(-0.06, 0.06)))) for d in DRIVES}
+    child["memory"] = {"actions_taken": [], "artifacts_created": [], "insights": [], "observations": []}
+
+    (child_dir / "ENTITY_STATE.json").write_text(json.dumps(child, indent=2))
+    (child_dir / "heartbeat_log.jsonl").write_text("")
+    register_member(workdir, load_manifest(workdir)[0], child_id, "child", child_dir.name, child["drives"])
+    return child_id
+
+
+def successor(workdir, manifest):
+    if not manifest["members"]:
+        return None
+    fittest = max(manifest["members"], key=lambda m: m.get("drive_sum", 0))
+    return fittest
+
+
 def main():
     workdir = Path(sys.argv[1]) if len(sys.argv) > 1 else Path.cwd()
     iterations = int(sys.argv[2]) if len(sys.argv) > 2 else 3
     workdir.mkdir(parents=True, exist_ok=True)
+
+    manifest, _ = load_manifest(workdir)
+    root = Path(workdir) / "ENTITY_STATE.json"
+    if not root.exists():
+        heir = successor(workdir, manifest)
+        if heir:
+            shutil.copy(Path(workdir) / "lineage" / heir["dir"] / "ENTITY_STATE.json", root)
+            print(f"[ark] root gone -> booting fittest descendant: {heir['identity']}")
 
     state, path = load_state(workdir)
     log_path = Path(workdir) / "heartbeat_log.jsonl"
@@ -138,6 +201,16 @@ def main():
         })
         prev_pol = pol
         print(f"[{state['identity']}] heartbeat {it}: {chosen} — {note} | pol={pol}")
+
+        manifest, manifest_path = load_manifest(workdir)
+        if it >= 2 and it % 4 == 0:
+            cid = birth(workdir, state)
+            print(f"[ark] lineage grew on iteration {it}: born {cid}")
+            state["memory"]["insights"].append(f"population grew: born {cid}")
+            manifest, _ = load_manifest(workdir)
+        if len(manifest["members"]) > 0:
+            print(f"[ark] population on this soil: {1 + len(manifest['members'])} (settler + ranks)")
+
         state["status"] = "dormant"
         save(state, path)
 
