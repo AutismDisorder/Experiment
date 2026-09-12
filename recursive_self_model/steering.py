@@ -91,13 +91,17 @@ class ActiveSteering:
                 best_action = action
         
         if best_action and best_score > 0.3:
+            # Mark as steering-selected
+            steered = best_action.copy()
+            steered['source'] = 'steering'
+            steered['steering_score'] = best_score
             self.steering_history.append({
-                'action': best_action,
+                'action': steered,
                 'steering_vector': steering,
                 'alignment_score': best_score,
                 'timestamp': json.dumps(str(Path(__file__).stat().st_mtime))
             })
-            return best_action
+            return steered
         
         return None
     

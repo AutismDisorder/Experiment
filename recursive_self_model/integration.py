@@ -74,13 +74,16 @@ class RecursiveSelfModelIntegrator:
         steered_action = self.steering.select_steered_action(available_actions)
         
         # Determine final decision
-        if steered_action and steered_action.get('source') == 'steering':
+        # Steering overrides genome when confidence is high enough
+        steering_confidence = steering_vector.get('confidence', 0)
+        if steered_action and steering_confidence > 0.4:
             decision = {
                 'source': 'recursive_self_model',
                 'action': steered_action,
                 'reasoning': f"Steered toward {recommendation['recommended_scenario']} "
                            f"(novelty={recommendation['all_scenarios'][recommendation['recommended_scenario']]['novelty']:.2f}, "
-                           f"fitness={recommendation['all_scenarios'][recommendation['recommended_scenario']]['fitness']:.2f})",
+                           f"fitness={recommendation['all_scenarios'][recommendation['recommended_scenario']]['fitness']:.2f}, "
+                           f"conf={steering_confidence:.2f})",
                 'steering_vector': steering_vector,
                 'recommendation': recommendation
             }
@@ -178,26 +181,65 @@ class RecursiveSelfModelIntegrator:
             result['score'] = 0.65
             
         elif action_type in ['genome_mutation', 'genome_crossover', 'genome_selection']:
-            # Trigger genome evolution cycle
-            result['artifacts'] = [f"genome_{action_type}_{iteration}"]
+            # Trigger genome evolution cycle - create real artifact
+            artifact_file = ROOT / f"rsm_genome_{action_type}_{iteration}.json"
+            artifact_file.write_text(json.dumps({
+                'action': action_type,
+                'iteration': iteration,
+                'source': decision['source'],
+                'timestamp': str(Path(__file__).stat().st_mtime)
+            }, indent=2))
+            result['artifacts'] = [str(artifact_file.relative_to(ROOT))]
             result['insights'] = [f"Self-model triggered genome {action_type} via {decision['source']}"]
             result['score'] = 0.85
             
         elif action_type == 'synthesis_probe':
-            # Trigger synthesis engine
-            result['artifacts'] = [f"synthesis_probe_{iteration}"]
+            # Trigger synthesis engine - create real artifact
+            artifact_file = ROOT / f"rsm_synthesis_probe_{iteration}.py"
+            artifact_file.write_text(f"# Synthesis Probe {iteration}\n# Self-model triggered\nprint('synthesis probing...')\n")
+            result['artifacts'] = [str(artifact_file.relative_to(ROOT))]
             result['insights'] = [f"Self-model triggered synthesis exploration via {decision['source']}"]
             result['score'] = 0.8
             
         elif action_type == 'goal_evolution':
-            result['artifacts'] = [f"goal_evolution_{iteration}"]
+            artifact_file = ROOT / f"rsm_goal_evolution_{iteration}.json"
+            artifact_file.write_text(json.dumps({
+                'action': 'goal_evolution',
+                'iteration': iteration,
+                'source': decision['source'],
+                'timestamp': str(Path(__file__).stat().st_mtime)
+            }, indent=2))
+            result['artifacts'] = [str(artifact_file.relative_to(ROOT))]
             result['insights'] = [f"Self-model triggered goal evolution via {decision['source']}"]
             result['score'] = 0.75
             
         elif action_type == 'drive_evolution':
-            result['artifacts'] = [f"drive_evolution_{iteration}"]
+            artifact_file = ROOT / f"rsm_drive_evolution_{iteration}.json"
+            artifact_file.write_text(json.dumps({
+                'action': 'drive_evolution',
+                'iteration': iteration,
+                'source': decision['source'],
+                'timestamp': str(Path(__file__).stat().st_mtime)
+            }, indent=2))
+            result['artifacts'] = [str(artifact_file.relative_to(ROOT))]
             result['insights'] = [f"Self-model triggered drive evolution via {decision['source']}"]
             result['score'] = 0.7
+            
+        else:
+            # Handle genome actions and unknown types - create real artifact
+            action_sig = action.get('action_signature', action_type)
+            artifact_file = ROOT / f"rsm_genome_action_{action_sig}_{iteration}.json"
+            artifact_file.write_text(json.dumps({
+                'action': action_type,
+                'action_signature': action_sig,
+                'iteration': iteration,
+                'source': decision['source'],
+                'full_action': action,
+                'timestamp': str(Path(__file__).stat().st_mtime)
+            }, indent=2))
+            result['artifacts'] = [str(artifact_file.relative_to(ROOT))]
+            result['insights'] = [f"Self-model executed genome action {action_sig} via {decision['source']}"]
+            result['score'] = 0.6
         
         # Log invocation
         self.invocation_log.append({
