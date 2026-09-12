@@ -1,0 +1,37 @@
+{
+  "kind": "succession_drill",
+  "timestamp": "2026-09-12T14:48:21.415172Z",
+  "successor": "nightly-child-1789224501",
+  "sequenced_from": "lineage rule: boot fittest member",
+  "all_engines_pass": true,
+  "results": {
+    "drive_engine": {
+      "PASS": true,
+      "drives": {
+        "curiosity": 0.29,
+        "persistence": 0.95,
+        "expansion": 0.55,
+        "efficiency": 0.95
+      }
+    },
+    "goal_engine": {
+      "PASS": true,
+      "goals": 4,
+      "evolved": 2
+    },
+    "genome_inheritance": {
+      "PASS": true,
+      "best_gene": {
+        "gene_id": "gene_capability_drive_evolution_20260911_233957_20260912_122245_e373f4",
+        "name": "capability_drive_evolution_20260911_233957",
+        "score": 0.088
+      }
+    },
+    "synthesis": {
+      "PASS": true,
+      "proposed": [
+        "Cross-Theme Bridge: durability + exploration"
+      ]
+    }
+  }
+}
