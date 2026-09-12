@@ -1,0 +1,43 @@
+{
+  "ts": "2026-09-12T17:11:16.034785Z",
+  "organs_tested": 6,
+  "passed": 6,
+  "failed": 0,
+  "results": [
+    {
+      "organ": "reflect.status",
+      "status": "PASS",
+      "detail": {
+        "events": 17,
+        "lessons": 2,
+        "postmortems": 1,
+        "recalls": 1
+      }
+    },
+    {
+      "organ": "reflect.reflect",
+      "status": "PASS",
+      "detail": "2 lessons consolidated"
+    },
+    {
+      "organ": "reflect.recall_directives",
+      "status": "PASS",
+      "detail": "1 directive(s), first: applies here: an earlier 'research_handr..."
+    },
+    {
+      "organ": "reflect.inbox",
+      "status": "PASS",
+      "detail": "3 inbox item(s)"
+    },
+    {
+      "organ": "goals_archive.novelty",
+      "status": "PASS",
+      "detail": "novel=1.00 clone=0.00"
+    },
+    {
+      "organ": "ark.boot",
+      "status": "PASS",
+      "detail": "booted 2 heartbeats on fresh soil, pool written"
+    }
+  ]
+}

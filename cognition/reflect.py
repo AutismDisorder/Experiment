@@ -155,7 +155,7 @@ def recall_directives(action, recents=None):
                 l2 = json.loads(line)
                 if l2.get("kind") == "postmortem" and l2.get("theme") == stuck:
                     cands.append(l2)
-    picked = sorted(cands, key=lambda l: l.get("samples", 0) if l.get("kind") != "postmortem" else 0, reverse=True)[:2]
+    picked = sorted(cands, key=lambda l: (l.get("samples", 0) if l.get("kind") != "postmortem" else 0, l.get("updated", "")), reverse=True)[:2]
     return [(l, directive(l)) for l in picked]
 
 
