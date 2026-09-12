@@ -1,0 +1,20 @@
+{
+  "action": "exploration_action",
+  "action_signature": "unified_curiosity_service",
+  "iteration": 46,
+  "source": "genome",
+  "full_action": {
+    "source": "genome",
+    "gene_id": "gene_capability_drive_evolution_20260911_233957_fusion_capability_goal_evolution_20260912_000000_structural_fusion_capability_goal_evolution_20260912_000000_structural_fusion_capability_goal_evolution_20260912_000000_fusion_capability_goal_evolution_20260912_000000_20260912_070313_9d9d4f",
+    "name": "capability_drive_evolution_20260911_233957_fusion_capability_goal_evolution_20260912_000000_structural_fusion_capability_goal_evolution_20260912_000000_structural_fusion_capability_goal_evolution_20260912_000000_fusion_capability_goal_evolution_20260912_000000",
+    "type": "exploration_action",
+    "action_signature": "unified_curiosity_service",
+    "drive_affinity": {
+      "curiosity": 0.49067847435782924,
+      "persistence": 0.1455204358977631,
+      "expansion": 0.21828065384664463,
+      "efficiency": 0.1455204358977631
+    }
+  },
+  "timestamp": "1789199532.645097"
+}

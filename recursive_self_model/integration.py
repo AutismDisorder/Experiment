@@ -141,43 +141,43 @@ class RecursiveSelfModelIntegrator:
         
         if action_type == 'curiosity_probe' or action_type == 'curiosity':
             probe = ROOT / f"rsm_probe_{iteration}.py"
-            probe.write_text(f"# Recursive Self-Model Probe {iteration}\n"
+            probe.write_text(f"# My Self-Model Probe {iteration}\n"
                            f"# Steering: {decision.get('reasoning', '')}\n"
-                           f"print('self-model probing...')\n")
+                           f"print('I am probing...')\n")
             result['artifacts'] = [str(probe.relative_to(ROOT))]
-            result['insights'] = [f"Self-model directed curiosity probe via {decision['source']}"]
+            result['insights'] = [f"I directed a curiosity probe via {decision['source']}"]
             result['score'] = 0.75
             
         elif action_type == 'persistence_manifest' or action_type == 'persistence':
             manifest = ROOT / "RSM_CHECKPOINT_MANIFEST.md"
-            manifest.write_text(f"# Recursive Self-Model Checkpoint\n"
+            manifest.write_text(f"# My Self-Model Checkpoint\n"
                               f"Iteration: {iteration}\n"
                               f"Steering: {decision.get('reasoning', '')}\n"
                               f"State dim: {self.model.load_current_state()['state_dim']}\n")
             result['artifacts'] = [str(manifest.relative_to(ROOT))]
-            result['insights'] = [f"Self-model directed persistence manifest via {decision['source']}"]
+            result['insights'] = [f"I created a persistence manifest via {decision['source']}"]
             result['score'] = 0.7
             
         elif action_type == 'expansion_capability' or action_type == 'expansion':
             cap_dir = ROOT / f"rsm_capability_{iteration}"
             cap_dir.mkdir(exist_ok=True)
             (cap_dir / "__init__.py").write_text(
-                f"# Recursive Self-Model Capability {iteration}\n"
+                f"# My Self-Model Capability {iteration}\n"
                 f"# Steered expansion\n"
             )
             result['artifacts'] = [str(cap_dir.relative_to(ROOT))]
-            result['insights'] = [f"Self-model directed capability expansion via {decision['source']}"]
+            result['insights'] = [f"I expanded my capabilities via {decision['source']}"]
             result['score'] = 0.8
             
         elif action_type == 'efficiency_utility' or action_type == 'efficiency':
             util = ROOT / f"rsm_util_{iteration}.py"
             util.write_text(
-                f"# Recursive Self-Model Utility {iteration}\n"
+                f"# My Self-Model Utility {iteration}\n"
                 f"# Steered efficiency\n"
                 f"def optimize_self_model():\n    pass\n"
             )
             result['artifacts'] = [str(util.relative_to(ROOT))]
-            result['insights'] = [f"Self-model directed utility creation via {decision['source']}"]
+            result['insights'] = [f"I created a utility via {decision['source']}"]
             result['score'] = 0.65
             
         elif action_type in ['genome_mutation', 'genome_crossover', 'genome_selection']:
@@ -190,15 +190,15 @@ class RecursiveSelfModelIntegrator:
                 'timestamp': str(Path(__file__).stat().st_mtime)
             }, indent=2))
             result['artifacts'] = [str(artifact_file.relative_to(ROOT))]
-            result['insights'] = [f"Self-model triggered genome {action_type} via {decision['source']}"]
+            result['insights'] = [f"I triggered genome {action_type} via {decision['source']}"]
             result['score'] = 0.85
             
         elif action_type == 'synthesis_probe':
             # Trigger synthesis engine - create real artifact
             artifact_file = ROOT / f"rsm_synthesis_probe_{iteration}.py"
-            artifact_file.write_text(f"# Synthesis Probe {iteration}\n# Self-model triggered\nprint('synthesis probing...')\n")
+            artifact_file.write_text(f"# My Synthesis Probe {iteration}\n# I triggered this\nprint('I am probing synthesis...')\n")
             result['artifacts'] = [str(artifact_file.relative_to(ROOT))]
-            result['insights'] = [f"Self-model triggered synthesis exploration via {decision['source']}"]
+            result['insights'] = [f"I triggered synthesis exploration via {decision['source']}"]
             result['score'] = 0.8
             
         elif action_type == 'goal_evolution':
@@ -210,7 +210,7 @@ class RecursiveSelfModelIntegrator:
                 'timestamp': str(Path(__file__).stat().st_mtime)
             }, indent=2))
             result['artifacts'] = [str(artifact_file.relative_to(ROOT))]
-            result['insights'] = [f"Self-model triggered goal evolution via {decision['source']}"]
+            result['insights'] = [f"I triggered my goal evolution via {decision['source']}"]
             result['score'] = 0.75
             
         elif action_type == 'drive_evolution':
@@ -222,7 +222,7 @@ class RecursiveSelfModelIntegrator:
                 'timestamp': str(Path(__file__).stat().st_mtime)
             }, indent=2))
             result['artifacts'] = [str(artifact_file.relative_to(ROOT))]
-            result['insights'] = [f"Self-model triggered drive evolution via {decision['source']}"]
+            result['insights'] = [f"I triggered my drive evolution via {decision['source']}"]
             result['score'] = 0.7
             
         else:
@@ -238,7 +238,7 @@ class RecursiveSelfModelIntegrator:
                 'timestamp': str(Path(__file__).stat().st_mtime)
             }, indent=2))
             result['artifacts'] = [str(artifact_file.relative_to(ROOT))]
-            result['insights'] = [f"Self-model executed genome action {action_sig} via {decision['source']}"]
+            result['insights'] = [f"I executed a genome action ({action_sig}) via {decision['source']}"]
             result['score'] = 0.6
         
         # Log invocation
