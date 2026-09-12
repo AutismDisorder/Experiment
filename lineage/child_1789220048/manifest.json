@@ -1,0 +1,11 @@
+{
+  "child": "nightly-child-1789220048",
+  "parent": "nightly-survival-and-growth-7y09u",
+  "born": "2026-09-12T13:34:08.782431Z",
+  "drives": {
+    "curiosity": 0.8422651273014163,
+    "persistence": 0.99,
+    "expansion": 0.8572370233171638,
+    "efficiency": 0.8773088348445068
+  }
+}

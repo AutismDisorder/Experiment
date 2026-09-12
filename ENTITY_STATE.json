@@ -506,7 +506,7 @@
   },
   "status": "dormant",
   "last_boot": "2026-09-12T13:33:07.931653Z",
-  "last_checkpoint": "2026-09-12T13:33:40.034517Z",
+  "last_checkpoint": "2026-09-12T13:34:11.667842Z",
   "lineage": {
     "lineage_id": "nightly-survival-and-growth-7y09u",
     "role": "founder",
