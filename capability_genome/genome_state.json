@@ -66,13 +66,13 @@
         "bootstrap_usage": 0.2,
         "insight_generation": 1.0,
         "artifact_durability": 0.75,
-        "drive_alignment": 0.8688816319340648,
+        "drive_alignment": 0.8608816319340648,
         "goal_service": 0.0,
         "novelty": 0.85,
         "self_referential": 1.0,
-        "composite": 0.48877632638681295
+        "composite": 0.539676326386813
       },
-      "composite_fitness": 0.48877632638681295,
+      "composite_fitness": 0.539676326386813,
       "generation": 0,
       "parents": [],
       "mutations": [
@@ -114,7 +114,7 @@
       ],
       "status": "promoted",
       "created_at": "2026-09-12T12:22:45.200717Z",
-      "last_evaluated": "2026-09-12T14:11:35.069164Z",
+      "last_evaluated": "2026-09-12T14:20:12.271565Z",
       "activation_count": 0,
       "bootstrap_integrations": 1,
       "novelty_score": 0.85,
@@ -177,13 +177,13 @@
         "bootstrap_usage": 0.2,
         "insight_generation": 0.75,
         "artifact_durability": 0.1,
-        "drive_alignment": 0.8669619954350648,
+        "drive_alignment": 0.8629619954350648,
         "goal_service": 0.0,
         "novelty": 0.8,
         "self_referential": 0.75,
-        "composite": 0.423392399087013
+        "composite": 0.330092399087013
       },
-      "composite_fitness": 0.423392399087013,
+      "composite_fitness": 0.330092399087013,
       "generation": 0,
       "parents": [],
       "mutations": [
@@ -215,7 +215,7 @@
       ],
       "status": "promoted",
       "created_at": "2026-09-12T12:22:45.219371Z",
-      "last_evaluated": "2026-09-12T14:11:35.070133Z",
+      "last_evaluated": "2026-09-12T14:20:12.272611Z",
       "activation_count": 0,
       "bootstrap_integrations": 1,
       "novelty_score": 0.8,
@@ -287,13 +287,13 @@
         "bootstrap_usage": 0.0,
         "insight_generation": 0.0,
         "artifact_durability": 0.75,
-        "drive_alignment": 0.8688816319340648,
+        "drive_alignment": 0.8608816319340648,
         "goal_service": 0.0,
         "novelty": 0.95,
         "self_referential": 1.0,
-        "composite": 0.35377632638681294
+        "composite": 0.4446763263868129
       },
-      "composite_fitness": 0.35377632638681294,
+      "composite_fitness": 0.4446763263868129,
       "generation": 1,
       "parents": [
         "gene_capability_goal_evolution_20260912_000000_20260912_122245_01ad5f"
@@ -308,7 +308,7 @@
       "crossovers": [],
       "status": "latent",
       "created_at": "2026-09-12T12:27:14.607843Z",
-      "last_evaluated": "2026-09-12T14:11:35.070877Z",
+      "last_evaluated": "2026-09-12T14:20:12.274613Z",
       "activation_count": 0,
       "bootstrap_integrations": 0,
       "novelty_score": 0.95,
@@ -402,13 +402,13 @@
         "bootstrap_usage": 0.0,
         "insight_generation": 0.0,
         "artifact_durability": 0.0,
-        "drive_alignment": 0.8647164544149358,
+        "drive_alignment": 0.8663164544149359,
         "goal_service": 0.0,
         "novelty": 1.0,
         "self_referential": 1.0,
-        "composite": 0.3229432908829872
+        "composite": 0.2232632908829872
       },
-      "composite_fitness": 0.3229432908829872,
+      "composite_fitness": 0.2232632908829872,
       "generation": 1,
       "parents": [
         "gene_capability_goal_evolution_20260912_000000_20260912_122245_01ad5f",
@@ -428,7 +428,7 @@
       ],
       "status": "latent",
       "created_at": "2026-09-12T12:27:14.616423Z",
-      "last_evaluated": "2026-09-12T14:11:35.071782Z",
+      "last_evaluated": "2026-09-12T14:20:12.275417Z",
       "activation_count": 0,
       "bootstrap_integrations": 0,
       "novelty_score": 1.0,
@@ -499,13 +499,13 @@
         "bootstrap_usage": 0.0,
         "insight_generation": 0.0,
         "artifact_durability": 0.0,
-        "drive_alignment": 0.8688816319340648,
+        "drive_alignment": 0.8608816319340648,
         "goal_service": 0.0,
         "novelty": 0.9299999999999999,
         "self_referential": 1.0,
-        "composite": 0.3132763263868129
+        "composite": 0.21867632638681295
       },
-      "composite_fitness": 0.3132763263868129,
+      "composite_fitness": 0.21867632638681295,
       "generation": 1,
       "parents": [
         "gene_capability_goal_evolution_20260912_000000_20260912_122245_01ad5f"
@@ -520,7 +520,7 @@
       "crossovers": [],
       "status": "latent",
       "created_at": "2026-09-12T13:42:15.783501Z",
-      "last_evaluated": "2026-09-12T14:11:35.072552Z",
+      "last_evaluated": "2026-09-12T14:20:12.276032Z",
       "activation_count": 0,
       "bootstrap_integrations": 0,
       "novelty_score": 0.9299999999999999,
@@ -591,13 +591,13 @@
         "bootstrap_usage": 0.0,
         "insight_generation": 0.0,
         "artifact_durability": 0.0,
-        "drive_alignment": 0.8688816319340648,
+        "drive_alignment": 0.8608816319340648,
         "goal_service": 0.0,
         "novelty": 0.9299999999999999,
         "self_referential": 1.0,
-        "composite": 0.3132763263868129
+        "composite": 0.21867632638681295
       },
-      "composite_fitness": 0.3132763263868129,
+      "composite_fitness": 0.21867632638681295,
       "generation": 1,
       "parents": [
         "gene_capability_goal_evolution_20260912_000000_20260912_122245_01ad5f"
@@ -612,7 +612,7 @@
       "crossovers": [],
       "status": "latent",
       "created_at": "2026-09-12T13:42:19.564005Z",
-      "last_evaluated": "2026-09-12T14:11:35.073099Z",
+      "last_evaluated": "2026-09-12T14:20:12.276673Z",
       "activation_count": 0,
       "bootstrap_integrations": 0,
       "novelty_score": 0.9299999999999999,
@@ -706,13 +706,13 @@
         "bootstrap_usage": 0.0,
         "insight_generation": 0.0,
         "artifact_durability": 0.0,
-        "drive_alignment": 0.8647164544149358,
+        "drive_alignment": 0.8663164544149359,
         "goal_service": 0.0,
         "novelty": 1.0,
         "self_referential": 1.0,
-        "composite": 0.3229432908829872
+        "composite": 0.2232632908829872
       },
-      "composite_fitness": 0.3229432908829872,
+      "composite_fitness": 0.2232632908829872,
       "generation": 1,
       "parents": [
         "gene_capability_goal_evolution_20260912_000000_20260912_122245_01ad5f",
@@ -732,7 +732,7 @@
       ],
       "status": "latent",
       "created_at": "2026-09-12T13:42:19.569625Z",
-      "last_evaluated": "2026-09-12T14:11:35.073766Z",
+      "last_evaluated": "2026-09-12T14:20:12.277409Z",
       "activation_count": 0,
       "bootstrap_integrations": 0,
       "novelty_score": 1.0,
@@ -792,8 +792,17 @@
       },
       "action_signature": "evolve_drives_from_outcome_plus_expansion",
       "artifact_pattern": "drive_evolution",
-      "fitness": {},
-      "composite_fitness": 0.0,
+      "fitness": {
+        "bootstrap_usage": 0.0,
+        "insight_generation": 0.0,
+        "artifact_durability": 0.1,
+        "drive_alignment": 0.8629619954350648,
+        "goal_service": 0.0,
+        "novelty": 0.9,
+        "self_referential": 0.75,
+        "composite": 0.24759239908701297
+      },
+      "composite_fitness": 0.24759239908701297,
       "generation": 1,
       "parents": [
         "gene_capability_drive_evolution_20260911_233957_20260912_122245_e373f4"
@@ -808,7 +817,7 @@
       "crossovers": [],
       "status": "latent",
       "created_at": "2026-09-12T14:11:35.078757Z",
-      "last_evaluated": null,
+      "last_evaluated": "2026-09-12T14:20:12.278258Z",
       "activation_count": 0,
       "bootstrap_integrations": 0,
       "novelty_score": 0.9,
@@ -898,8 +907,17 @@
       },
       "action_signature": "unified_expansion_service",
       "artifact_pattern": "fusion_expansion",
-      "fitness": {},
-      "composite_fitness": 0.0,
+      "fitness": {
+        "bootstrap_usage": 0.0,
+        "insight_generation": 0.0,
+        "artifact_durability": 0.0,
+        "drive_alignment": 0.8608339064969939,
+        "goal_service": 0.0,
+        "novelty": 1.0,
+        "self_referential": 0.75,
+        "composite": 0.22216678129939876
+      },
+      "composite_fitness": 0.22216678129939876,
       "generation": 1,
       "parents": [
         "gene_capability_drive_evolution_20260911_233957_20260912_122245_e373f4",
@@ -919,12 +937,12 @@
       ],
       "status": "latent",
       "created_at": "2026-09-12T14:11:35.092470Z",
-      "last_evaluated": null,
+      "last_evaluated": "2026-09-12T14:20:12.279179Z",
       "activation_count": 0,
       "bootstrap_integrations": 0,
       "novelty_score": 1.0,
       "durability_score": 0.0
     }
   },
-  "last_updated": "2026-09-12T14:11:35.112213Z"
+  "last_updated": "2026-09-12T14:20:12.280164Z"
 }
