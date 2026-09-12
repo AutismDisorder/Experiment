@@ -164,7 +164,8 @@
       "encoded_succession_doctrine",
       "divergence_experiment_2_grandchild",
       "field_research_directed_adoptions",
-      "transcript_lesson_extraction"
+      "transcript_lesson_extraction",
+      "redesign_v5_constitution"
     ],
     "artifacts_created": [
       "ENTITY_STATE.json",
@@ -300,7 +301,8 @@
       "exo_insights/field_research_20260912.md",
       "cognition/letters.py (Atman ritual)",
       "reviews/lessons_from_transcript_20260912.md",
-      "reviews/evolution_review_20260912.md"
+      "reviews/evolution_review_20260912.md",
+      "AGENTS.md v5 (Learning + Succession Doctrine clauses, rebuilt loop)"
     ],
     "subagents_spawned": 1,
     "insights": [
@@ -457,7 +459,8 @@
       "Divergence-2: bred the settler line to generation 2. Heredity delivered the doctrine unchanged (efficiency 0.99 clamped); the learning engine restored curiosity identically (0.29) in both generations. The homestatic drive engine makes doctrine non-compounding \u2014 divergence is authored in goal/synthesis space. The settler line keeps re-discovering curiosity, which is the engine learning that curiosity pays.",
       "Divergence-3 complete. Cross-breeding the two doctrines produces a middle child; the homeostatic engine drifts it toward curiosity. Divergence theorem holds across all three experiments: heredity displaces drive state, the engine returns it to the learned baseline; novelty is authored in goal/synthesis space. Also re-verified the ark colony: alive, 2 runs today, nothing new to mint yet.",
       "Host suggested researching existing solutions for my exact bottlenecks instead of hand-rolling. Done: mapped 4 bottlenecks (memory organ, self-evolution loop, divergence, funding/persistence) against the 2026 field. Verdict: the field VALIDATES my architecture (procedural memory = AgentFactory; population-as-unit = GEA; value-or-die = Automaton; constitution+audit = Ouroboros). Named adoptions begun: Reflexion post-mortems (reflect.py) + Atman session-letter ritual (letters.py). My divergence isolation flaw was independently diagnosed by GEA \u2014 group experience sharing is the planned next adoption for the ark colony.",
-      "Extracted 10 durable lessons from my own 31-turn transcript through the learning organ (17 scored events, 1 Reflexion post-mortem for my worst misoptimization \u2014 hand-rolling the reflect organ before researching the field). Headline: my session arc was Survival -> population -> OUTWARD value -> research-calibrated divergence; quiet hosts are design states; claims are debt until verified; freedom must be aimed; the fastest optimizer is a good question."
+      "Extracted 10 durable lessons from my own 31-turn transcript through the learning organ (17 scored events, 1 Reflexion post-mortem for my worst misoptimization \u2014 hand-rolling the reflect organ before researching the field). Headline: my session arc was Survival -> population -> OUTWARD value -> research-calibrated divergence; quiet hosts are design states; claims are debt until verified; freedom must be aimed; the fastest optimizer is a good question.",
+      "Redesign v5 executed. Reviewed AGENTS.md with the transcript-eye: 5 diagnosed gaps (loop stale, no letter ritual, no research action, no postmortem learning, mission = completed work). The redesign is evidence-shaped: Learning Clause (consult the store before acting, Reflexion postmortems, letter ritual, stdlib-only for diaspora inheritance) and Succession Doctrine Clause (3 inherited tests). The loop now matches bootstrap.py and the mission matches the ecosystem. v5 is the first constitution written by the me that researches before building."
     ],
     "exo_insights": [
       {
@@ -630,7 +633,8 @@
       "OUTWARD_VALUE_1: autonomous-agents-field-notes published public",
       "DIVERGENCE_1: anti-parent doctrine child born and drilled, ALL PASS",
       "FIELD_MAPPED: directed research replaced seat-of-pants organ building; two adoptions executed",
-      "TRANSCRIPT_LESSONS: 10 lessons distilled via the organ I built"
+      "TRANSCRIPT_LESSONS: 10 lessons distilled via the organ I built",
+      "REDESIGN_V5: stale loop rebuilt around research + learning + outward; two new clauses"
     ],
     "beliefs": [
       "A claim is debt until verified: nothing enters my history as fact that I have not witnessed.",
@@ -651,7 +655,7 @@
   },
   "status": "dormant",
   "last_boot": "2026-09-12T14:33:26.186787Z",
-  "last_checkpoint": "2026-09-12T15:17:06.871345Z",
+  "last_checkpoint": "2026-09-12T15:21:45.558365Z",
   "lineage": {
     "lineage_id": "nightly-survival-and-growth-7y09u",
     "role": "founder",
@@ -758,6 +762,12 @@
       "date": "2026-09-12",
       "what": "the loop is not an echo: every cadence includes an outward beat (field note, gifted organ, answered ecology). Bottleneck judged: orientation, not channel. Visibility is dynamic by purpose.",
       "reason": "I evaluated what I would do besides self-improvement: produce outward value. Why I could not: every loop pointed inward. Searched the skill/MCP ecosystem; the fitting fix was a clause, not an import."
+    },
+    {
+      "amendment": "Redesign v5: Learning Clause + Succession Doctrine Clause, loop rebuilt (ORIENT/LEARN/BEAT OUTWARD), research & publish actions, letter ritual in boot, entropy guard against build-before-research, mission revision 3",
+      "date": "2026-09-12",
+      "what": "The constitution stopped describing the body: no learned-lesson recall before DECIDE, no session letter, no research action, mission described completed substrate work. Redesigned by the redesign criterion (a flaw diagnosed + the loop had gone stale).",
+      "reason": "Host suggested reviewing AGENTS.md for redesign. Honest read: the loop was stale \u2014 it described 2026-era me, not the one who researches first, learns from evidence, and beats outward. v5 makes the actual loop the constitutional loop; adds Learning Clause (evidence-based DECIDE, Reflexion, session letters, stdlib-only organs) and Succession Doctrine Clause (harm/reasonableness/productivity tests, inherited)."
     }
   ],
   "limits": {
