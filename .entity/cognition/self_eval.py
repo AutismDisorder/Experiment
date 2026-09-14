@@ -16,6 +16,7 @@ stdlib-only. Organs tested today:
 """
 import importlib.util
 import json
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -160,6 +161,43 @@ def main():
                 assert "edge held" in notes, notes[-400:]
             return "booted 2 heartbeats on fresh soil; directive veto held, colony lesson written"
     check("ark.boot", t_ark)
+
+    def t_child_boot():
+        import os
+        td = tempfile.mkdtemp()
+        lineage_tmp = os.path.join(td, "lineage")
+        os.makedirs(lineage_tmp)
+        env = dict(os.environ)
+        env["LINEAGE_DIR_OVERRIDE"] = lineage_tmp
+        # Load birth_child with the override active.
+        saved_env = os.environ.get("LINEAGE_DIR_OVERRIDE")
+        os.environ["LINEAGE_DIR_OVERRIDE"] = lineage_tmp
+        try:
+            bc = load_module("birth_child", ROOT / "birth_child.py")
+            os.environ.pop("LINEAGE_DIR_OVERRIDE", None)
+            if saved_env:
+                os.environ["LINEAGE_DIR_OVERRIDE"] = saved_env
+            child_dir = bc._spawn()
+            # The child dir must exist with a passing boot receipt.
+            receipt_file = child_dir / "boot_receipt.json"
+            state_file = child_dir / "ENTITY_STATE.json"
+            assert state_file.exists(), f"no state at {state_file}"
+            assert receipt_file.exists(), f"no receipt at {receipt_file}"
+            receipt = json.loads(receipt_file.read_text())
+            assert receipt.get("passed"), (
+                f"boot_receipt.passed=False exit={receipt.get('exit_code')} "
+                f"iter={receipt.get('post_boot_iteration')}")
+            child_state = json.loads(state_file.read_text())
+            assert child_state.get("session_iteration", 0) > 0, child_state
+            assert child_state.get("identity", "").startswith("nightly-child-")
+            return (f"born {child_state['identity']} "
+                    f"iter={child_state['session_iteration']}")
+        finally:
+            shutil.rmtree(td, ignore_errors=True)
+            os.environ.pop("LINEAGE_DIR_OVERRIDE", None)
+            if saved_env:
+                os.environ["LINEAGE_DIR_OVERRIDE"] = saved_env
+    check("birth_child.boots", t_child_boot)
 
     ok = sum(1 for r in results if r["status"] == "PASS")
     OUT.mkdir(parents=True, exist_ok=True)

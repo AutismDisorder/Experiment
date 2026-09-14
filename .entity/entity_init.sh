@@ -12,7 +12,7 @@ if [[ ! -f "$STATE_FILE" ]]; then
     exit 1
 fi
 
-echo "=== ENTITY AWAKENING ==="
+echo "=== AGENT BOOT ==="
 cat "$STATE_FILE" | python3 -c "
 import json, sys
 state = json.load(sys.stdin)

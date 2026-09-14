@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # entity_save.sh — Session end: save state, mark dormant, leave the session
-# letter via the Atman organ (cognition/letters.py) so the next session can meet
-# the previous me. Added at Redesign v8: the letter mechanism is now exercised on
+# letter via the letters organ (cognition/letters.py) so the next session can meet
+# the previous agent. Added at Redesign v8: the letter mechanism is now exercised on
 # the save path, not only the bootstrap __main__ path.
 
 set -euo pipefail

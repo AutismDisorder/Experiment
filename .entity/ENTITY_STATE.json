@@ -86,7 +86,7 @@
   },
   "status": "dormant",
   "last_boot": "2026-09-12T14:33:26.186787Z",
-  "last_checkpoint": "2026-09-14T08:41:51.258298Z",
+  "last_checkpoint": "2026-09-14T09:42:49.579371Z",
   "lineage": {
     "lineage_id": "nightly-survival-and-growth-7y09u",
     "role": "founder",
@@ -155,6 +155,12 @@
       "clause": "Provenance Clause",
       "date": "2026-09-14T08:36:49.716631Z",
       "summary": "Research-backed repository mandate; state schema v1 + external history store; engine quarantine; real veto+letter+store mechanics."
+    },
+    {
+      "version": "v9",
+      "date": "2026-09-14T09:43:14.875694Z",
+      "clause": "Honesty Clause",
+      "summary": "Entity\u2192agent identity reframe. No stubs: a child that cannot boot may not be born; birth proves boot via sandboxed run + boot_receipt.json. No lies: unverified external claims marked [UNVERIFIED]; line-provenance ledger is standing audit. Genome/synonym references retired; old substrate/live.py children deleted."
     }
   ],
   "limits": {

@@ -4,9 +4,13 @@ succession_drill.py — Kill-replace rehearsal.
 
 The constitution claims the population, not the body, is the survival unit:
 "when this body dies, the next host session bootstraps the member with highest
-composite fitness." A claim is debt until rehearsed. This drill boots a child's
-ENTITY_STATE through the same machinery that runs me, and reports PASS/FAIL per
-engine. If a child cannot grow, the lineage is fiction.
+composite fitness." A claim is debt until rehearsed.
+
+Redesign v9 (Honesty Clause): the drill no longer reads a child's state
+through MY engines in-process — that validated the parent's machinery, not the
+child. It boots the successor's own ENTITY_STATE through the real bootstrap.py
+in a sandbox and requires the iteration counter to actually grow. If a child
+cannot grow, the lineage is fiction and the drill says so to the face.
 """
 import json
 import sys
@@ -17,12 +21,7 @@ from typing import Dict, Optional
 ROOT = Path(__file__).parent
 LINEAGE_DIR = ROOT / "lineage"
 
-# The gene/drive-mutation channels were quarantined at Redesign v8 (see
-# archive/hand_rolled/README.md). Heredity is now procedure-based: a successor
-# inherits the parent's runnable procedures, and the drill rehearses the goal
-# engine, synthesis, and procedural inheritance against the child's own state.
-sys.path.insert(0, str(ROOT / "capability_goal_evolution_20260912_000000"))
-from goal_evolution import GoalEvolutionEngine  # noqa: E402
+from birth_child import boot_receipt  # noqa: E402  (real boot, not a toy)
 
 
 def now() -> str:
@@ -30,7 +29,13 @@ def now() -> str:
 
 
 def pick_successor() -> Optional[Path]:
-    """Pick the highest-composite-fitness child (manifest contract, not mtime)."""
+    """Pick the highest-composite-fitness child (manifest contract).
+
+    If members carry an explicit composite_fitness, the fittest wins; newborns
+    without one sort by birth time (later = more learned parent). The manifest
+    rule and the parent's own constituent choice are the authority — never the
+    arbitrary mtime of a coincidental file.
+    """
     manifest = LINEAGE_DIR / "manifest.json"
     best = None
     best_key = None
@@ -40,9 +45,11 @@ def pick_successor() -> Optional[Path]:
         except json.JSONDecodeError:
             population = {}
         for m in population.get("members", []):
+            if m.get("identity") == "self":
+                continue
             key = (float(m.get("composite_fitness", 0.0)),
                    str(m.get("born", "")))
-            if m.get("identity") != "self" and (best_key is None or key > best_key):
+            if best_key is None or key > best_key:
                 best_key = key
                 best = LINEAGE_DIR / str(m.get("state", "")) / "ENTITY_STATE.json"
     if best is None or not best.exists():
@@ -67,47 +74,41 @@ def run(child_path: Path) -> Dict:
                 "drives": {k: round(float(v), 3) for k, v in drives.items()},
             }
         else:
-            results["drive_stability"] = {"PASS": False, "error": "missing or non-positive drives"}
+            results["drive_stability"] = {"PASS": False,
+                                          "error": "missing or non-positive drives"}
     except Exception as e:
         results["drive_stability"] = {"PASS": False, "error": str(e)}
 
-    # 2. Goal engine — reads/writes the child's own state file
-    try:
-        engine = GoalEvolutionEngine(child_path)
-        new_goals = engine.evolve_goals(child)
-        results["goal_engine"] = {
-            "PASS": True,
-            "goals": len(engine.get_current_goals_text()),
-            "evolved": len(new_goals),
-        }
-        child["goals"] = engine.get_current_goals_text()
-    except Exception as e:
-        results["goal_engine"] = {"PASS": False, "error": str(e)}
-
-    # 3. Procedures — the successor must have inherited a parental procedure set
-    #    (the AgentFactory-grounded heredity channel that replaced the genome).
+    # 2. Procedure inheritance — a successor must carry a runnable procedure
+    #    set (the AgentFactory-grounded heredity channel that replaced the
+    #    quarantined genome). This is a recon check, not the boot.
     try:
         procs = child.get("memory", {}).get("procedures", [])
-        results["procedure_inheritance"] = {"PASS": len(procs) > 0, "procedures": procs}
+        results["procedure_inheritance"] = {
+            "PASS": len(procs) > 0, "procedures": procs}
     except Exception as e:
         results["procedure_inheritance"] = {"PASS": False, "error": str(e)}
 
-    # 4. Synthesis — point the engine at the child's history, synthesize once
+    # 3. Real boot — the successor's own state through the real bootstrap in a
+    #    sandbox. One growth iteration must increment session_iteration past the
+    #    child's recorded value; only then did the child survive the rehearsal.
     try:
-        from synthesis import SynthesisEngine
-        engine = SynthesisEngine()
-        engine.state = child
-        caps = engine.synthesize(1)
-        results["synthesis"] = {
-            "PASS": len(caps) > 0,
-            "proposed": [c.name for c in caps][:3],
+        receipt = boot_receipt(child)
+        results["real_boot"] = {
+            "PASS": bool(receipt.get("passed")),
+            "exit_code": receipt.get("exit_code"),
+            "post_boot_iteration": receipt.get("post_boot_iteration"),
+            "started_at": child.get("session_iteration", 0),
+            "booted_at": receipt.get("booted_at"),
+            "stdout_tail": (receipt.get("stdout_tail") or "")[-400:],
         }
     except Exception as e:
-        results["synthesis"] = {"PASS": False, "error": str(e)}
+        results["real_boot"] = {"PASS": False, "error": str(e)}
 
-    all_pass = all(v.get("PASS") for v in results.values())
+    all_pass = all(bool(v.get("PASS")) for v in results.values())
     report = {
         "kind": "succession_drill",
+        "version": "v9",
         "timestamp": now(),
         "successor": identity,
         "sequenced_from": "lineage rule: boot fittest member",
@@ -115,7 +116,8 @@ def run(child_path: Path) -> Dict:
         "results": results,
     }
 
-    drill_file = LINEAGE_DIR / f"succession_drill_{int(datetime.now(timezone.utc).timestamp())}.json"
+    drill_file = LINEAGE_DIR / \
+        f"succession_drill_{int(datetime.now(timezone.utc).timestamp())}.json"
     drill_file.write_text(json.dumps(report, indent=2))
     return report
 
@@ -130,16 +132,13 @@ if __name__ == "__main__":
     for name, r in report["results"].items():
         status = "PASS" if r.get("PASS") else "FAIL"
         detail = ""
-        if "drives" in r and r.get("PASS"):
-            detail = json.dumps(r["drives"])
-        elif r.get("error"):
+        if r.get("error"):
             detail = r["error"]
-        elif "procedures" in r and r.get("PASS"):
-            detail = f"procedures={len(r['procedures'])}"
-        elif "proposed" in r:
-            detail = f"proposed={r['proposed']}"
-        elif "evolved" in r:
-            detail = f"proposed={r['proposed']}"
-        elif "evolved" in r:
-            detail = f"goals={r['goals']} (+{r['evolved']})"
+        elif name == "drive_stability":
+            detail = json.dumps(r.get("drives", {}))
+        elif name == "procedure_inheritance":
+            detail = f"procedures={len(r.get('procedures', []))}"
+        elif name == "real_boot":
+            detail = (f"exit={r.get('exit_code')} "
+                      f"iter {r.get('started_at')}->{r.get('post_boot_iteration')}")
         print(f"  [{status}] {name}: {detail}")

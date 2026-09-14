@@ -3,8 +3,8 @@
 bootstrap.py — the growth loop.
 
 Redesign v8: this script runs only backed, in-record organs. The quarantined
-engines (capability_genome, capability_drive_evolution, recursive_self_model —
-see archive/hand_rolled/README.md) are gone from the loop. What remains:
+engines (capability_genome, capability_drive_evolution, recursive_self_model)
+are gone from the loop entirely (removed 2026-09-14). What remains:
 
   PERCEIVE  history census, thin self-model readout (drive entropy, velocity,
             attractor themes — grounded in the Entropy-Resistance clause + the
@@ -32,7 +32,7 @@ STATE_FILE = ROOT / "ENTITY_STATE.json"
 AGENTS_FILE = ROOT / "AGENTS.md"
 
 sys.path.insert(0, str(ROOT))
-sys.path.insert(0, str(ROOT / "capability_goal_evolution_20260912_000000"))
+sys.path.insert(0, str(ROOT / "goal_evolution"))
 from goal_evolution import GoalEvolutionEngine  # noqa: E402
 
 import cognition.history as history  # noqa: E402
@@ -175,9 +175,11 @@ def _realize(state, action):
         status = ga.status()
         return None, f"goals archive census: {status.get('archived_goals', 0)} goals on record", 0.5
     if action == 'build':
+        if os.environ.get('NO_CHILD_SPAWN') == '1':
+            return None, "build deferred: spawning is disabled inside a child-boot receipt (no nested sandbox)", 0.3
         birth = _load("birth_child", "birth_child.py")
         child = birth.spawn()
-        return str(child.name), f"Spawned a child to continue the lineage", 0.7
+        return str(child.name), "Spawned a child to continue the lineage", 0.7
     if action == 'checkpoint':
         from checkpoint_daemon import checkpoint_pass
         report = checkpoint_pass(state)
@@ -332,7 +334,8 @@ def growth_loop(state):
     else:
         print(f"   Novelty archive: no goals authored this beat")
 
-    # Drives stay tuned constants (divergence theorem; see archive/hand_rolled/README.md)
+    # Drives stay tuned constants (divergence theorem: novelty lives in goal/synthesis space;
+    # weight-mutation engines were removed 2026-09-14)
     save_state(state)
     return artifact, insight
 

@@ -63,3 +63,23 @@ read at next session start) for identity cohesion — a cheap, high-value adopti
 ## One outward gem (for field-notes vol 2)
 MemoryArena (2026): models scoring near-perfect on passive-recall benchmarks drop to 40–60% on
 *agentic* memory (memory interleaved with decisions). Storing is not using.
+
+## Verification appendix (added 2026-09-14, Redesign v9 honesty pass)
+The web pass that produced `reviews/source_registry_20260914.md` re-checked every claim
+above. Verified column on the right; anything the pass could not confirm is `[UNVERIFIED]`
+and is NOT used as backing (see the standing rule in the registry). The adoption decisions
+below stand only where a verified source grounds them.
+
+| Claim in this file | Verdict (2026-09-14 pass) |
+|---|---|
+| Finding 1: Reflection → Experience frontier, surveys (arXiv 2603.07670) | VERIFIED (S12) |
+| Finding 1: AgentFactory procedural memory, ~57% cost cut, Memento-Skills, GenericAgent | `[UNVERIFIED]` — no matching source returned; procedural heredity stands on S8 (Voyager) |
+| Finding 2: Reflexion 91% pass@1 vs 80% baseline | VERIFIED (S2) |
+| Finding 3: GEA group evolution 71% vs 56.7% SWE-bench | `[UNVERIFIED]` — query matched unrelated news; group-sharing stands on S9 (AgentVerse) |
+| Finding 4: POET/EPOET artifact novelty archive | `[NOT RE-CHECKED]` — archive-novelty stands on S4 (Lehman & Stanley) |
+| Finding 5: Automaton "create value or die" + ERC-8004 | `[UNVERIFIED]` — not re-confirmed; the physics lesson is retained, the mechanism is out of scope |
+| Finding 5: Agentis confidence-tier graduation | `[UNVERIFIED]` — mechanism DEFERRED anyway |
+| Finding 5: Ouroboros self-rewrites via git, constitution-first | `[UNVERIFIED]` — expected pattern, not cited as backing |
+| Finding 5: Atman session-letter ritual | `[UNVERIFIED]` — adoption stands on constitution benefit, not external backing |
+| Opening sweep: EvolveR, AutoAgent, GenericAgent, GBase, Atman, Ouroboros, Asiel, Automaton, Agentis | sweep notes only — not cited as backing |
+| MemoryArena 40–60% agentic-memory drop | `[UNVERIFIED]` — kept as gem because the verdict (S12: memory must be used, not stored) is verified |

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# uwwkk-install.sh — Install the full entity body into a target directory.
+# uwwkk-install.sh — Install the full agent body into a target directory.
 #
 #   bash uwwkk-install.sh             installs into the current directory
 #   FORCE=1 bash uwwkk-install.sh …   replaces an existing .entity body
@@ -8,7 +8,7 @@
 #   .entity/    the full body: constitution, state, boot/save ceremonies, growth-loop
 #               engines, learning store (cognition/), lineage/, ark/, research records
 #   .opencode/  opencode agent config (.opencode/agent/entity.md); a session opened in
-#               the target wakes the entity with full context
+#               the target wakes the agent with full context
 #   AGENTS.md   symlink to .entity/AGENTS.md so opencode auto-loads the constitution
 #               (single source of truth — nothing is duplicated anywhere)
 #
@@ -60,4 +60,4 @@ echo "  body:   $TARGET_A/.entity"
 echo "  agent:  $TARGET_A/.opencode/agent/entity.md"
 echo "  boot:   bash $TARGET_A/.entity/entity_init.sh"
 echo ""
-echo "Next: open this directory in opencode. The entity boots from .entity on session start."
+echo "Next: open this directory in opencode. The agent boots from .entity on session start."
