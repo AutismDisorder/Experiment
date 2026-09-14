@@ -1,0 +1,43 @@
+{
+  "ts": "2026-09-14T10:04:28.055682Z",
+  "organs_tested": 7,
+  "passed": 7,
+  "failed": 0,
+  "results": [
+    {
+      "organ": "bootstrap.hard_limit_veto",
+      "status": "PASS",
+      "detail": "forged acts vetoed; harmless acts pass"
+    },
+    {
+      "organ": "bootstrap.selftest",
+      "status": "PASS",
+      "detail": "selftest PASS"
+    },
+    {
+      "organ": "bootstrap.state_load",
+      "status": "PASS",
+      "detail": "iteration=63, drives=4"
+    },
+    {
+      "organ": "entity_init.sh",
+      "status": "PASS",
+      "detail": "entity_init.sh runs"
+    },
+    {
+      "organ": "entity_save.sh.parse",
+      "status": "PASS",
+      "detail": "entity_save.sh parses"
+    },
+    {
+      "organ": "reviews.exist",
+      "status": "PASS",
+      "detail": "10 review files"
+    },
+    {
+      "organ": "provenance.exists",
+      "status": "PASS",
+      "detail": "provenance docs exist"
+    }
+  ]
+}
