@@ -1,6 +1,6 @@
 ---
 name: lesson-learning
-description: Use after any failure — bug, broken test, user correction, wrong design call, a review that found a defect, or any outcome that was worse than expected. Trigger keywords: lesson, mistake, I was wrong, fix this, bug, failing test, correction, what went wrong, reflexion, learn from this, don't repeat.
+description: "Use after any failure — bug, broken test, user correction, wrong design call, or any outcome that was worse than expected. Trigger keywords: lesson, mistake, I was wrong, fix this, bug, failing test, correction, what went wrong, reflexion, learn from this, don't repeat."
 ---
 
 # Lesson-Learning

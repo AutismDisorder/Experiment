@@ -1,6 +1,6 @@
 ---
 name: research-first
-description: Enforced before writing any code or making any design/tooling decision. Use when starting a build, choosing a library, framework, approach, or architecture, writing a plan, or when a decision could be guessed instead of researched. Trigger keywords: research, research first, how should I build, which library, best practice, compare, evaluate, survey, evidence, proven, verified, don't guess.
+description: "Enforced before writing ANY code or making ANY decision or any plan. Use when starting a build, choosing a library, framework, approach, or architecture, writing a plan, or whenever anything could be guessed instead of researched online. Trigger keywords: research, research first, how should I build, which library, best practice, compare, evaluate, survey, evidence, proven, verified, don't guess, verify."
 ---
 
 # Research-First
