@@ -21,9 +21,9 @@ Open the project in opencode. Done — no build, no scripts, no dependencies.
 
 | File | What it does |
 |---|---|
-| `AGENTS.md` | Operating principles, loaded every session: research-first, lesson-learning, honest data, lean, verify before shipping |
-| `.opencode/skills/research-first/SKILL.md` | Procedure for researching before building: one-line framing, stop-rules, verdict format, honest-data rules |
-| `.opencode/skills/lesson-learning/SKILL.md` | Procedure for converting every failure into a permanent patch of a skill file |
+| `AGENTS.md` | Operating principles, loaded every session: research-first (extensive + per-cycle adaptive), lesson-learning (learning as part of research), honest data, lean, verify before shipping |
+| `.opencode/skills/research-first/SKILL.md` | Per-cycle research procedure: extensive start, gain checks, dynamic adjustment (method/source/scope) on diminishing returns, cycle verdict, research-method lessons |
+| `.opencode/skills/lesson-learning/SKILL.md` | Converts every failure + every research cycle into a permanent dated patch of a skill file, with a strict bloat balance (earn lines, consolidate, compress) |
 
 ## The lean-lesson history
 
@@ -41,3 +41,21 @@ that did not enhance capability. The final insight that collapsed it to four fil
 What survived is what actually changes how a model works: two procedures — do the
 research first, and patch a skill file when you fail. Everything else was the ritual
 around them.
+
+## Adaptive research: the model behind it
+
+Research is **extensive while it yields** and **adjusted when it doesn't** —
+per cycle, not per session.
+
+- A cycle is the research behind **one** line of code or **one** decision.
+- Each cycle starts extensive regardless of history; there is no session-wide
+  budget that decays.
+- When returns diminish, the cycle **adjusts** rather than stops: web search ⇄
+  GitHub, docs ⇄ papers ⇄ implementations, broad ⇄ precise queries.
+- A cycle closes only when an *adjusted* pass still yields nothing — and it
+  records why, in its verdict.
+- Every cycle deposits a research-method lesson that patches the research skill,
+  so the next cycle starts closer to the answer.
+
+The balance against bloat: lessons must change behavior, earn their lines,
+consolidate duplicates, and get compressed when the skill grows noisy.

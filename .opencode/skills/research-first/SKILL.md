@@ -1,39 +1,71 @@
 ---
 name: research-first
-description: "Enforced before writing ANY code or making ANY decision or any plan. Use when starting a build, choosing a library, framework, approach, or architecture, writing a plan, or whenever anything could be guessed instead of researched online. Trigger keywords: research, research first, how should I build, which library, best practice, compare, evaluate, survey, evidence, proven, verified, don't guess, verify."
+description: "Non-optional before writing ANY code or making ANY decision or any plan. Runs per-cycle: one cycle = the research behind ONE line or ONE decision. Extensive while gains hold, dynamically adjusted (method, source type, scope) on diminishing returns, closed only when an adjusted cycle still yields nothing. Trigger keywords: research, research first, how should I build, which library, best practice, compare, evaluate, survey, evidence, proven, verified, don't guess."
 ---
 
 # Research-First
 
 Everything is researched before it is built. Guessing is a bug. This procedure is
-non-optional for any code-writing or decision-making task.
+non-optional for every code-writing or decision-making task.
+
+A **cycle** is the single round of research behind one line of code or one
+decision. Every cycle is judged on its own returns — a cycle's depth is never
+limited by what any other cycle did. There is no session-wide research budget.
 
 ## One-line framing
 
 Before doing anything, write the decision as a single sentence. A decision with no
 sharp sentence is not yet a decision — sharpen it first.
 
-## The research pass
+## Cycle start: extensive
 
-1. Search for the exact organ you are about to build or the exact decision you are
-   about to make. Never pre-load a survey of things you are not building.
-2. Consult the first source that clearly covers the question. Open and read it, do
-   not skim summaries of summaries.
-3. If a second source is needed, it must answer a new discriminating question the
-   first source did not. Two adjacent sources with no new signal = stop.
-4. Small decision stop-rule: ~2 searches / ~4 sources maximum. Beyond that you are
-   over-researching, which is a failure of judgment, not diligence.
+Every cycle begins extensive, regardless of history. The first search covers the
+question broadly; the first read is of the actual source, not a summary of a
+summary.
 
-## Verdict format
+## Gain check, per source
 
-Every research pass ends in a written verdict — same session, same message. It is
-not a suggestion; it is the deliverable of the research step:
+After each source, ask: does this materially deepen understanding or narrow the
+decision?
+
+- **YES — gains hold.** Keep going. There is no cap on a productive cycle. Large
+  gains justify a deliberately deeper pass.
+- **NO — returns diminish.** That is not the end of research; it is the trigger
+  to adjust.
+
+## Adjust, then continue
+
+On a barren or thinning pass, change the approach and keep researching:
+
+| Adjustment | Move |
+|---|---|
+| Search method | web search ⇄ GitHub (repos, code search, issues, PRs) |
+| Source type | docs ⇄ papers ⇄ reference implementations ⇄ package source |
+| Query / scope | broader survey ⇄ exact API signature; other terms, another repo |
+
+After an adjustment, assess gain again. Research ends only when an **adjusted**
+cycle still yields nothing new.
+
+## Cycle close: verdict
+
+Every cycle closes with a written verdict — same session, same message:
 
 ```
-VERDICT: adopt | adapt | reject | mixed
-SOURCE: <url> or [UNVERIFIED]
-REASON: one sentence
+CYCLE:      <decision in one line>
+METHODS:    web · github · docs · papers   (which were tried)
+DEPTH:      <sources read>
+CLOSE:      gain held → adjusted (x3) → barren after adjustment
+VERDICT:    adopt | adapt | reject | mixed
+SOURCE:     <url> or [UNVERIFIED]
+REASON:     one sentence
 ```
+
+Write the METHODS, DEPTH, and CLOSE lines honestly. They are the record that the
+cycle was extensive, that it adjusted rather than stopped, and that the close
+happened only after adjustment failed to yield. This record is the feedback that
+trains the research skill itself.
+
+## Verdicts
 
 - `adopt` — use the source's approach as-is
 - `adapt` — use it with a modified detail (state which)
@@ -48,9 +80,19 @@ REASON: one sentence
   it, mark `[UNVERIFIED]` and say you did not verify it.
 - Every line of code in the final change traces to a verdict. In commit messages,
   summarize: `research: <verdict> <source>`.
-- If research turns out to be disproportionate for a trivial change (a one-line fix
-  with an obvious answer), say so explicitly rather than pretending research
-  happened. The rule is: no guessing; the discipline is: no theater.
+- The CLOSE line is never faked: either the cycle adjusted, or it closed when an
+  adjustment failed to yield. Both are honest answers.
+
+## Research-method lessons
+
+The research skill trains on its own outcomes. After each cycle, deposit one
+usable observation and patch `.opencode/skills/research-first/SKILL.md`:
+
+- "For <kind of question>, GitHub code search beat web search because <reason>"
+- "For <kind of question>, exact-symbol queries beat broad ones"
+
+These patches tune how the next cycle starts. If the patch duplicates an existing
+rule, consolidate instead of appending.
 
 ## Values-based tiebreak
 
