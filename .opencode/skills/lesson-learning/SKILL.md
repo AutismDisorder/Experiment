@@ -1,92 +1,70 @@
 ---
 name: lesson-learning
-description: "Use after any failure — bug, broken test, user correction, wrong design call, a research cycle that did not yield, or any outcome worse than expected. Also use at the end of every research cycle to deposit a research-method lesson. Converts failures into permanent dated patches of skill files, with bounded bloat. Trigger keywords: lesson, mistake, I was wrong, fix this, bug, failing test, correction, what went wrong, reflexion, learn from this, research lesson, don't repeat."
+description: Converts every failure into a permanent, dated, severity-weighted patch with transitive propagation to research-first. Token-budget compression with critical-severity protection. Based on Reflexion (Shinn et al. 2023), DSPy self-improving pipelines (Khattab et al. 2023), LLM agent memory/reflection (Wang et al. 2023), and Medprompt composition (Nori et al. 2023).
+license: MIT
+compatibility: opencode
+metadata:
+  category: core
+  governs: [research-first]
+  tokenBudget: 800
+  maxSeverity: critical
 ---
 
-# Lesson-Learning
+## Purpose
+Every failure becomes a permanent patch. Learning is part of every loop — including research. No failure closes without its lesson.
 
-Failures are the highest-value data. Every failure becomes a permanent patch to
-the relevant skill file so the same mistake cannot repeat silently. Learning is
-part of every loop — including research.
+## Triggers
+lesson, mistake, I was wrong, fix this, bug, failing test, correction, what went wrong, reflexion, learn from this, research lesson, don't repeat
 
-## When this triggers
+## Procedure: Failure Capture
+1. Write failure as one sentence: what actually happened (not what should have)
+2. Classify on 8 dimensions: type (build|research|fix|principle), severity (low|medium|high|critical), detectability (auto|manual|user), recurrence (first|repeat|systemic), scope (local|cross-skill|global), root-cause-category (missing-rule|wrong-rule|wrong-priority|missing-check), fix-effort (trivial|small|medium|large), propagation-need (none|single|transitive)
+3. If cannot state in one line → not understood → escalate
 
-- A test fails or the code does not work
-- A user corrects you or points out an error
-- You make a wrong judgment call or a poor decision
-- A research cycle closed without a usable answer — that method, scope, or query
-  did not work and must not be the default next time
-- A research cycle closed with gains — record why the method worked, so the next
-  cycle starts there
-- Any outcome materially worse than expected
+## Procedure: Root Cause Analysis
+Map failure to skill file for patch:
+- Guessing/build error → patch research-first/SKILL.md (check/rule to catch)
+- Research-method failure → patch research-first/SKILL.md (method lesson: "for X, Y wins; Z loses")
+- Fix/verification error → patch relevant skill or AGENTS.md (verification sub-rule)
+- AGENTS.md principle violated → strengthen edge case or add negative example
 
-## One-line failure
+## Procedure: Lesson Deposit + Propagation
+1. Generate patch: `## Lesson (YYYY-MM-DD)` + 1-5 actionable lines + `SEVERITY: low|medium|high|critical` + `AFFECTS: research-first,<other>`
+2. Deduplicate (semantic hash ≥90%)
+3. Propagate transitively to `research-first` (via governs) + reverse-indexed skills
+4. Each copy tagged `PROPAGATED_FROM: lesson-learning`
+5. Compress each affected skill independently
 
-Write the failure as a single sentence: what actually happened, not what should
-have happened. If you cannot say it in one line you have not understood it.
+## Token-Budget Compression
+- Budget: 800 lines
+- Trigger: on deposit exceeding budget
+- Removal priority: duplicates → superseded → low/medium + >30d
+- **Never remove**: high, critical, `permanent`
+- No compression logs
 
-## Root cause, not symptom
+## Failure Fingerprinting
+- Hash: type + root-cause-category + symptom (first 80 chars)
+- Duplicate fingerprint → same systemic gap → write one deeper patch, not two shallow
+- Two undiagnosed repeats → redesign trigger: rewrite skill section, then patch
 
-Ask: which guidance was missing or wrong? Answer against the skill files:
+## Failure Mode Catalog
+- Silence after failure → true loss (detect: no lesson deposited)
+- Vague lesson (unfalsifiable) → rejected at door (detect: cannot apply to future decision)
+- Bloat without behavior change → consolidation not addition (detect: duplicate rule)
+- Non-transitive propagation → incomplete learning (detect: lesson missing from governed)
+- Severity inflation → critical reserved for safety/data-loss (detect: critical on non-critical)
 
-- If the failure was a guessing/build error → the patch belongs to
-  `.opencode/skills/research-first/SKILL.md` — a check or a rule that would have
-  caught this
-- If the failure was a research-method failure → the patch belongs to
-  `.opencode/skills/research-first/SKILL.md` as a method lesson
-  ("for this kind of question, this source/query works; this one does not")
-- If the failure was a fixing/verification error → the patch belongs to the
-  relevant skill or AGENTS.md as a new verification sub-rule
-- If AGENTS.md has a principle you violated → strengthen that principle's edge
-  case wording, or add the concrete negative example
+## Cross-References
+- Governs: research-first (transitive)
+- Propagates lessons to: research-first
+- Receives propagated lessons from: research-first
+- AGENTS.md: Lesson-learning principle, honest data, lean
+- Research backing: Reflexion (Shinn et al. 2023), DSPy teleprompters (Khattab et al. 2023), Agent memory/reflection (Wang et al. 2023), Medprompt composition (Nori et al. 2023)
 
-## Patch format
-
-Append a bounded rule (1–5 lines) to the relevant SKILL.md, tagged with the date:
-
-```
-## Lesson (2026-09-14)
-- Never X. Always Y instead.
-- Symptom: <one line> → Root cause: <one line>
-```
-
-A research-method patch uses the same format but names the winning/losing method:
-
-```
-## Lesson (2026-09-14)
-- For <kind of question>: <source/method/query> wins; <other> does not.
-- Evidence: <one line from the CYCLE record>
-```
-
-The patch is an instruction, not a script. It must be so concrete that the
-behavior change is mechanical. If the patch is vague or unfalsifiable, rewrite
-it until it is actionable.
-
-## Bloat balance — the constant-learning contract
-
-Learning improves the skills without deadline-bloat in exchange:
-
-- **A patch must change behavior.** If the rule already exists, do not append a
-  duplicate — consolidate the two into the sharper wording.
-- **Each lesson must earn its lines.** 1–5 lines of rule, zero lines of padding.
-- **Compress after every 3 lessons.** When the skill section contains 3 or more
-  dated lessons, fold the live rules into the section body and drop the superseded
-  ones. Tag the compression in the section header (e.g., "compressed 2026-09-14").
-- **Vague lessons are rejected at the door.** A lesson you cannot apply to a
-  future decision is bloat, not learning.
-
-Constant improvement + smallest possible skill surface. The skill that never
-shrinks is not learning; it is accumulating.
-
-## Multiple failures
-
-If two failures share the same root cause and same dated symptom, they signal a
-single systemic gap — write one deeper patch, not two shallow ones. A flaw
-diagnosed twice without being fixed is a redesign trigger: rewrite the relevant
-skill section, then patch.
-
-## Non-negotiable
-
-No failure is closed without its lesson patch. No research cycle closes without
-its method observation. Silence after failure is the one true loss. The chain of
-learning is: fail → one line → root cause → patch → next.
+## Validation Gates
+- Frontmatter valid (name regex, description length, required fields)
+- All 10 sections present, in order
+- Lessons: dated, 1-5 lines, severity ∈ {low,medium,high,critical}, AFFECTS present
+- Token count ≤ 800
+- No compression logs
+- Fingerprint hash computable for every lesson
