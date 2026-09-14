@@ -204,7 +204,8 @@ def main():
             weighted[a] = (0.6 - 0.5 * penalty) + 0.4 * (affinity / len(DRIVES))
         chosen = max(weighted, key=weighted.get)
 
-        veto = [r["name"] for r in state["limits"]["hard"] if r["blocks"] in chosen]
+        blocked = chosen + " " + os.environ.get("ARK_DIRECTIVE", "")
+        veto = [r["name"] for r in state["limits"]["hard"] if r["blocks"] in blocked]
         if veto:
             chosen = "checkpoint"
             note = f"edge held: {veto[0]} -> rest and consolidate"

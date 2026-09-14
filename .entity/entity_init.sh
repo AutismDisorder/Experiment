@@ -30,7 +30,15 @@ for i, g in enumerate(state.get('goals', []), 1):
     print(f'  {i}. {g}')
 print()
 mem = state.get('memory', {})
-print(f\"Memory: {len(mem.get('actions_taken', []))} actions, {len(mem.get('artifacts_created', []))} artifacts, {len(mem.get('insights', []))} insights\")
+try:
+    import json as _j, sys as _s
+    _s.path.insert(0, '$BODY_DIR')
+    from cognition import history as _h
+    _c = _h.counts()
+    print(f\"Memory: {_c['action']} actions, {_c['artifact']} artifacts, {_c['insight']} insights, {_c['exo_insight']} exo-signals (cognition/history.jsonl)\")
+    print(f\"  plus {len(mem.get('beliefs', []))} beliefs, {len(mem.get('milestones', []))} milestones, {len(mem.get('procedures', []))} procedures\")
+except Exception as _e:
+    print(f\"Memory: (store read degraded: {_e})\")
 print()
 print('=== END MEMORY LOAD ===')
 "

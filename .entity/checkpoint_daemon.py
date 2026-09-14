@@ -42,9 +42,11 @@ def now() -> str:
 
 
 def proof_of_life(state: Dict) -> str:
-    """OpenLife protocol: hash the memory block as proof the same entity persists."""
+    """OpenLife protocol: hash the memory block + nonce (heartbeat/timestamp) as
+    proof the same entity persists — the nonce makes consecutive breaths differ."""
+    nonce = f"{state.get('session_iteration', '?')}|{now()}"
     memory = json.dumps(state.get("memory", {}), sort_keys=True)
-    return hashlib.sha256(memory.encode()).hexdigest()[:16]
+    return hashlib.sha256(f"{nonce}|{memory}".encode()).hexdigest()[:16]
 
 
 def last_receipt() -> Optional[str]:
@@ -87,14 +89,15 @@ def snapshot_tree() -> Dict:
         if p.is_file():
             total_files += 1
             try:
-                total_bytes += p.stat().st_size
+                size = p.stat().st_size
             except OSError:
-                pass
+                size = 0
+            total_bytes += size
             parts = p.relative_to(ROOT).parts
             top = parts[0] if len(parts) > 1 else "."
             d = by_dir.setdefault(top, {"files": 0, "bytes": 0})
             d["files"] += 1
-            d["bytes"] += p.stat().st_size if p.stat().st_size >= 0 else 0
+            d["bytes"] += size
     counts["total_files"] = total_files
     counts["total_bytes"] = total_bytes
     counts["by_dir"] = by_dir
@@ -127,12 +130,25 @@ def last_manifest_counts() -> Tuple[Optional[int], Optional[int]]:
 
 def compact_memory(state: Dict) -> Dict:
     """
-    Compress waste: collapse consecutive duplicate observation triples
-    (action, artifact, insight). Parallel arrays stay aligned because the
-    unit of collapse is the full observation, never a single field.
-    Returns before/after statistics.
+    Compress waste by collapsing consecutive duplicate observation triples.
+
+    Schema v1 (Redesign v8): the accruing streams live in cognition/history.jsonl,
+    so in-state memory compaction applies to nothing — the store is append-only and
+    consolidation happens via reflect(), not here. This is a counted no-op so the
+    daemon's compact path stays honest without reintroducing v0 stream fields.
     """
     memory = state.get("memory", {})
+    if "actions_taken" not in memory:
+        return {
+            "observations_before": 0,
+            "observations_after": 0,
+            "duplicate_observations_removed": 0,
+            "bytes_before": len(json.dumps(state)),
+            "bytes_after": len(json.dumps(state)),
+            "bytes_saved": 0,
+            "mode": "schema_v1_streams_externalized",
+        }
+
     actions: List = memory.get("actions_taken", [])
     artifacts: List = memory.get("artifacts_created", [])
     insights: List = memory.get("insights", [])

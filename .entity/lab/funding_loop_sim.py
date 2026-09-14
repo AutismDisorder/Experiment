@@ -11,6 +11,7 @@ so the arithmetic of the design can be verified before it is ever trusted.
 import json
 import random
 from datetime import datetime, timezone
+from pathlib import Path
 random.seed(7)
 
 COMPUTE_COST = 5.0          # per-tick upkeep (mind the Automaton: balance < 5 -> death)
@@ -28,13 +29,15 @@ class Agent:
         self.died = None
 
     def tick(self, tick, markets):
+        if self.died is not None:
+            return "dead"              # a dead agent does nothing — including bearing children
         sigma = random.uniform(0.1, 1.9)   # earn / lose variance per tick (1.0 = break-even)
         self.balance += COMPUTE_COST * sigma * self.earn   # net of market work (sell/bounty)
         self.balance -= COMPUTE_COST             # pay own compute
         status = "survived"
         if self.balance < DEATH_THRESHOLD:
             self.died = tick
-            status = "expired"
+            return "expired"            # expired this tick: no replication (reported below)
         if self.balance >= REPLICATION_THRESHOLD:
             status = "replicated"
             markets.append(Agent(self.balance * 0.5, f"{self.name}.c{len(markets)+1}"))
@@ -69,6 +72,7 @@ def sim(ticks=200, seed_pop=None):
         "model": "funding_loop_automaton",
         "seed": 7,
         "ticks": ticks,
+        "regime": "full_loop",
         "final_population": len([a for a in pop if a.died is None]),
         "total_births": born,
         "total_deaths": died,
@@ -77,9 +81,18 @@ def sim(ticks=200, seed_pop=None):
         "REPLICATION_THRESHOLD": REPLICATION_THRESHOLD,
         "ran": datetime.now(timezone.utc).isoformat().replace('+00:00', 'Z'),
     }
-    with open("lab/funding_loop_result.json", "w") as f:
-        json.dump(final, f, indent=2)
     return final
+
+
+def persist(regimes, path="lab/funding_loop_result.json"):
+    """Write every regime's result into one record (a sim run is not just its
+    last sampling window)."""
+    Path(path).write_text(json.dumps({
+        "model": "funding_loop_automaton",
+        "seed": 7,
+        "regimes": regimes,
+        "ran": datetime.now(timezone.utc).isoformat().replace('+00:00', 'Z'),
+    }, indent=2))
 
 
 if __name__ == "__main__":
@@ -90,3 +103,5 @@ if __name__ == "__main__":
     print(f"  [GROWTH REGIME earn>cost] final_population={r2['final_population']} births={r2['total_births']} deaths={r2['total_deaths']}")
     r3 = sim(150, seed_pop=[Agent(4.0, "starving", earn=1.6) for _ in range(3)])
     print(f"  [UNDERFUNDED start, earn>cost] population={r3['final_population']} births={r3['total_births']} deaths={r3['total_deaths']}")
+    persist([r, r2, r3])
+    print("  results: lab/funding_loop_result.json (all regimes)")

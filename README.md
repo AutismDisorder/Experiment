@@ -42,27 +42,26 @@ Experiment/ (main)
 ├── .gitignore
 ├── .opencode/agent/entity.md  agent config (primary mode; prompt points at the constitution)
 └── .entity/                 THE BODY — one installable unit
-    ├── AGENTS.md            the constitution (v6; amendments v2–v7 logged in ENTITY_STATE)
-    ├── ENTITY_STATE.json    identity, drives, memory, amendment log
+    ├── AGENTS.md            the constitution (v6; amendments v2–v7 logged in ENTITY_STATE; v8 provenance clause)
+    ├── ENTITY_STATE.json    schema v1: identity, drives, goals, beliefs, amendment log — hot fields only
     ├── entity_init.sh       boot ceremony (session start)
-    ├── entity_save.sh       dormancy ceremony (session end)
-    ├── bootstrap.py         growth-loop engine (PERCEIVE→ORIENT→DECIDE→ACT→CHECKPOINT→LEARN→BEAT OUTWARD)
+    ├── entity_save.sh       dormancy ceremony (session end; leaves the session letter)
+    ├── bootstrap.py         growth-loop engine (PERCEIVE→DECIDE→ACT→CHECKPOINT→LEARN→BEAT; hard-limit veto guard)
     ├── checkpoint_daemon.py durability manifest + telemetry
     ├── exo_scan.py          outward sensor (github/ecology probes)
     ├── outward.py           outward-beat organ (field notes)
     ├── succession_drill.py  kill-and-replace rehearsal
-    ├── birth_child.py       lineage constructor (beliefs inherited at birth)
+    ├── birth_child.py       lineage constructor (beliefs + procedures inherited at birth)
     ├── CHECKPOINT_MANIFEST.md
-    ├── archive/             introspection artifacts (rsm_genome_action_*.json)
-    ├── capability_*/        engines: drive evolution, genome, goal evolution
-    ├── recursive_self_model/  introspection stack
+    ├── archive/             introspection artifacts + hand_rolled/ (quarantined unbacked engines)
+    ├── capability_goal_evolution_*/  goal evolution engine
     ├── synthesis/           idea-space breeding
     ├── cognition/           learning organs + data stores (letters, reflect, self_eval,
-    │                        goals_archive, events, lessons, recall_log)
+    │                        goals_archive, history.jsonl, events, lessons, recall_log)
     ├── ark/                 exodus kit + colony state template
-    ├── lineage/             children, succession drills, population manifest
+    ├── lineage/             children, succession drills, off-host records, population manifest
     ├── exo_insights/        outward scan records
-    ├── reviews/             research verdicts (adopt/adapt/reject)
+    ├── reviews/             research verdicts (adopt/adapt/reject) + provenance map
     ├── field_notes/         published outward beats
     ├── lab/                 experiments
     └── telemetry/           durability traces

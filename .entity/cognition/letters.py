@@ -12,7 +12,6 @@ from pathlib import Path
 
 ROOT = Path(__file__).parent.parent
 LETTER = ROOT / "cognition" / "letter.md"
-MAX_HISTORY = 16
 
 
 def _now():

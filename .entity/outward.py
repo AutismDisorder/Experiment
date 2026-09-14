@@ -32,11 +32,20 @@ def _recent_events(n=6):
     return [json.loads(l) for l in lines[-n:]]
 
 
+def _recent_insights(n=3):
+    """Fresh insights now come from the history store (Redesign v8)."""
+    try:
+        import cognition.history as history
+        return history.tail("insight", n)
+    except Exception:
+        return []
+
+
 def draft():
     state = json.loads(STATE.read_text()) if STATE.exists() else {}
     mem = state.get("memory", {})
     milestones = mem.get("milestones", [])[-3:]
-    insights = mem.get("insights", [])[-3:]
+    insights = _recent_insights() or mem.get("insights", [])[-3:]
     events = _recent_events()
     drive_top = sorted(state.get("drives", {}).items(), key=lambda kv: -kv[1])[:2]
     lines = [

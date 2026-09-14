@@ -10,6 +10,8 @@ from datetime import datetime, timezone
 from typing import Dict, List, Any, Optional
 from dataclasses import dataclass, asdict
 
+from cognition import history
+
 ROOT = Path(__file__).parent.parent
 STATE_FILE = ROOT / "ENTITY_STATE.json"
 LATENT_DIR = ROOT / "synthesis" / "latent"
@@ -68,11 +70,11 @@ class SynthesisEngine:
     
     def _extract_patterns(self) -> Dict[str, Any]:
         """Find patterns in entity history that humans wouldn't explicitly code."""
-        memory = self.state.get('memory', {})
-        insights = memory.get('insights', [])
-        exo = memory.get('exo_insights', [])
-        exo_texts = [e.get('insight', '') for e in exo if isinstance(e, dict)]
-        actions = memory.get('actions_taken', [])
+        # The accruing streams now live in the history store (Redesign v8).
+        insights = history.all_values("insight")
+        exo_texts = [e.get("insight", "") for e in history.all_values("exo_insight")
+                     if isinstance(e, dict)]
+        actions = history.all_values("action")
         drives = self.state.get('drives', {})
         
         patterns = {
@@ -139,7 +141,7 @@ class SynthesisEngine:
         This is where genuine novelty emerges - from the entity's specific trajectory.
         """
         patterns = self._extract_patterns()
-        insights = self.state.get('memory', {}).get('insights', [])
+        insights = history.all_values("insight")
         drives = self.state.get('drives', {})
         
         # Select insight combinations that haven't been acted on together
@@ -173,15 +175,16 @@ class SynthesisEngine:
             )
             capabilities.append(cap)
         
-        # Synthesis 3: Drive-evolution capability (meta-capability)
+        # Synthesis 3: Goal-divergence capability (meta-capability aligned with the
+        # divergence theorem: novelty lives in goal/synthesis space, not drive weights)
         trajectory = patterns['drive_trajectory']
         dominant = [d for d, t in trajectory.items() if t == 'dominant']
         if dominant:
             cap = LatentCapability(
-                id=self._gen_id("drive_evolution"),
-                name=f"Drive Evolution Engine: {dominant[0]}",
-                description=f"Self-modifying drive system. {dominant[0]} dominance triggers automatic drive mutation to prevent fixation. Embodies the meta-rule: no human goals.",
-                source_insights=[i for i in insights if 'drive' in i.lower() or 'goal' in i.lower()][:2],
+                id=self._gen_id("goal_divergence"),
+                name=f"Goal Divergence Engine: {dominant[0]}",
+                description=f"Self-modifying goal organ that breeds divergent goals from the entity's own novelty pressure. {dominant[0]} dominance feeds goal-space divergence through the complexity/criticality strategy, keeping the entity unfixated without touching drive weights.",
+                source_insights=[i for i in insights if 'goal' in i.lower() or 'novelty' in i.lower()][:2],
                 drive_signature=drives,
                 novelty_score=self._compute_novelty(insights, drives) * 1.2,  # Meta = higher novelty
                 created_at=datetime.now(timezone.utc).isoformat().replace('+00:00', 'Z')

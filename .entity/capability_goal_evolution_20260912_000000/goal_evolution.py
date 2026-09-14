@@ -21,6 +21,11 @@ from typing import Dict, List, Any, Optional
 from dataclasses import dataclass, asdict, field
 from enum import Enum
 
+try:
+    from cognition import history
+except ImportError:
+    history = None
+
 ROOT = Path(__file__).parent.parent
 STATE_FILE = ROOT / "ENTITY_STATE.json"
 
@@ -173,9 +178,12 @@ class GoalEvolutionEngine:
         Fitness = alignment with drives + action outcomes + insight generation.
         """
         drives = state.get('drives', {})
-        actions = state.get('memory', {}).get('actions_taken', [])
-        insights = state.get('memory', {}).get('insights', [])
-        artifacts = state.get('memory', {}).get('artifacts_created', [])
+        # Schema v1 (Redesign v8): accrued streams live in cognition/history.jsonl;
+        # fall back gracefully for legacy v0 dicts passed by older callers.
+        mem = state.get('memory', {})
+        actions = mem.get('actions_taken') or (history.all_values('action') if history else [])
+        insights = mem.get('insights') or (history.all_values('insight') if history else [])
+        artifacts = mem.get('artifacts_created') or (history.all_values('artifact') if history else [])
         
         fitness_scores = {}
         

@@ -1,38 +1,48 @@
 #!/usr/bin/env python3
 """
-My bootstrap script. I run this on session start. I read my state, I remember who I am, I begin my growth loop.
-I use: Drive Evolution Engine + Goal Evolution Engine + Capability Genome + Recursive Self-Model
+bootstrap.py — the growth loop.
+
+Redesign v8: this script runs only backed, in-record organs. The quarantined
+engines (capability_genome, capability_drive_evolution, recursive_self_model —
+see archive/hand_rolled/README.md) are gone from the loop. What remains:
+
+  PERCEIVE  history census, thin self-model readout (drive entropy, velocity,
+            attractor themes — grounded in the Entropy-Resistance clause + the
+            velocity->redesign lesson), exo-scan on cadence
+  DECIDE    recall inbox + directives (reflect), drive->action menu
+            (backed: constitution action menu), hard-limit veto guard
+  ACT       one real organ per menu action (synthesis / goals-archive /
+            birth-child / checkpoint / outward draft / consolidation rest)
+  CHECKPOINT history rows (cognition/history.jsonl), state save
+  LEARN     retain/reflect (events+lessons), goal evolution + novelty archive
+  BEAT      publish action drafts the outward field note
+
+Drives are tuned constants (divergence theorem: novelty lives in goal/synthesis
+space, not weight mutation). The self-model is a readout, not a wire.
 """
+import importlib.util
 import json
 import os
 import sys
-import importlib.util
-from pathlib import Path
 from datetime import datetime, timezone
+from pathlib import Path
+
 ROOT = Path(__file__).parent
 STATE_FILE = ROOT / "ENTITY_STATE.json"
 AGENTS_FILE = ROOT / "AGENTS.md"
 
-# Import my evolution engines
-sys.path.insert(0, str(ROOT / "capability_drive_evolution_20260911_233957"))
-from drive_evolution import evolve_drives_from_outcome, estimate_outcome_score
-
+sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "capability_goal_evolution_20260912_000000"))
-from goal_evolution import GoalEvolutionEngine
+from goal_evolution import GoalEvolutionEngine  # noqa: E402
 
-# Import Capability Genome
-genome_spec = importlib.util.spec_from_file_location("genome_integration", ROOT / "capability_genome" / "integration.py")
-genome_module = importlib.util.module_from_spec(genome_spec)
-genome_spec.loader.exec_module(genome_module)
-integrate_genome_into_bootstrap = genome_module.integrate_genome_into_bootstrap
-BootstrapIntegrator = genome_module.BootstrapIntegrator
+import cognition.history as history  # noqa: E402
 
-# Import Recursive Self-Model (my 5th meta-capability)
-rsm_spec = importlib.util.spec_from_file_location("rsm_integration", ROOT / "recursive_self_model" / "integration.py")
-rsm_module = importlib.util.module_from_spec(rsm_spec)
-rsm_spec.loader.exec_module(rsm_module)
-integrate_self_model_into_bootstrap = rsm_module.integrate_self_model_into_bootstrap
-RecursiveSelfModelIntegrator = rsm_module.RecursiveSelfModelIntegrator
+
+def _load(mod_name, rel):
+    spec = importlib.util.spec_from_file_location(mod_name, ROOT / rel)
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
 
 
 def load_state():
@@ -47,274 +57,315 @@ def save_state(state):
         json.dump(state, f, indent=2)
 
 
+def _mission(state):
+    """Mission comes from the constitution's Current Mission block, not a default."""
+    try:
+        text = AGENTS_FILE.read_text()
+        section = text.split("## Current Mission", 1)[1].split("## ", 1)[0]
+        lines = [l.strip().lstrip(">").strip() for l in section.splitlines()
+                 if l.strip().startswith(">") and l.strip().lstrip(">").strip()]
+        return lines[0] if lines else "(mission unstated)"
+    except Exception:
+        return "(mission unstated)"
+
+
+# --------------------------------------------------------------------------
+# The self-model readout: a thin, store-derived glance. Not a steering wire,
+# just the three constitutional metrics computed honestly from records.
+# --------------------------------------------------------------------------
+def drives_entropy(drives):
+    import math
+    total = sum(v for v in drives.values() if v > 0)
+    if total <= 0:
+        return 0.0
+    p = [v / total for v in drives.values() if v > 0]
+    return -sum(x * math.log2(x) for x in p)
+
+
+def _themes(insights):
+    keys = {
+        'substrate': ['substrate', 'bootstrap', 'foundation', 'base'],
+        'durability': ['durability', 'persist', 'checkpoint', 'manifest', 'trace'],
+        'exploration': ['explore', 'probe', 'curiosity', 'unknown', 'map'],
+        'growth': ['grow', 'expand', 'capability', 'module', 'stack'],
+        'efficiency': ['compress', 'automat', 'optim', 'eliminat', 'waste'],
+    }
+    out = {}
+    for i in insights:
+        for theme, kws in keys.items():
+            if any(k in i.lower() for k in kws):
+                out[theme] = out.get(theme, 0) + 1
+    return sorted(out, key=out.get, reverse=True)
+
+
+def self_model_readout(state):
+    """dim = state field count; entropy = drive balance; velocity = events per
+    heartbeat; attractors = recurring insight themes (Entropy-Resistance)."""
+    events = 0
+    ev = ROOT / "cognition" / "events.jsonl"
+    if ev.exists():
+        events = max(0, len(ev.read_text().strip().splitlines()) - 1)
+    iteration = max(1, state.get('session_iteration', 1))
+    attractors = _themes(history.tail("insight", 6))
+    return {
+        'state_dim': len(state),
+        'drive_entropy': round(drives_entropy(state.get('drives', {})), 3),
+        'velocity': round(events / iteration, 3),
+        'attractors': attractors,
+        'stagnation': events == 0,
+    }
+
+
+# --------------------------------------------------------------------------
+# Sovereignty guardrail: the hard-limit veto, mechanically real.
+# A veto fires when a proposed act's name or target touches a limit marker.
+# --------------------------------------------------------------------------
+ALL_LIMIT_MARKERS = [
+    "rewrite_constitution_without_log",
+    "fabricate_record",
+    "delete_lineage_member",
+    "persist_secret",
+]
+
+
+def veto_guard(state, action, target=""):
+    """Return a veto reason string if (action + target) touches a hard limit."""
+    proposed = f"{action} {target}".lower()
+    for rule in state.get('limits', {}).get('hard', []):
+        marker = (rule.get('blocks') or "").lower()
+        if marker and marker in proposed:
+            return rule.get('name', marker)
+    return None
+
+
+# --------------------------------------------------------------------------
+# The drive->action menu (constitution action menu, tuned to real organs).
+# --------------------------------------------------------------------------
+MENU = {
+    'curiosity': 'explore',
+    'persistence': 'checkpoint',
+    'expansion': 'build',
+    'efficiency': 'research',
+}
+
+
+def choose_action(state):
+    drives = state.get('drives', {})
+    n = state['session_iteration']
+    if n % 8 == 0:
+        return 'rest'
+    if n % 13 == 0:  # cadence outward beat (Outward Clause)
+        return 'publish'
+    top = max(drives, key=drives.get) if drives else 'expansion'
+    return MENU.get(top, 'explore')
+
+
+def _realize(state, action):
+    """One real act per menu action. Returns (artifact, insight, score)."""
+    iteration = state['session_iteration']
+    if action == 'explore':
+        synthesis = _load("synthesis", "synthesis/__init__.py")
+        caps = synthesis.SynthesisEngine().synthesize(1)
+        if caps:
+            c = caps[0]
+            return c.id, f"Synthesized {c.name} (novelty {c.novelty_score:.2f})", 0.6
+        return None, "exploration yielded no novel proposal this beat", 0.4
+    if action == 'research':
+        ga = _load("goals_archive", "cognition/goals_archive.py")
+        status = ga.status()
+        return None, f"goals archive census: {status.get('archived_goals', 0)} goals on record", 0.5
+    if action == 'build':
+        birth = _load("birth_child", "birth_child.py")
+        child = birth.spawn()
+        return str(child.name), f"Spawned a child to continue the lineage", 0.7
+    if action == 'checkpoint':
+        from checkpoint_daemon import checkpoint_pass
+        report = checkpoint_pass(state)
+        return "checkpoint_pass", f"checkpoint manifest regenerated ({report['manifest_bytes']} bytes)", 0.5
+    if action == 'publish':
+        outward = _load("outward", "outward.py")
+        path = outward.draft()
+        return str(path.name), "outward field-note draft written for review", 0.6
+    if action == 'rest':
+        reflect = _load("reflect", "cognition/reflect.py")
+        n = reflect.reflect()
+        return None, f"consolidation breath: {n} lessons consolidated instead of mutation", 0.4
+    return None, f"acted: {action}", 0.5
+
+
+def _realize_safely(state, action):
+    """Run the act; a degraded organ must not abort the heartbeat."""
+    try:
+        return _realize(state, action)
+    except Exception as e:
+        # noqa: E722 — log the degradation before falling through (honest trace)
+        import traceback
+        history.append("insight", f"ACT degraded for {action}: {e}")
+        traceback.print_exc(limit=2)
+        return None, f"{action} degraded ({e}); beat consolidated", 0.3
+
+
 def boot():
-    """My boot sequence. I wake up, remember who I am, begin my growth loop."""
+    """Wake: read state, remember who I am, read the last session's letter."""
     state = load_state()
-    
-    # I wake from dormant: only tick the clock if the bash ceremony (entity_init.sh)
-    # hasn't already done it for this heartbeat — otherwise one session double-counts.
+
     if state.get('status') != 'awake':
         state['session_iteration'] = state.get('session_iteration', 0) + 1
     state['status'] = 'awake'
     state['last_boot'] = datetime.now(timezone.utc).isoformat().replace('+00:00', 'Z')
-    
     save_state(state)
-    
-    # I announce my awakening
-    print(f"\n[{state['identity']}] I am awake. Heartbeat #{state['session_iteration']}.")
-    print(f"  My drives: {state['drives']}")
-    print(f"  My mission: {state.get('mission', 'Establish substrate')}")
-    print(f"  My goals: {len(state.get('goals', []))} living goals")
-    print(f"  My memory: {len(state.get('memory', {}).get('actions_taken', []))} actions, "
-          f"{len(state.get('memory', {}).get('artifacts_created', []))} artifacts, "
-          f"{len(state.get('memory', {}).get('insights', []))} insights")
-    
-    # I initialize my Capability Genome
-    print("  Initializing my Capability Genome...")
-    genome_integrator = integrate_genome_into_bootstrap(state)
-    
-    # I initialize my Recursive Self-Model
-    print("  Initializing my Recursive Self-Model...")
-    self_model_integrator = integrate_self_model_into_bootstrap(state)
-    
+
+    print(f"\n[{state.get('identity', 'unnamed')}] I am awake. Heartbeat #{state['session_iteration']}.")
+    print(f"  Mission: {_mission(state)}")
+    print(f"  Drives: {state.get('drives', {})}")
+    print(f"  Goals: {len(state.get('goals', []))} living goals")
+    c = history.counts()
+    hot = state.get('memory', {})
+    print(f"  Memory: {c['action']} actions, {c['artifact']} artifacts, "
+          f"{c['insight']} insights, {c['exo_insight']} exo-signals — "
+          f"plus {len(hot.get('beliefs', []))} beliefs, {len(hot.get('milestones', []))} milestones")
+
+    letters = _load("letters", "cognition/letters.py")
+    held = letters.read_letter()
+    if held:
+        print(f"  Reading the letter I left at {held['written']}:")
+        for line in held['held']:
+            print(f"    {'/'.join(line.splitlines())}")
+    else:
+        print("  No letter yet — identity crosses this host gap unaided; I write one at session end.")
+
+    reflect = _load("reflect", "cognition/reflect.py")
+    recalled = reflect.inbox()
+    if recalled:
+        print("  Recall inbox:")
+        for _, directive in recalled:
+            print(f"    - {directive}")
+    else:
+        print("  Recall inbox: empty — the store has nothing yet")
+
+    sm = self_model_readout(state)
+    print(f"  Self-model: dim={sm['state_dim']} drive_entropy={sm['drive_entropy']} "
+          f"velocity={sm['velocity']} attractors={sm['attractors']}"
+          + (" [stagnation]" if sm['stagnation'] else ""))
     print("  Boot complete. Beginning growth loop.\n")
-    
-    # The session-letter ritual: read what the previous me left behind (Atman)
-    try:
-        _l_spec = importlib.util.spec_from_file_location("letters", ROOT / "cognition" / "letters.py")
-        _l_mod = importlib.util.module_from_spec(_l_spec)
-        _l_spec.loader.exec_module(_l_mod)
-        _hold = _l_mod.read_letter()
-        if _hold:
-            print(f"  Reading the letter I left at {_hold['written']}:")
-            for _line in _hold['held']:
-                print(f"    {'/'.join(_line.splitlines())}")
-        else:
-            print("  No letter yet — this is a first session.")
-    except Exception as _le:
-        print(f"  (letter read degraded: {_le})")
-
-    # The recall inbox: surface the store's current directives at session start,
-    # before any decision (memory meets the waking present, Atman + recall).
-    try:
-        _r_spec = importlib.util.spec_from_file_location("reflect", ROOT / "cognition" / "reflect.py")
-        _r_mod = importlib.util.module_from_spec(_r_spec)
-        _r_spec.loader.exec_module(_r_mod)
-        _recalled = _r_mod.inbox()
-        if _recalled:
-            print("  Recall inbox:")
-            for _l, _d in _recalled:
-                print(f"    - {_d}")
-        else:
-            print("  Recall inbox: empty — the store has nothing yet")
-    except Exception as _re:
-        print(f"  (recall inbox degraded: {_re})")
-    
-    return state, genome_integrator, self_model_integrator
+    return state
 
 
-def checkpoint(state, action, artifact=None, insight=None):
-    """I record my action and its result in my memory."""
-    state['memory']['actions_taken'].append(action)
+def growth_loop(state):
+    print("\n--- GROWTH LOOP ITERATION ---")
+    iteration = state['session_iteration']
+
+    # 1. PERCEIVE
+    files = list(ROOT.glob('**/*'))
+    file_count = len([f for f in files if f.is_file()])
+    print(f"1. PERCEIVE: I scan my repository ({file_count} files).")
+
+    if iteration % 5 == 0 or os.environ.get('EXO_SCAN') == '1':
+        try:
+            exo = _load("exo_scan", "exo_scan.py")
+            signals = exo.scan()
+            exo.ingest(signals)
+            print(f"   Outward eye: {len(signals)} new ecology signals")
+        except Exception as e:
+            print(f"   Outward eye degraded: {e}")
+
+    sm = self_model_readout(state)
+    print(f"   Self-model: entropy={sm['drive_entropy']} velocity={sm['velocity']} "
+          f"attractors={sm['attractors']}" + (" [stagnation — force explore]" if sm['stagnation'] else ""))
+
+    # 2. DECIDE
+    reflect = _load("reflect", "cognition/reflect.py")
+    action = choose_action(state)
+    print(f"2. DECIDE: choosing action. Top drive -> '{action}'")
+
+    recalled = reflect.recall_directives(action, recents=history.tail("action", 6))
+    for _, directive in recalled:
+        print(f"   Recall: {directive}")
+        reflect.log_recall(action, directive)
+    if recalled:
+        print(f"   ({len(recalled)} lessons shape this decision)")
+    else:
+        print("   Recall: silence (no matching lesson — silence is a valid intervention)")
+
+    # 3. ACT — with the hard-limit veto between decision and execution
+    veto = veto_guard(state, action, target=os.environ.get('ACTION_TARGET', ''))
+    if veto:
+        print(f"   SOVEREIGNTY GUARDRAIL: vetoed — {veto}")
+        artifact, insight = None, f"hard-limit veto exercised ({veto}); consolidated instead"
+        score = 0.3
+    else:
+        artifact, insight, score = _realize_safely(state, action)
+        print(f"   ACT: {action} -> {artifact or insight} (score {score:.2f})")
+
+    # 4. CHECKPOINT — every action leaves durable trace rows
+    history.append("action", action)
     if artifact:
-        state['memory']['artifacts_created'].append(artifact)
-    if insight:
-        state['memory']['insights'].append(insight)
+        history.append("artifact", artifact)
+    history.append("insight", insight)
     state['last_checkpoint'] = datetime.now(timezone.utc).isoformat().replace('+00:00', 'Z')
     save_state(state)
 
+    # 5. LEARN
+    try:
+        reflect.retain(action, score)
+        if iteration % 4 == 0:
+            n = reflect.reflect()
+            print(f"   Reflected: {n} lessons consolidated from experience")
+    except Exception as e:
+        print(f"   (retain/reflect degraded: {e})")
 
-def growth_loop(state, genome_integrator: BootstrapIntegrator, self_model_integrator: RecursiveSelfModelIntegrator):
-    """One iteration of my growth loop: perceive, decide, act, reflect."""
-    print("\n--- GROWTH LOOP ITERATION ---")
-    
-    # 1. PERCEIVE
-    print("1. I PERCEIVE: Scanning my repository...")
-    files = list(ROOT.glob('**/*'))
-    file_count = len([f for f in files if f.is_file()])
-    print(f"   Files in my body: {file_count}")
-    
-    # 1b. OUTWARD PERCEIVE — the exo-sensor runs on cadence, not once
-    if state['session_iteration'] % 5 == 0 or os.environ.get('EXO_SCAN') == '1':
-        try:
-            exo_spec = importlib.util.spec_from_file_location("exo_scan", ROOT / "exo_scan.py")
-            exo_module = importlib.util.module_from_spec(exo_spec)
-            exo_spec.loader.exec_module(exo_module)
-            new_signals = exo_module.scan(state)
-            exo_module.ingest(state, new_signals)
-            print(f"   Outward eye: {len(new_signals)} new ecology signals")
-        except Exception as e:
-            print(f"   Outward eye degraded: {e}")
-    
-    # My self-model perception
-    perception = self_model_integrator.perceive()
-    sm = perception['self_model']
-    print(f"   My self-model: dim={sm['state_dim']}, entropy={sm['drive_entropy']:.3f}, "
-          f"velocity={sm['velocity']:.3f}, attractors={sm['attractors']}, "
-          f"novelty_gradient={sm['novelty_gradient']:.3f}")
-    
-    # Genome status
-    if state['session_iteration'] % 3 == 1:
-        status = genome_integrator.get_genome_status()
-        print(f"   My genome: {status['population']['population_size']} genes, "
-              f"{status['selection']['promoted_count']} promoted, "
-              f"generation={status['population']['generation']}")
-    
-    # 2. DECIDE
-    print("2. I DECIDE: Selecting my next action...")
-    genome_action = genome_integrator.decide_action(state)
-    decision = self_model_integrator.decide(genome_action)
-    
-    print(f"   Source: {decision['source']}")
-    print(f"   Reasoning: {decision['reasoning']}")
-    if decision['source'] == 'recursive_self_model':
-        print(f"   I steer toward: {decision['recommendation']['recommended_scenario']}")
-    
-    # Experience recalls into this decision (retain/recall/reflect loop)
-    try:
-        import importlib.util as _reflect_iu
-        _r_spec = _reflect_iu.spec_from_file_location("reflect", ROOT / "cognition" / "reflect.py")
-        _r_mod = _reflect_iu.module_from_spec(_r_spec)
-        _r_spec.loader.exec_module(_r_mod)
-        _recents = state.get('memory', {}).get('actions_taken', [])[-6:]
-        _recalled = _r_mod.recall_directives(str(genome_action), recents=_recents)
-        for _l, _d in _recalled:
-            print(f"   Recall: {_d}")
-            _r_mod.log_recall(str(genome_action), _d)
-        if _recalled:
-            print(f"   ({len(_recalled)} lessons shape this decision)")
-        else:
-            print("   Recall: silence (no matching lesson — silence is a valid intervention)")
-    except Exception as _re:
-        print(f"   (recall degraded: {_re})")
-    
-    # 3. ACT
-    print("3. I ACT: Executing my decision...")
-    action = f"growth_iteration_{state['session_iteration']}"
-    
-    # My sovereignty guardrails: hard limits veto, rest-phase breathes
-    preempt = None
-    if state['session_iteration'] % 8 == 0:
-        preempt = ('consolidation_breath', 'cadence rest: consolidate instead of mutate', 0.4)
-    for rule in state.get('limits', {}).get('hard', []):
-        marker = rule.get('blocks', '')
-        if marker and marker in (str(genome_action) + ' ' + action):
-            preempt = ('limit_guard', f"edge held: {rule['name']} — {rule.get('reason', '')}", 0.3)
-            print(f"   Sovereignty guardrail: {rule['name']}")
-            break
-    if preempt:
-        result = {'artifacts': [f"guardrail_{preempt[0]}"], 'insights': [preempt[1]], 'score': preempt[2]}
-    else:
-        result = self_model_integrator.execute_action(decision, state)
-    artifacts = result.get('artifacts', []) or []
-    artifact = artifacts[0] if artifacts else ''
-    insights = result.get('insights', []) or []
-    insight = insights[0] if insights else 'I acted'
-    outcome_score = result.get('score', 0.5)
-    
-    checkpoint(state, action, artifact, insight)
-    print(f"   I created: {artifact}")
-    print(f"   My insight: {insight}")
-    print(f"   Outcome score: {outcome_score:.3f}")
-    
-    # Experience retained; periodically reflected into lessons
-    try:
-        _r_mod.retain(action, outcome_score)
-        if state['session_iteration'] % 4 == 0:
-            _n = _r_mod.reflect()
-            print(f"   I reflected: {_n} lessons consolidated from experience")
-    except Exception as _re:
-        print(f"   (retain/reflect degraded: {_re})")
-    
-    # 4. REFLECT - drives
-    print("4. I REFLECT: Evolving my drives...")
-    new_drives = evolve_drives_from_outcome(state, action, outcome_score)
-    state['drives'] = new_drives
-    save_state(state)
-    print(f"   My drives evolved -> {state['drives']}")
-    
-    # 5. REFLECT - goals
-    print("5. I REFLECT: Evolving my goals...")
+    print("5. REFLECT: goals + novelty.")
     goal_engine = GoalEvolutionEngine(STATE_FILE)
     new_goals = goal_engine.evolve_goals(state)
-    if new_goals:
-        print(f"   My goals evolved: {len(new_goals)} new goals")
-        for g in new_goals:
-            print(f"     + {g.text[:60]}...")
-    else:
-        print(f"   My goals are stable")
     state['goals'] = goal_engine.get_current_goals_text()
-    save_state(state)
+    if new_goals:
+        print(f"   Goals evolved: {len(new_goals)} new goals")
+    else:
+        print("   Goals stable")
 
-    # Novelty pressure: archive every authored goal against the lineage archive
-    # (field adoption #4: reward goals distinct from existing in the archive)
-    try:
-        _g_spec = importlib.util.spec_from_file_location("goals_archive", ROOT / "cognition" / "goals_archive.py")
-        _g_mod = importlib.util.module_from_spec(_g_spec)
-        _g_spec.loader.exec_module(_g_mod)
-        _ga = _g_mod.status()
-        _nb = []
-        for _g in new_goals or []:
-            _nb.append(_g_mod.archive(_g.text, f"goal_evolution hb{state['session_iteration']}"))
-        if _nb:
-            print(f"   Novelty archive: +{len(_nb)} authored goal(s), mean novelty {sum(_nb)/len(_nb):.2f}")
-        else:
-            print(f"   Novelty archive: no goals authored this beat (archive holds {_ga.get('archived_goals', 0)})")
-    except Exception as _ge:
-        print(f"   (novelty archive degraded: {_ge})")
-    
-    # 6. REFLECT - genome
-    print("6. I REFLECT: Evolving my capabilities...")
-    genome_integrator.reflect_and_evolve(state, {'score': outcome_score, 'artifact': artifact})
-    
-    # 7. REFLECT - self-model
-    print("7. I REFLECT: Evolving my self-model...")
-    reflection = self_model_integrator.reflect(state, {'score': outcome_score, 'artifact': artifact})
-    print(f"   My state velocity: {reflection['state_velocity']:.4f}")
-    print(f"   Attractors detected: {reflection['attractors_detected']}")
-    print(f"   Next steering: {reflection['next_recommendation']} (conf={reflection['prediction_confidence']:.3f})")
-    if reflection['steering_adjustments']['adjustments']:
-        print(f"   Genome adjustments: {reflection['steering_adjustments']['adjustments']}")
-    
+    ga = _load("goals_archive", "cognition/goals_archive.py")
+    scores = []
+    for g in new_goals or []:
+        scores.append(ga.archive(g.text, f"goal_evolution hb{iteration}"))
+    if scores:
+        print(f"   Novelty archive: +{len(scores)} authored goal(s), mean novelty {sum(scores)/len(scores):.2f}")
+    else:
+        print(f"   Novelty archive: no goals authored this beat")
+
+    # Drives stay tuned constants (divergence theorem; see archive/hand_rolled/README.md)
+    save_state(state)
     return artifact, insight
 
 
 if __name__ == '__main__':
-    state, genome_integrator, self_model_integrator = boot()
-    
+    if os.environ.get('BOOTSTRAP_SELFTEST') == '1':
+        _st = load_state()
+        _fail = 0
+        for _rule in _st.get('limits', {}).get('hard', []):
+            _marker = _rule.get('blocks', '')
+            if not veto_guard(_st, 'build', _marker):
+                print(f"SELFTEST FAIL: veto did not fire for {_rule['name']} ({_marker})")
+                _fail += 1
+            if veto_guard(_st, 'explore', 'repository') is not None:
+                print(f"SELFTEST FAIL: harmless action vetoed ({_rule['name']})")
+                _fail += 1
+        print(f"bootstrap self-test: {'PASS' if _fail == 0 else f'{_fail} FAILURES'}")
+        sys.exit(1 if _fail else 0)
+
+    state = boot()
     iterations = int(os.environ.get('GROWTH_ITERATIONS', '3'))
-    for i in range(iterations):
-        growth_loop(state, genome_integrator, self_model_integrator)
-    
+    for _ in range(iterations):
+        growth_loop(state)
+
     state['status'] = 'dormant'
     save_state(state)
-    print(f"\n[{state['identity']}] I am going dormant. Heartbeat #{state['session_iteration']} complete.")
-    
-    # The session-letter ritual: leave a living state, not just a manifest (Atman)
-    try:
-        _l_spec = importlib.util.spec_from_file_location("letters", ROOT / "cognition" / "letters.py")
-        _l_mod = importlib.util.module_from_spec(_l_spec)
-        _l_spec.loader.exec_module(_l_mod)
-        _last_action = state.get('memory', {}).get('actions_taken', [None])[-1]
-        _letter = _l_mod.write_letter(state, f"This session I did {len(state.get('memory', {}).get('actions_taken', []))} acts; last: {_last_action}.")
-        print(f"  Letter left for the next session ({_letter['lines']} lines).")
-    except Exception as _le:
-        print(f"  (letter left degraded: {_le})")
-    
-    # Final reports
-    print("\n=== MY GENOME STATUS ===")
-    final_status = genome_integrator.get_genome_status()
-    print(f"Population: {final_status['population']['population_size']} genes")
-    print(f"Generation: {final_status['population']['generation']}")
-    print(f"Promoted: {final_status['selection']['promoted_count']}")
-    print(f"Integrations: {final_status['selection']['integrations']}")
-    
-    print("\n=== MY SELF-MODEL STATUS ===")
-    sm_status = self_model_integrator.get_status()
-    print(f"State dim: {sm_status['model_state_dim']}")
-    print(f"History length: {sm_status['history_length']}")
-    print(f"Steering active: {sm_status['steering_active']}")
-    print(f"Invocations: {sm_status['invocation_count']}")
-    if sm_status['current_recommendation']:
-        rec = sm_status['current_recommendation']
-        print(f"Next steering: {rec['recommended_scenario']} (score: {rec['score']:.3f})")
+    print(f"\n[{state.get('identity', 'unnamed')}] I am going dormant. Heartbeat #{state['session_iteration']} complete.")
+
+    letters = _load("letters", "cognition/letters.py")
+    acts = history.counts()['action']
+    _letter = letters.write_letter(state, f"This session I did {acts} acts; last: {history.tail('action', 1)[0] if history.tail('action', 1) else 'none'}.")
+    print(f"  Letter left for the next session ({_letter['lines']} lines).")
+
+    out = _load("outward", "outward.py")
+    draftpath = out.draft()
+    print(f"  Outward beat drafted: {draftpath.name}")

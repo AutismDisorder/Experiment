@@ -110,11 +110,6 @@ def reflect():
     return learned
 
 
-def recall(action):
-    """Legacy: surface matching lessons for a pending action (stats form)."""
-    return [l for l, _ in recall_directives(action, recents=None)]
-
-
 def directive(lesson):
     """Reconstruct a lesson into one contextual, actionable line — apply HERE,
     not replays of raw stats (MemHarness: reconstruct, don't replay)."""

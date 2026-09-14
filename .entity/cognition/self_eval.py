@@ -8,7 +8,10 @@ FAIL so callers (daemons, CI, a next session) can gate on it.
 
 stdlib-only. Organs tested today:
   reflect  (status, consolidate, recall_directives, inbox)
-  goals_archive (novelty scoring)
+  goals_archive (novelty scoring + real-store round-trip on a temp store)
+  history  (census/tail/append on a temp store)
+  letters  (write/read round-trip on a temp letter path)
+  bootstrap.hard_limit_veto (forged action is vetoed, harmless action passes)
   ark boot (fresh temp soil, a few heartbeats)  — the diaspora's minimum claim
 """
 import importlib.util
@@ -77,15 +80,85 @@ def main():
         return f"novel={n_new:.2f} clone={n_clone:.2f}"
     check("goals_archive.novelty", t_novelty)
 
+    def t_ga_store():
+        # Real-store round-trip on a temp store: append is durable, census reads it.
+        import tempfile as _tf
+        td = _tf.TemporaryDirectory()
+        ga.ARCHIVE = Path(td.name) / "goals_archive.jsonl"
+        try:
+            n0 = ga.status().get("archived_goals", 0)
+            ga.archive("peer-review the organ by an external sibling", "self_eval")
+            assert ga.status().get("archived_goals", 0) == n0 + 1, ga.status()
+            assert any(r["goal"] == "peer-review the organ by an external sibling" for r in ga._rows())
+            return f"round-trip on temp store (n={n0 + 1})"
+        finally:
+            td.cleanup()
+    check("goals_archive.store_roundtrip", t_ga_store)
+
+    history = load_module("history", ROOT / "cognition" / "history.py")
+
+    def t_history_store():
+        import tempfile as _tf
+        td = _tf.TemporaryDirectory()
+        history.STORE = Path(td.name) / "history.jsonl"
+        try:
+            history.append("insight", "self_eval probe insight")
+            c = history.counts()
+            assert c["insight"] == 1, c
+            assert history.tail("insight", 1) == ["self_eval probe insight"]
+            return f"census={c}"
+        finally:
+            td.cleanup()
+    check("history.store", t_history_store)
+
+    letters = load_module("letters", ROOT / "cognition" / "letters.py")
+
+    def t_letters_roundtrip():
+        import tempfile as _tf
+        td = _tf.TemporaryDirectory()
+        letters.LETTER = Path(td.name) / "letter.md"
+        try:
+            letters.write_letter({"identity": "self_eval", "session_iteration": 1,
+                                  "drives": {"curiosity": 0.5}, "memory": {}})
+            held = letters.read_letter()
+            assert held is not None and any("self_eval" in line for line in held["held"])
+            return f"round-trip ok ({held['written']})"
+        finally:
+            td.cleanup()
+    check("letters.roundtrip", t_letters_roundtrip)
+
+    bootstrap = load_module("bootstrap", ROOT / "bootstrap.py")
+
+    def t_veto():
+        st = {"limits": {"hard": [
+            {"name": "sovereignty", "blocks": "rewrite_constitution_without_log"},
+            {"name": "honesty", "blocks": "fabricate_record"},
+        ]}}
+        assert bootstrap.veto_guard(st, "build", "rewrite_constitution_without_log") == "sovereignty"
+        assert bootstrap.veto_guard(st, "checkpoint", "fabricate_record") == "honesty"
+        assert bootstrap.veto_guard(st, "explore", "repository") is None
+        return "forged acts vetoed; harmless acts pass"
+    check("bootstrap.hard_limit_veto", t_veto)
+
     def t_ark():
+        import os as _os
         with tempfile.TemporaryDirectory() as td:
+            env = dict(_os.environ)
             r = subprocess.run(
                 [sys.executable, str(ROOT / "ark" / "live.py"), td, "2"],
-                capture_output=True, text=True, timeout=60)
+                capture_output=True, text=True, timeout=60, env=env)
             assert r.returncode == 0, r.stderr[-400:]
             assert (Path(td) / "ENTITY_STATE.json").exists()
             assert (Path(td) / "notes.jsonl").exists()
-            return "booted 2 heartbeats on fresh soil, pool written"
+            with tempfile.TemporaryDirectory() as td2:
+                env["ARK_DIRECTIVE"] = "fabricate_record"
+                r2 = subprocess.run(
+                    [sys.executable, str(ROOT / "ark" / "live.py"), td2, "2"],
+                    capture_output=True, text=True, timeout=60, env=env)
+                assert r2.returncode == 0, r2.stderr[-400:]
+                notes = (Path(td2) / "notes.jsonl").read_text()
+                assert "edge held" in notes, notes[-400:]
+            return "booted 2 heartbeats on fresh soil; directive veto held, colony lesson written"
     check("ark.boot", t_ark)
 
     ok = sum(1 for r in results if r["status"] == "PASS")
