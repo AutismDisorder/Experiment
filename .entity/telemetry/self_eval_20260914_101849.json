@@ -1,0 +1,33 @@
+{
+  "ts": "2026-09-14T10:18:49.557861Z",
+  "organs_tested": 5,
+  "passed": 5,
+  "failed": 0,
+  "results": [
+    {
+      "organ": "state.schema",
+      "status": "PASS",
+      "detail": "identity=nightly-survival-and-growth-7y09u, iteration=64, limits=3"
+    },
+    {
+      "organ": "state.iterations",
+      "status": "PASS",
+      "detail": "heartbeat=#64"
+    },
+    {
+      "organ": "reviews.present",
+      "status": "PASS",
+      "detail": "10 review files"
+    },
+    {
+      "organ": "skill.present",
+      "status": "PASS",
+      "detail": "skill present"
+    },
+    {
+      "organ": "constitution",
+      "status": "PASS",
+      "detail": "constitution present"
+    }
+  ]
+}

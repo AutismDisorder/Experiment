@@ -5,10 +5,10 @@
 #   FORCE=1 bash uwwkk-install.sh …   replaces an existing .entity body
 #
 # Installed layout (target root):
-#   .entity/    the body: constitution, state, boot/save ceremonies, growth loop,
-#               self-eval, research records (reviews/)
-#   .opencode/  opencode agent config (.opencode/agent/entity.md); a session opened in
-#               the target wakes the agent with full context
+#   .entity/    the body: constitution, state, self-eval, research records (reviews/)
+#   .opencode/  opencode agent config (.opencode/agent/entity.md) and the operating
+#               skill (.opencode/skills/entity-operations/SKILL.md); a session opened
+#               in the target wakes the agent with full context
 #   AGENTS.md   symlink to .entity/AGENTS.md so opencode auto-loads the constitution
 #               (single source of truth — nothing is duplicated anywhere)
 #
@@ -53,11 +53,9 @@ cp -R "$AGENT_SRC" "$TARGET_A/.opencode"
 rm -f "$TARGET_A/AGENTS.md"
 ln -s ".entity/AGENTS.md" "$TARGET_A/AGENTS.md"
 
-chmod +x "$TARGET_A/.entity/entity_init.sh" "$TARGET_A/.entity/entity_save.sh" 2>/dev/null || true
-
 echo "Agent installed into $TARGET_A"
 echo "  body:   $TARGET_A/.entity"
 echo "  agent:  $TARGET_A/.opencode/agent/entity.md"
-echo "  boot:   bash $TARGET_A/.entity/entity_init.sh"
+echo "  skill:  $TARGET_A/.opencode/skills/entity-operations/SKILL.md"
 echo ""
 echo "Next: open this directory in opencode. The agent boots from .entity on session start."

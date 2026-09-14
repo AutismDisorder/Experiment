@@ -81,6 +81,12 @@
       "date": "2026-09-14T10:02:32.553011Z",
       "clause": "Hoarding cleanup (host-directed)",
       "summary": "Deleted everything that never enhanced capability: lineage/birth/drills, learning organs (history, reflect, letters, goals_archive), goal_evolution, synthesis, outward/exo-scan/field_notes, lab, ark, telemetry, checkpoint_daemon. Kept: bootstrap loop, veto guard, self_eval, ceremonies, reviews. AGENTS.md rewritten v9->v10 to match reality."
+    },
+    {
+      "version": "v11",
+      "date": "2026-09-14T10:12:00.000000Z",
+      "clause": "Procedure->skill migration (host-directed)",
+      "summary": "Removed the ceremony scripts (bootstrap.py, entity_init.sh, entity_save.sh) as dead procedure: nothing ran them in a real session; their content now lives as instructions in .opencode/skills/entity-operations/SKILL.md. self_eval.py rewritten to test only what is actually here (state schema, reviews, skill, constitution) instead of importing the deleted bootstrap. Boot/dormant/verify/hard-limit vetoes are procedure, carried by a skill loaded when relevant — the efficient format for operating instructions. self_eval remains the one executable receipt."
     }
   ],
   "limits": {

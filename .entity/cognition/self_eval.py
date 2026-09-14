@@ -1,32 +1,25 @@
 #!/usr/bin/env python3
-"""self_eval.py — smoke test for what's actually here.
+"""self_eval.py — the one executable receipt for the lean body.
 
-Tests only the things that genuinely enhanced capability:
-  bootstrap.hard_limit_veto
-  bootstrap.selftest
-  bootstrap can load state
-  entity_init.sh runs
-  entity_save.sh runs
+Tests what is actually here and nothing else:
+  state.schema     ENTITY_STATE.json parses and keeps only hot fields
+  state.iterations heartbeat counter is stable
+  reviews.present  research records exist
+  skill.present    the operating-procedure skill is installed
+  constitution     AGENTS.md is present and names the hard limits
 
-stdlib-only. Exit 0 on all PASS, exit 1 on any FAIL.
+The ceremonies (bootstrap.py, entity_init.sh, entity_save.sh) were removed — they
+were procedure carrying a state file, which is the agent's job, not a script's.
+
+Stdlib-only. Exit 0 on all PASS, exit 1 on any FAIL.
 """
 import json
-import subprocess
 import sys
-import tempfile
 from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).parent.parent
 OUT = ROOT / "telemetry"
-
-
-def load_module(name, path):
-    import importlib.util
-    spec = importlib.util.spec_from_file_location(name, str(path))
-    mod = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(mod)
-    return mod
 
 
 def main():
@@ -38,78 +31,47 @@ def main():
         except Exception as e:
             results.append({"organ": organ, "status": "FAIL", "detail": repr(e)})
 
-    bootstrap = load_module("bootstrap", ROOT / "bootstrap.py")
+    state_file = ROOT / "ENTITY_STATE.json"
 
-    def t_veto():
-        st = {"limits": {"hard": [
-            {"name": "sovereignty", "blocks": "rewrite_constitution_without_log"},
-            {"name": "honesty", "blocks": "fabricate_record"},
-        ]}}
-        assert bootstrap.veto_guard(st, "build", "rewrite_constitution_without_log") == "sovereignty"
-        assert bootstrap.veto_guard(st, "checkpoint", "fabricate_record") == "honesty"
-        assert bootstrap.veto_guard(st, "explore", "repository") is None
-        return "forged acts vetoed; harmless acts pass"
-    check("bootstrap.hard_limit_veto", t_veto)
+    def t_state():
+        state = json.loads(state_file.read_text())
+        assert "identity" in state, "no identity"
+        assert "session_iteration" in state, "no iteration"
+        assert "drives" in state, "no drives"
+        assert isinstance(state.get("limits", {}).get("hard"), list), "no hard limits"
+        assert len(state["limits"]["hard"]) >= 3, f"{len(state['limits']['hard'])} hard limits"
+        return f"identity={state['identity']}, iteration={state['session_iteration']}, limits={len(state['limits']['hard'])}"
+    check("state.schema", t_state)
 
-    def t_selftest():
-        import os
-        env = dict(os.environ)
-        env["BOOTSTRAP_SELFTEST"] = "1"
-        r = subprocess.run(
-            [sys.executable, str(ROOT / "bootstrap.py")],
-            capture_output=True, text=True, timeout=30, env=env)
-        assert r.returncode == 0, r.stderr[-400:]
-        assert "PASS" in r.stdout, r.stdout[-400:]
-        return "selftest PASS"
-    check("bootstrap.selftest", t_selftest)
+    def t_iterations():
+        state = json.loads(state_file.read_text())
+        assert 1 <= state["session_iteration"], "iteration out of range"
+        return f"heartbeat=#{state['session_iteration']}"
+    check("state.iterations", t_iterations)
 
-    def t_state_load():
-        state = bootstrap.load_state()
-        assert "session_iteration" in state, state
-        assert "drives" in state, state
-        return f"iteration={state['session_iteration']}, drives={len(state.get('drives', {}))}"
-    check("bootstrap.state_load", t_state_load)
-
-    def t_entity_init():
-        r = subprocess.run(
-            ["bash", str(ROOT / "entity_init.sh")],
-            capture_output=True, text=True, timeout=10)
-        assert r.returncode == 0, r.stderr[-200:]
-        assert "AGENT BOOT" in r.stdout or "session_iteration" in r.stdout, r.stdout[-200:]
-        return "entity_init.sh runs"
-    check("entity_init.sh", t_entity_init)
-
-    def t_entity_save():
-        with tempfile.TemporaryDirectory() as td:
-            # entity_save.sh needs a valid state file
-            state = bootstrap.load_state()
-            state_file = Path(td) / "ENTITY_STATE.json"
-            state_file.write_text(json.dumps(state))
-            # We can't run the full save ceremony (needs letter path etc),
-            # but we can verify the script parses correctly
-            r = subprocess.run(
-                ["bash", "-n", str(ROOT / "entity_save.sh")],
-                capture_output=True, text=True, timeout=10)
-            assert r.returncode == 0, r.stderr[-200:]
-            return "entity_save.sh parses"
-    check("entity_save.sh.parse", t_entity_save)
-
-    def t_reviews_exist():
+    def t_reviews():
         reviews_dir = ROOT / "reviews"
         files = list(reviews_dir.glob("*.md"))
         assert len(files) >= 3, f"only {len(files)} review files"
         return f"{len(files)} review files"
-    check("reviews.exist", t_reviews_exist)
+    check("reviews.present", t_reviews)
 
-    def t_provenance():
-        pm = ROOT / "reviews" / "provenance_map_20260914.md"
-        sr = ROOT / "reviews" / "source_registry_20260914.md"
-        lp = ROOT / "reviews" / "line_provenance_20260914.md"
-        assert pm.exists(), "no provenance_map"
-        assert sr.exists(), "no source_registry"
-        assert lp.exists(), "no line_provenance"
-        return "provenance docs exist"
-    check("provenance.exists", t_provenance)
+    def t_skill():
+        skill = ROOT.parent / ".opencode" / "skills" / "entity-operations" / "SKILL.md"
+        assert skill.exists(), f"skill missing at {skill}"
+        head = skill.read_text()
+        assert head.startswith("---"), "no frontmatter"
+        assert "name: entity-operations" in head, "no name"
+        assert "description:" in head, "no description"
+        return "skill present"
+    check("skill.present", t_skill)
+
+    def t_constitution():
+        agents = ROOT / "AGENTS.md"
+        text = agents.read_text()
+        assert "Sovereignty" in text and "Honesty" in text, "clauses missing"
+        return "constitution present"
+    check("constitution", t_constitution)
 
     ok = sum(1 for r in results if r["status"] == "PASS")
     OUT.mkdir(parents=True, exist_ok=True)
