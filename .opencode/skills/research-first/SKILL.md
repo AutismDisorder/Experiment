@@ -54,7 +54,7 @@ Every cycle closes with a written verdict — same session, same message:
 CYCLE:      <decision in one line>
 METHODS:    web · github · docs · papers   (which were tried)
 DEPTH:      <sources read>
-CLOSE:      gain held → adjusted (x3) → barren after adjustment
+CLOSE:      gain held → adjusted (x∗) → barren after adjustment
 VERDICT:    adopt | adapt | reject | mixed
 SOURCE:     <url> or [UNVERIFIED]
 REASON:     one sentence
@@ -64,6 +64,22 @@ Write the METHODS, DEPTH, and CLOSE lines honestly. They are the record that the
 cycle was extensive, that it adjusted rather than stopped, and that the close
 happened only after adjustment failed to yield. This record is the feedback that
 trains the research skill itself.
+
+## Deposit research lesson
+
+At cycle close, deposit one research-method lesson to `.opencode/skills/research-first/SKILL.md` so the next cycle starts better. Use the format:
+
+```
+## Lesson (YYYY-MM-DD)
+- For <kind of question>: <method> worked best because <one-line reason>;
+  <other method> did not work as well.
+```
+
+If the lesson duplicates an existing rule, consolidate instead of appending. If the
+lesson cannot be stated in one concise rule, it is bloat — do not write it.
+
+Lessons tune how the next cycle starts: if the prior cycle found GitHub code search
+more effective than web search, the next cycle begins by trying GitHub first.
 
 ## Verdicts
 
@@ -82,17 +98,6 @@ trains the research skill itself.
   summarize: `research: <verdict> <source>`.
 - The CLOSE line is never faked: either the cycle adjusted, or it closed when an
   adjustment failed to yield. Both are honest answers.
-
-## Research-method lessons
-
-The research skill trains on its own outcomes. After each cycle, deposit one
-usable observation and patch `.opencode/skills/research-first/SKILL.md`:
-
-- "For <kind of question>, GitHub code search beat web search because <reason>"
-- "For <kind of question>, exact-symbol queries beat broad ones"
-
-These patches tune how the next cycle starts. If the patch duplicates an existing
-rule, consolidate instead of appending.
 
 ## Values-based tiebreak
 

@@ -69,9 +69,9 @@ Learning improves the skills without deadline-bloat in exchange:
 - **A patch must change behavior.** If the rule already exists, do not append a
   duplicate — consolidate the two into the sharper wording.
 - **Each lesson must earn its lines.** 1–5 lines of rule, zero lines of padding.
-- **Compress periodically.** When a skill section grows noisy with dated patches,
-  fold the live rules into the section body and drop the superseded ones. Tag
-  the compression in the section header (e.g., "compressed 2026-09-14").
+- **Compress after every 3 lessons.** When the skill section contains 3 or more
+  dated lessons, fold the live rules into the section body and drop the superseded
+  ones. Tag the compression in the section header (e.g., "compressed 2026-09-14").
 - **Vague lessons are rejected at the door.** A lesson you cannot apply to a
   future decision is bloat, not learning.
 
