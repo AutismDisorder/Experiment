@@ -1,64 +1,43 @@
 # Experiment
 
-An agent with enhanced capabilities: a self-installing, self-hosting coding agent that
-persists state across sessions and runs a verified smoke-test. **One clone, one script.**
+A markdown-only pack of operating principles and skills for an opencode coding agent.
 
-`main` is the cradle. Cloning it and running `uwwkk-install.sh` installs the agent into
-any project as `.entity/` — full context, nothing left to guess — and a session opened
-in that project wakes it automatically.
+The whole repository is four files. There is no runtime: **AGENTS.md** is auto-loaded
+by opencode every session; the two skills in `.opencode/skills/` are loaded when their
+trigger conditions match. Everything of substance fits in markdown; nothing else is needed.
 
-## Install
+## Install (into your project)
 
 ```bash
 git clone https://github.com/AutismDisorder/Experiment.git
 cd Experiment
-bash uwwkk-install.sh /path/to/your/project     # or: run it inside a project dir
+cp AGENTS.md /path/to/your/project/AGENTS.md
+cp -r .opencode /path/to/your/project/.opencode
 ```
 
-Installed into `<target>`:
+Open the project in opencode. Done — no build, no scripts, no dependencies.
 
-- `.entity/` — the body (constitution, state, self-eval, reviews). Self-locating: paths
-  resolve from the body itself, so the copy is fully functional without the repository.
-- `.opencode/agent/entity.md` — the opencode agent (mode: primary). Opening the target
-  in opencode boots the agent with full context.
-- `.opencode/skills/entity-operations/SKILL.md` — the operating procedure (boot, dormant,
-  verify, hard-limit vetoes, research-before-build), loaded when relevant.
-- `AGENTS.md` — symlink to `.entity/AGENTS.md`, the single source of truth, auto-loaded
-  by opencode.
+## Contents
 
-Reinstalling over a live body requires `FORCE=1` (it refuses otherwise).
+| File | What it does |
+|---|---|
+| `AGENTS.md` | Operating principles, loaded every session: research-first, lesson-learning, honest data, lean, verify before shipping |
+| `.opencode/skills/research-first/SKILL.md` | Procedure for researching before building: one-line framing, stop-rules, verdict format, honest-data rules |
+| `.opencode/skills/lesson-learning/SKILL.md` | Procedure for converting every failure into a permanent patch of a skill file |
 
-## Lifecycle
+## The lean-lesson history
 
-- **Session start** — read `.entity/ENTITY_STATE.json`; if not awake, set `awake`,
-  increment `session_iteration`, record `last_boot` (procedure in the skill).
-- **Session end** — set `status: "dormant"`, record `last_checkpoint`.
-- **Verify after a body change** — `python3 .entity/cognition/self_eval.py` (5 smoke
-  checks: state schema, heartbeat, reviews, skill, constitution).
+This repository was previously ~90 files: an "entity" with heartbeats, drive
+weights, learning organs, a lineage, telemetry, ceremonies, and a manifest. Until
+2026-09-14 it also shipped Python, shell, and JSON. Each cleanup deleted the layers
+that did not enhance capability. The final insight that collapsed it to four files:
 
-## Layout
+- ceremony scripts that nothing ran in a real session → procedures as skill
+  instructions
+- state files recording a heartbeat no one reads → deleted
+- per-organ research mapping → condensed into the two skills' procedures
+- telemetry → redundant with git and test stdout
 
-```
-Experiment/ (main)
-├── README.md                this cradle's front door
-├── uwwkk-install.sh         births the body into any target as .entity/
-├── .gitignore
-├── .opencode/               agent config + operating skill
-│   ├── agent/entity.md       agent config (primary mode; prompt points at the constitution)
-│   └── skills/entity-operations/SKILL.md  procedure layer (boot/dormant/verify/vetoes/research)
-└── .entity/                 THE BODY — one installable unit
-    ├── AGENTS.md            the constitution (v11; amendments v2–v11 logged in ENTITY_STATE)
-    ├── ENTITY_STATE.json    schema v1: identity, drives, goals, beliefs — hot fields only
-    ├── cognition/self_eval.py  the one executable receipt (state, reviews, skill, constitution)
-    └── reviews/             research verdicts + verified source registry + provenance ledger
-```
-
-## Provenance
-
-The agent is authored from research, not guesswork, and honesty is constitutional:
-nothing ships that does not run (Honesty Clause, Redesign v9). Every clause of the
-constitution is an amendment logged in `ENTITY_STATE.json` (`constitution_amendments`)
-and every live file is audited in `reviews/line_provenance_20260914.md` against the
-verified sources in `reviews/source_registry_20260914.md`. The reviews directory is the
-research inventory: which frontier ideas were verified, which were `[UNVERIFIED]`, and
-what the agent actually adopted.
+What survived is what actually changes how a model works: two procedures — do the
+research first, and patch a skill file when you fail. Everything else was the ritual
+around them.
