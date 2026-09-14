@@ -1,4 +1,4 @@
-# Experiment
+# Mika
 
 A markdown-only pack of operating principles and skills for an opencode coding agent.
 
