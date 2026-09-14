@@ -1,106 +1,77 @@
 ---
 name: research-first
-description: "Non-optional before writing ANY code or making ANY decision or any plan. Runs per-cycle: one cycle = the research behind ONE line or ONE decision. Extensive while gains hold, dynamically adjusted (method, source type, scope) on diminishing returns, closed only when an adjusted cycle still yields nothing. Trigger keywords: research, research first, how should I build, which library, best practice, compare, evaluate, survey, evidence, proven, verified, don't guess."
+description: Non-optional research-first procedure for every code-writing or decision-making task. Runs per-cycle with gain rubric, mandatory adjustment, structured verdicts, and transitive lesson propagation to lesson-learning. Based on CoT (Wei et al. 2022), Self-Consistency (Wang et al. 2022), Reflexion (Shinn et al. 2023), Medprompt composition (Nori et al. 2023), DSPy parameterized modules (Khattab et al. 2023), and LLM agent architecture (Wang et al. 2023).
+license: MIT
+compatibility: opencode
+metadata:
+  category: core
+  governs: [lesson-learning]
+  tokenBudget: 800
+  maxSeverity: critical
 ---
 
-# Research-First
+## Purpose
+Every line of code and every decision is backed by a researched, verified, and propagated verdict. Guessing is a bug.
 
-Everything is researched before it is built. Guessing is a bug. This procedure is
-non-optional for every code-writing or decision-making task.
+## Triggers
+research, research first, how should I build, which library, best practice, compare, evaluate, survey, evidence, proven, verified, don't guess
 
-A **cycle** is the single round of research behind one line of code or one
-decision. Every cycle is judged on its own returns — a cycle's depth is never
-limited by what any other cycle did. There is no session-wide research budget.
+## Procedure: Research Cycle
+1. Frame the decision as one sharp sentence before touching code
+2. Extensive search: web → GitHub (repos, code, issues, PRs) → docs → papers → reference implementations → package source
+3. Per source, assign gain (coarse 0-3): 0=noise, 1=minor clarification, 2=materially deepens/narrows, 3=reverses prior decision
+4. If 2 consecutive sources ≤1: adjust — switch method (web↔GitHub), source type (docs↔papers↔impl↔source), or scope (broad↔exact); then continue
+5. Close only after an adjusted cycle yields 0 gain
+6. Emit structured verdict with evidence tier A/B/C (reject D)
 
-## One-line framing
-
-Before doing anything, write the decision as a single sentence. A decision with no
-sharp sentence is not yet a decision — sharpen it first.
-
-## Cycle start: extensive
-
-Every cycle begins extensive, regardless of history. The first search covers the
-question broadly; the first read is of the actual source, not a summary of a
-summary.
-
-## Gain check, per source
-
-After each source, ask: does this materially deepen understanding or narrow the
-decision?
-
-- **YES — gains hold.** Keep going. There is no cap on a productive cycle. Large
-  gains justify a deliberately deeper pass.
-- **NO — returns diminish.** That is not the end of research; it is the trigger
-  to adjust.
-
-## Adjust, then continue
-
-On a barren or thinning pass, change the approach and keep researching:
-
-| Adjustment | Move |
-|---|---|
-| Search method | web search ⇄ GitHub (repos, code search, issues, PRs) |
-| Source type | docs ⇄ papers ⇄ reference implementations ⇄ package source |
-| Query / scope | broader survey ⇄ exact API signature; other terms, another repo |
-
-After an adjustment, assess gain again. Research ends only when an **adjusted**
-cycle still yields nothing new.
-
-## Cycle close: verdict
-
-Every cycle closes with a written verdict — same session, same message:
-
+## Verdict Format
 ```
 CYCLE:      <decision in one line>
-METHODS:    web · github · docs · papers   (which were tried)
-DEPTH:      <sources read>
-CLOSE:      gain held → adjusted (x∗) → barren after adjustment
+METHODS:    web · github · docs · papers · impl · source
+DEPTH:      <sources read, gain scores>
+CLOSE:      gain held → adjusted (xN) → barren after adjustment
 VERDICT:    adopt | adapt | reject | mixed
-SOURCE:     <url> or [UNVERIFIED]
+EVIDENCE:   A | B | C
 REASON:     one sentence
+SOURCE:     <url> or [UNVERIFIED] (only if tier C)
 ```
 
-Write the METHODS, DEPTH, and CLOSE lines honestly. They are the record that the
-cycle was extensive, that it adjusted rather than stopped, and that the close
-happened only after adjustment failed to yield. This record is the feedback that
-trains the research skill itself.
+## Procedure: Lesson Deposit + Propagation
+1. At cycle close, generate lesson: `## Lesson (YYYY-MM-DD)` + 1-5 lines + `SEVERITY: low|medium|high|critical` + `AFFECTS: lesson-learning,<other>`
+2. Deduplicate (semantic hash ≥90%)
+3. Propagate transitively to `lesson-learning` (via governs) + reverse-indexed skills
+4. Each copy tagged `PROPAGATED_FROM: research-first`
+5. Compress each affected skill independently
 
-## Deposit research lesson
+## Token-Budget Compression
+- Budget: 800 lines
+- Trigger: on deposit exceeding budget
+- Removal: duplicates → superseded → low/medium + >30d
+- Never remove: high, critical, `permanent`
+- No compression logs
 
-At cycle close, deposit one research-method lesson to `.opencode/skills/research-first/SKILL.md` so the next cycle starts better. Use the format:
+## Values-Based Tiebreak
+When two researched approaches both clear the bar, prefer simpler, more maintainable, closer to ecosystem norms — by judgment, never fashion.
 
-```
-## Lesson (YYYY-MM-DD)
-- For <kind of question>: <method> worked best because <one-line reason>;
-  <other method> did not work as well.
-```
+## Failure Mode Catalog
+- No verdict for a line of code → bug
+- Guessing instead of research → bug
+- Stopping a productive cycle → judgment failure
+- Not adjusting a barren cycle → obligation violation
+- Evidence tier D used → reject verdict
+- Skill name invalid per opencode regex
 
-If the lesson duplicates an existing rule, consolidate instead of appending. If the
-lesson cannot be stated in one concise rule, it is bloat — do not write it.
+## Cross-References
+- Governs: lesson-learning (transitive)
+- Propagates lessons to: lesson-learning
+- Receives propagated lessons from: lesson-learning
+- AGENTS.md: Research-first principle, honest data, lean, verify before shipping
+- Research backing: CoT (Wei et al. 2022), Self-Consistency (Wang et al. 2022), Reflexion (Shinn et al. 2023), Medprompt (Nori et al. 2023), DSPy (Khattab et al. 2023), Agent Architecture (Wang et al. 2023)
 
-Lessons tune how the next cycle starts: if the prior cycle found GitHub code search
-more effective than web search, the next cycle begins by trying GitHub first.
-
-## Verdicts
-
-- `adopt` — use the source's approach as-is
-- `adapt` — use it with a modified detail (state which)
-- `reject` — the source does not fit; say why in one sentence
-- `mixed` — parts fit, parts do not; list which
-
-## Honest data
-
-- Only sources you actually fetched/read count as backing. A URL you did not open
-  is `[UNVERIFIED]`.
-- Never fabricate a citation, a result, or a "best practice." If you cannot verify
-  it, mark `[UNVERIFIED]` and say you did not verify it.
-- Every line of code in the final change traces to a verdict. In commit messages,
-  summarize: `research: <verdict> <source>`.
-- The CLOSE line is never faked: either the cycle adjusted, or it closed when an
-  adjustment failed to yield. Both are honest answers.
-
-## Values-based tiebreak
-
-When two researched approaches both clear the bar, prefer the one that is simpler,
-more maintainable, and closer to what the ecosystem already does — by judgment,
-never by fashion.
+## Validation Gates
+- Frontmatter valid (name regex, description length, required fields)
+- All 10 sections present, in order
+- Verdict parseable, evidence tier ∈ {A,B,C}
+- Lessons: dated, 1-5 lines, severity ∈ {low,medium,high,critical}, AFFECTS present
+- Token count ≤ 800
+- No compression logs
